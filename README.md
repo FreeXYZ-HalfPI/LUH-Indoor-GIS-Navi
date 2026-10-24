@@ -21,3 +21,7 @@ Develop an open-source indoor GIS navigation system capable of routing users fro
 - Mobile interface
 
 - Digital Twin integration
+
+- Where You Are > where do you wanna go > give me accurate address of the calssroom > Navigate and find the best path > Orient the Site Plan based on where you are > with no sensor > with no IMU >  
+
+
