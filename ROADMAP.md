@@ -8,20 +8,20 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [x] Document the data sources ([docs/DATA_SOURCES.md](docs/DATA_SOURCES.md))
 
 ## Phase 1: Building-to-building navigator (MVP) 🚧
-- [ ] `tools/fetch_luh_data.py`: crawl buildings and rooms from LUH Rauminfo
+- [x] `tools/fetch_luh_data.py`: crawl buildings and rooms from LUH Rauminfo
       (CAFM) and get coordinates from the Standortfinder
-- [ ] `tools/build_walk_graph.py`: extract the pedestrian network and building
+- [x] `tools/build_walk_graph.py`: extract the pedestrian network and building
       entrances from OpenStreetMap (Overpass API)
-- [ ] Static mobile web app (`web/`)
-  - [ ] Search "From" / "To" by room code, building number or building name
-  - [ ] Parse room code → building, floor, wing
-  - [ ] Outdoor walking route between the best entrance pair (Dijkstra, on device)
-  - [ ] Map with route, distance and walking time
-  - [ ] Step-by-step text guidance, including floor and wing hints
-  - [ ] Link to and preview of the official CAFM floor plan of the target room
-  - [ ] German / English
-  - [ ] Installable PWA with offline cache
-- [ ] Deploy to GitHub Pages
+- [x] Static mobile web app (`web/`)
+  - [x] Search "From" / "To" by room code, building number or building name
+  - [x] Parse room code → building, floor, wing
+  - [x] Outdoor walking route between the best entrance pair (Dijkstra, on device)
+  - [x] Map with route, distance and walking time
+  - [x] Step-by-step text guidance, including floor and wing hints
+  - [x] Link to and preview of the official CAFM floor plan of the target room
+  - [x] German / English
+  - [x] Installable PWA with offline cache
+- [x] Deploy to GitHub Pages (workflow in `.github/workflows/pages.yml`)
 - [ ] Field test on campus Welfengarten with real students; collect feedback
 
 ## Phase 2: Better data & indoor routing for pilot buildings

@@ -26,6 +26,9 @@ another across the campus:
    floor plan.
 4. Later: door-to-door indoor routing, and QR codes for "You are here".
 
+🚀 **Try it:** <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>
+(example: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107))
+
 ➡ Full idea: **[docs/CONCEPT.md](docs/CONCEPT.md)** · Plan: **[ROADMAP.md](ROADMAP.md)** ·
 Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 
@@ -55,7 +58,7 @@ sensors and no IMU.*
 docs/    concept, architecture, data sources
 tools/   Python scripts that build the data (LUH rooms, OSM walk graph)
 web/     the static mobile web app (served by GitHub Pages)
-data/    raw cached downloads (not committed)
+data/    raw cached downloads (not committed) and manual entrance overrides
 ```
 
 ## Run locally

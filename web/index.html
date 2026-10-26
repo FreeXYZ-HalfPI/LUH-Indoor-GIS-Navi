@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LUH Campus Navigator</title>
+  <meta name="description" content="Walk from room to room across Leibniz Universität Hannover. No GPS, no tracking.">
+  <meta name="theme-color" content="#003366">
+  <meta name="referrer" content="no-referrer">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="loading">
+  <header>
+    <div>
+      <h1 data-t="title">LUH Campus Navigator</h1>
+      <p data-t="subtitle"></p>
+    </div>
+    <button id="lang" type="button" class="chip">DE</button>
+  </header>
+
+  <main>
+    <section id="planner" aria-label="Route">
+      <div class="field">
+        <label for="from-input"><span class="dot from">A</span> <span data-t="from">From</span></label>
+        <input id="from-input" type="search" autocomplete="off" spellcheck="false" enterkeyhint="next"
+               role="combobox" aria-controls="from-list" aria-expanded="false" aria-autocomplete="list">
+        <ul id="from-list" class="suggest" role="listbox" hidden></ul>
+      </div>
+      <button id="swap" type="button" class="swap">⇅</button>
+      <div class="field">
+        <label for="to-input"><span class="dot to">B</span> <span data-t="to">To</span></label>
+        <input id="to-input" type="search" autocomplete="off" spellcheck="false" enterkeyhint="go"
+               role="combobox" aria-controls="to-list" aria-expanded="false" aria-autocomplete="list">
+        <ul id="to-list" class="suggest" role="listbox" hidden></ul>
+      </div>
+      <div class="options">
+        <label><input id="avoid-steps" type="checkbox"> <span data-t="avoidSteps">Avoid steps</span></label>
+        <button id="share" type="button" class="chip" data-t="share" hidden>Share</button>
+      </div>
+    </section>
+
+    <div id="map" role="region" aria-label="Map"></div>
+
+    <section id="result" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <p data-t="privacy"></p>
+    <p data-t-html="aboutText"></p>
+  </footer>
+  <div id="toast" role="status" hidden></div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
