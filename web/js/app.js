@@ -203,6 +203,8 @@ function initMap(buildings) {
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView([52.3826, 9.7175], 15);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
+    // the OSM tile policy requires a Referer; send only our origin (the page default is no-referrer)
+    referrerPolicy: "strict-origin-when-cross-origin",
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
