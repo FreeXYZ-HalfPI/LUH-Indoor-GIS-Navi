@@ -1,1 +1,49 @@
+# Roadmap
 
+See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
+
+## Phase 0: Concept & repository ✅
+- [x] Problem statement, principles, architecture ([docs/CONCEPT.md](docs/CONCEPT.md))
+- [x] GPLv3 license, contribution guide, roadmap
+- [x] Document the data sources ([docs/DATA_SOURCES.md](docs/DATA_SOURCES.md))
+
+## Phase 1: Building-to-building navigator (MVP) 🚧
+- [ ] `tools/fetch_luh_data.py`: crawl buildings and rooms from LUH Rauminfo
+      (CAFM) and get coordinates from the Standortfinder
+- [ ] `tools/build_walk_graph.py`: extract the pedestrian network and building
+      entrances from OpenStreetMap (Overpass API)
+- [ ] Static mobile web app (`web/`)
+  - [ ] Search "From" / "To" by room code, building number or building name
+  - [ ] Parse room code → building, floor, wing
+  - [ ] Outdoor walking route between the best entrance pair (Dijkstra, on device)
+  - [ ] Map with route, distance and walking time
+  - [ ] Step-by-step text guidance, including floor and wing hints
+  - [ ] Link to and preview of the official CAFM floor plan of the target room
+  - [ ] German / English
+  - [ ] Installable PWA with offline cache
+- [ ] Deploy to GitHub Pages
+- [ ] Field test on campus Welfengarten with real students; collect feedback
+
+## Phase 2: Better data & indoor routing for pilot buildings
+- [ ] Verify and add missing building entrances (OSM edits + local overrides)
+- [ ] Indoor graph format (GeoJSON: nodes = doors/stairs/elevators/junctions,
+      edges = corridors), one file per building and floor
+- [ ] Digitise the pilot building **1101 Hauptgebäude** from the floor plans
+- [ ] Indoor + outdoor routing combined into one route
+- [ ] Floor plan viewer with the route drawn on top
+
+## Phase 3: Positioning without GPS
+- [ ] QR codes / short codes at entrances, stairs and junctions ("You are here")
+- [ ] Printable QR sign generator for the university
+- [ ] Deep links: `…/#from=1101.000.E028&to=3403.001.123` (shareable, e.g. in StudIP)
+
+## Phase 4: Accessibility & polish
+- [ ] Step-free routing (elevators, ramps) using LUH barrier-free data
+- [ ] Screen-reader friendly route text, high-contrast mode
+- [ ] Links to the public-transport planner for distant campuses (Garbsen, Herrenhausen)
+- [ ] Automated data refresh (scheduled GitHub Action)
+
+## Phase 5: Ideas
+- [ ] Orient the site plan to the user's view without sensors (pick a visible landmark)
+- [ ] Digital-twin / IFC integration if LUH provides BIM data
+- [ ] Timetable integration: "Navigate to my next lecture"

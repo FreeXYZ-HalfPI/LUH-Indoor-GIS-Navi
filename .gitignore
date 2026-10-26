@@ -1,1 +1,5 @@
-
+# raw crawler caches
+data/raw/
+__pycache__/
+*.pyc
+.DS_Store
