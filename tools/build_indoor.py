@@ -219,7 +219,14 @@ def build(bid, debug=False):
     set_frame(src)
     geo = Georef(src["georef"])
     px_per_m = src["georef"]["scale"]
-    rooms_all = json.loads((ROOT / "web" / "data" / "rooms.json").read_text(encoding="utf-8")).get(bid, [])
+    crawled = ROOT / "data" / "indoor" / bid / "rooms.json"     # all rooms, from tools/crawl_rooms.py
+    if crawled.exists():
+        crawl = json.loads(crawled.read_text(encoding="utf-8"))["rooms"]
+        rooms_all = [r["id"] for r in crawl]
+        listed = sorted(r["id"] for r in crawl if r["listed"])
+    else:
+        rooms_all = json.loads((ROOT / "web" / "data" / "rooms.json").read_text(encoding="utf-8")).get(bid, [])
+        listed = rooms_all
     walk = json.loads((ROOT / "web" / "data" / "walkgraph.json").read_text(encoding="utf-8"))
 
     foot = Image.new("L", (W, H), 0)
@@ -387,10 +394,12 @@ def build(bid, debug=False):
         "attribution": "Derived from LUH Rauminfo floor plans © Leibniz Universität Hannover; outline © OpenStreetMap contributors (ODbL)",
         "georef": geo.affine(),
         "px_per_m": px_per_m,
+        "plan_size": [W, H],       # CAFM plan image size (some buildings are portrait)
         "levels": levels,
         "nodes": nodes,
         "edges": edges,
         "rooms": {rid: index[k] for rid, k in sorted(room_nodes.items()) if k in index},
+        "listed": listed,          # rooms with a public Rauminfo page
         "entrances": [{"node": index[k], "lat": lat, "lon": lon} for k, lat, lon in entrances if k in index],
     }
     dest = ROOT / "web" / "data" / "indoor" / f"{bid}.json"

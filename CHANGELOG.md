@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- `tools/crawl_rooms.py`: finds **all** rooms of a building, not only the
+  public ones. Rauminfo lists few rooms, but every floor plan exists for every
+  room; the crawler guesses room numbers per floor and wing, keeps those with
+  a plan, and takes each room's position and outline from its red highlight.
+  Output `data/indoor/<b>/rooms.json` (+ GeoJSON) is used by the app and by
+  `build_indoor.py`. The "Room info" link is shown only for public rooms.
+- 3101 Schneiderberg-Gebäude: 261 rooms found (9 public), 232 routable
 - Indoor routing for two more example buildings: 3101 Schneiderberg-Gebäude
   and 3110 Hauptmensa (3 example buildings in total)
 - `build_indoor.py fit --coarse`: automatic georeferencing by matching the
@@ -10,6 +17,8 @@
   hand-placed `room_points`
 - `data/buildings_override.json` for names missing in the LUH data
 ### Fixed
+- Floor plans of portrait buildings (3101, 3110) were squeezed, so the route
+  was drawn beside the building; the plan size now comes from the indoor data
 - Map tiles were blocked by OpenStreetMap (403) because no Referer was sent
 ### Added (earlier)
 - Phase 2 pilot: indoor routing for building 1101 (Hauptgebäude), door to

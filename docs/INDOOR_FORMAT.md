@@ -40,6 +40,10 @@ little manual work as possible.
 
 ## Adding a building
 
+0. `python3 tools/crawl_rooms.py <id>` finds all rooms of the building (not
+   only the public ones) and writes `data/indoor/<id>/rooms.json`; the builder
+   then routes to all of them. Look at `data/raw/rooms_<id>_<floor>.png`:
+   rooms left white were missed, add them with `--extra`.
 1. Create `data/indoor/<id>/source.json` with `building`, `osm_outline` (one
    OSM id or a list, if the building is mapped as several ways) and
    `plan_room` (any listed room per floor; its CAFM image is that floor's plan).

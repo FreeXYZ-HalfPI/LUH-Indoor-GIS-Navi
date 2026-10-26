@@ -35,6 +35,8 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [x] Floor plan viewer with the route drawn on top
 - [x] Two more example buildings: **3101 Schneiderberg-Gebäude** (3 floors,
       9/9 rooms) and **3110 Hauptmensa** (4 floors, 8/8 rooms)
+- [ ] Crawl all rooms of the 3 example buildings (`tools/crawl_rooms.py`)
+      and route to every one of them, not only the public ones
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
 - Scope for now: these **3 example buildings**. More buildings come later.
 

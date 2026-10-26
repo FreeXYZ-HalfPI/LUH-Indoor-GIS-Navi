@@ -94,7 +94,7 @@ export class WalkGraph {
     }
     const rooms = {};
     for (const [id, n] of Object.entries(data.rooms)) rooms[id] = n + off;
-    this.indoor[data.building] = { rooms, levels: data.levels, approximate: data.approximate };
+    this.indoor[data.building] = { rooms, levels: data.levels, size: data.plan_size, approximate: data.approximate, listed: data.listed && new Set(data.listed) };
   }
 
   entrances(buildingId) {

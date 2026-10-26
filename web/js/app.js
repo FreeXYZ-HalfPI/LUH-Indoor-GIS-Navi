@@ -383,6 +383,7 @@ function routePlans(legs, from, to) {
       room: pick ? pick.room.id : lv.room,
       grey: !pick, // another room's plan: hide its red highlight
       title: t.planTitle(t.floor(g.level), g.building),
+      size: graph.indoor[g.building].size,
       lines: g.lines.map((l) => l.map(toImage)),
     };
   });
@@ -392,7 +393,8 @@ function floorplanBlock(plans, to) {
   const figs = plans
     .map((p) => {
       // zoom to the part of the plan the route uses
-      let vb = [0, 0, 1600, 1200];
+      const [W, H] = p.size || [1600, 1200];
+      let vb = [0, 0, W, H];
       if (p.lines) {
         const pts = p.lines.flat();
         const xs = pts.map((q) => q[0]);
@@ -400,8 +402,8 @@ function floorplanBlock(plans, to) {
         let [x0, x1, y0, y1] = [Math.min(...xs) - 90, Math.max(...xs) + 90, Math.min(...ys) - 90, Math.max(...ys) + 90];
         const w = Math.max(x1 - x0, 480);
         const h = Math.max(y1 - y0, w * 0.6);
-        x0 = Math.max(0, Math.min(1600 - w, (x0 + x1 - w) / 2));
-        y0 = Math.max(0, Math.min(1200 - h, (y0 + y1 - h) / 2));
+        x0 = Math.max(0, Math.min(W - w, (x0 + x1 - w) / 2));
+        y0 = Math.max(0, Math.min(H - h, (y0 + y1 - h) / 2));
         vb = [x0, y0, w, h].map((v) => Math.round(v));
       }
       const lines = (p.lines || [])
@@ -415,12 +417,14 @@ function floorplanBlock(plans, to) {
       const src = `${CAFM}/images/room/floorplan/${encodeURIComponent(p.room)}`;
       return `<figure hidden>${p.title ? `<figcaption>${p.title}</figcaption>` : ""}
         <svg class="plan-svg" viewBox="${vb.join(" ")}" role="img" aria-label="${esc(p.title || p.room)}">
-          <rect x="0" y="0" width="1600" height="1200" fill="#fff"/>
-          <image data-src="${src}" width="1600" height="1200" class="${p.grey ? "grey" : ""}"/>${lines}
+          <rect x="0" y="0" width="${W}" height="${H}" fill="#fff"/>
+          <image data-src="${src}" width="${W}" height="${H}" class="${p.grey ? "grey" : ""}"/>${lines}
         </svg></figure>`;
     })
     .join("");
-  const info = to.type === "room" ? `<p><a href="${CAFM}/${getLang()}/room/${encodeURIComponent(to.room.id)}" target="_blank" rel="noopener">${t.openInfo} ${to.room.id} ↗</a></p>` : "";
+  const listed = to.type === "room" && graph.indoor[to.building.id]?.listed;
+  const hasPage = to.type === "room" && (!listed || listed.has(to.room.id)); // other rooms have no public Rauminfo page
+  const info = hasPage ? `<p><a href="${CAFM}/${getLang()}/room/${encodeURIComponent(to.room.id)}" target="_blank" rel="noopener">${t.openInfo} ${to.room.id} ↗</a></p>` : "";
   return `<section class="plan">
     <h3>${t.floorplan}</h3>
     <button id="show-plan" type="button">${plans.some((p) => p.lines) ? t.showPlans : t.showPlan}</button> <small>${t.planNote}</small>

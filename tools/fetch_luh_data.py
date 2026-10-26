@@ -100,6 +100,9 @@ def main():
 
     OUT.mkdir(parents=True, exist_ok=True)
     known = {b["id"] for b in buildings}
+    for f in (ROOT / "data" / "indoor").glob("*/rooms.json"):   # buildings crawled with crawl_rooms.py
+        crawl = json.loads(f.read_text(encoding="utf-8"))
+        rooms[crawl["building"]] = sorted(set(rooms.get(crawl["building"], [])) | {r["id"] for r in crawl["rooms"]})
     rooms = {k: v for k, v in rooms.items() if k in known and v}
     (OUT / "buildings.json").write_text(json.dumps(buildings, ensure_ascii=False, indent=1), encoding="utf-8")
     (OUT / "rooms.json").write_text(json.dumps(rooms, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
