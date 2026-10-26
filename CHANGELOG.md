@@ -11,6 +11,10 @@
 - 3101 Schneiderberg-Gebäude: 261 rooms found (9 public), 232 routable
 - 3110 Hauptmensa: 234 rooms found (8 public), 217 routable
 - 1101 Hauptgebäude: 1227 rooms found (57 public), 1035 routable
+- Corridors traced for the 1101 2nd-floor mezzanine (north corridor, middle
+  wing, west wing, Lichthof gallery) and the attic floors 3101/003 and
+  3110/004, with their stairs: 1101 now routes to 1082 rooms, 3101 to 240,
+  3110 to 222
 - Indoor routing for two more example buildings: 3101 Schneiderberg-Gebäude
   and 3110 Hauptmensa (3 example buildings in total)
 - `build_indoor.py fit --coarse`: automatic georeferencing by matching the

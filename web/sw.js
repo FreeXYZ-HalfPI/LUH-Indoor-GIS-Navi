@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Offline support: app shell + data are cached; map tiles are cached as they are viewed.
-const VERSION = "v6";
+const VERSION = "v7";
 const SHELL = `shell-${VERSION}`;
 const TILES = "tiles-v1";
 const MAX_TILES = 600;

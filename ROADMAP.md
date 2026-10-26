@@ -37,8 +37,10 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
       9/9 rooms) and **3110 Hauptmensa** (4 floors, 8/8 rooms)
 - [x] Crawl all rooms of the 3 example buildings (`tools/crawl_rooms.py`):
       1101 1227 rooms (1035 routable), 3101 261 (232), 3110 234 (217)
-- [ ] Trace corridors for the parts still missing them (e.g. 1101 floor 002
-      B/C wing, attic floors 3101/003 and 3110/004) so every room is routable
+- [x] Trace corridors for the 1101 2nd-floor mezzanine and the attic floors
+      3101/003 and 3110/004: 1101 1082 routable, 3101 240, 3110 222
+- [ ] Remaining unrouted rooms: no corridor visible on the plan (e.g. 1101
+      C201–C209 strip), drawn outside the outline, or no red highlight
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
 - Scope for now: these **3 example buildings**. More buildings come later.
 
