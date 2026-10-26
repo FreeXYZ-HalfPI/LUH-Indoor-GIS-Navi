@@ -222,6 +222,15 @@ def build(refresh):
             best = max(scored, key=lambda t: t[0], default=None)
             hit = (best[1], best[2]) if best else None
             ents = ring_entrances(hit[1]) if hit else []
+            # a digitised building may consist of several OSM outlines (data/indoor/<id>/source.json)
+            indoor = ROOT / "data" / "indoor" / b["id"] / "source.json"
+            if indoor.exists():
+                ids = json.loads(indoor.read_text(encoding="utf-8")).get("osm_outline", [])
+                ids = [ids] if isinstance(ids, str) else ids
+                seen = set()
+                ents = [e for oid, r in rings if oid in ids for e in ring_entrances(r)
+                        if not (e["osm"] in seen or seen.add(e["osm"]))]
+                hit = (",".join(ids), None)
             for o in overrides.get(b["id"], []):
                 ents.append({"osm": None, "lat": o["lat"], "lon": o["lon"], "kind": o.get("kind", "yes"), "name": o.get("name", "")})
             meta[b["id"]] = {"cluster": ci, "osm": hit[0] if hit else None, "entrances": ents, "estimated": not ents}

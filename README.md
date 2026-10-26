@@ -24,13 +24,15 @@ another across the campus:
    building entrances, using OpenStreetMap footpaths.
 3. It tells you the floor and wing of the target room and shows the official
    floor plan.
-4. Inside the **Hauptgebäude (1101)** it already routes door to door: corridors,
-   stairs and lifts, drawn on the floor plans (pilot, approximate). More
-   buildings and QR codes for "You are here" will follow.
+4. In **3 example buildings** it already routes door to door: corridors,
+   stairs and lifts, drawn on the floor plans (pilot, approximate):
+   **1101 Hauptgebäude**, **3101 Schneiderberg-Gebäude** and **3110 Hauptmensa**.
+   More buildings and QR codes for "You are here" will follow.
 
 🚀 **Try it:** <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>
 (examples: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107),
-[inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407))
+[inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407),
+[lecture hall A104 → Hauptmensa 205A](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=3101.001.A104&to=3110.002.205A))
 
 ➡ Full idea: **[docs/CONCEPT.md](docs/CONCEPT.md)** · Plan: **[ROADMAP.md](ROADMAP.md)** ·
 Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**

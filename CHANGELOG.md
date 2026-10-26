@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 ### Added
+- Indoor routing for two more example buildings: 3101 Schneiderberg-Gebäude
+  and 3110 Hauptmensa (3 example buildings in total)
+- `build_indoor.py fit --coarse`: automatic georeferencing by matching the
+  plan's exterior boundary to the OSM outline (rotation, scale, shift);
+  coloured wall lines, any image size, several OSM outlines per building,
+  hand-placed `room_points`
+- `data/buildings_override.json` for names missing in the LUH data
+### Fixed
+- Map tiles were blocked by OpenStreetMap (403) because no Referer was sent
+### Added (earlier)
 - Phase 2 pilot: indoor routing for building 1101 (Hauptgebäude), door to
   door across 5 floors, with stairs/lifts and "avoid steps" using lifts
 - `tools/build_indoor.py`: georeferences CAFM floor plans to the OSM outline,

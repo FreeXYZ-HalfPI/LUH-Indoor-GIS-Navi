@@ -33,8 +33,10 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
       public rooms, 15 entrances, 12 staircases, 3 lifts; approximate)
 - [x] Indoor + outdoor routing combined into one route (door to door)
 - [x] Floor plan viewer with the route drawn on top
-- [ ] Walk the 1101 routes on site and correct `data/indoor/1101/source.json`
-- [ ] Next buildings: 3703 TI-Gebäude, 3403 WMR, 1102 Bibliothek
+- [x] Two more example buildings: **3101 Schneiderberg-Gebäude** (3 floors,
+      9/9 rooms) and **3110 Hauptmensa** (4 floors, 8/8 rooms)
+- [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
+- Scope for now: these **3 example buildings**. More buildings come later.
 
 ## Phase 3: Positioning without GPS
 - [ ] QR codes / short codes at entrances, stairs and junctions ("You are here")

@@ -92,6 +92,12 @@ def main():
         })
         print(f"  [{i}] {bid} {name}: {len(rooms[bid])} rooms", file=sys.stderr)
 
+    override = ROOT / "data" / "buildings_override.json"   # e.g. names missing in the LUH data
+    if override.exists():
+        fixes = json.loads(override.read_text(encoding="utf-8"))
+        for b in buildings:
+            b.update(fixes.get(b["id"], {}))
+
     OUT.mkdir(parents=True, exist_ok=True)
     known = {b["id"] for b in buildings}
     rooms = {k: v for k, v in rooms.items() if k in known and v}

@@ -31,17 +31,38 @@ little manual work as possible.
 ## Coordinate frames
 
 - **Plan frame**: pixel coordinates `(x, y)` of the building's ground-floor
-  plan image (1600 × 1200 for LUH). All floors are registered into this frame.
+  plan image (1600 × 1200 or 1200 × 1600 for LUH). Walls may be drawn in black
+  or in colour (3101 uses green). All floors are registered into this frame.
 - **Image frame of floor *f***: the CAFM image of that floor. Its relation to
   the plan frame is `plan = s · image + (dx, dy)` (`levels[f].s/dx/dy`).
 - **WGS84**: `lat = lat[0] + lat[1]·x + lat[2]·y`, same for `lon` (`georef`).
   The affine is fitted against the OpenStreetMap building outline.
+
+## Adding a building
+
+1. Create `data/indoor/<id>/source.json` with `building`, `osm_outline` (one
+   OSM id or a list, if the building is mapped as several ways) and
+   `plan_room` (any listed room per floor; its CAFM image is that floor's plan).
+2. `python3 tools/build_indoor.py fit <id> --coarse` searches rotation, scale
+   and shift by matching the plan's **exterior boundary** to the OSM outline,
+   then registers the upper floors. Paste the printed `georef` and `levels`
+   into `source.json`. Check the result visually; a wrong OSM outline gives a
+   wrong fit (for 3101 the long neighbouring institute had to be left out).
+3. Trace rough `corridors` and `connectors` (stairs, lifts) per floor.
+4. `python3 tools/build_indoor.py build <id> --debug`, look at the overlay
+   PNGs in `data/raw/`, adjust, repeat. Then re-run `tools/build_walk_graph.py`
+   so the building's entrances come from all its outlines.
+
+Optional keys: `room_points` (place a room node by hand, e.g. near the door of
+a lecture hall full of seats), `force_rooms` (keep a room outside the OSM
+outline), `skip_rooms` (rooms drawn as insets).
 
 ## `source.json` (hand-edited)
 
 ```jsonc
 {
   "building": "1101",
+  "osm_outline": "relation/2743600",                                 // or a list of ways
   "plan_room": { "000": "1101.000.E028", "001": "1101.001.F102" },  // any room per floor → CAFM image of that floor
   "georef": { "lat0": 52.3826, "lon0": 9.7172, "theta": 0.0895, "scale": 6.152, "tx": 702, "ty": 720 },
   "levels": { "000": { "s": 1, "dx": 0, "dy": 0 }, "001": { "s": 1.005, "dx": -2, "dy": 65 } },

@@ -6,6 +6,7 @@ and a small hand-made source file (data/indoor/<building>/source.json).
   build_indoor.py fit 1101     fit georeference (plan pixels ↔ OSM outline) and
                                register the upper floors onto the ground floor;
                                prints values to paste into source.json
+                               (--coarse, or no "georef" yet: global search first)
   build_indoor.py build 1101   write web/data/indoor/1101.json and
                                data/indoor/1101/1101.geojson
                                (--debug also writes overlay PNGs to data/raw/)
@@ -31,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 CAFM = "https://info.cafm.uni-hannover.de/images/room/floorplan/"
 USER_AGENT = "LUH-Indoor-GIS-Navi/0.1 (+https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi)"
-W, H = 1600, 1200
+W, H = 1600, 1200          # plan frame size, set per building from its ground-floor image
 
 STAIRS, ELEVATOR, VERTICAL = 1, 4, 8
 STAIRS_M_PER_LEVEL = 10    # routing cost of one flight of stairs, in metres of walking
@@ -57,6 +58,18 @@ def fetch_plan(room):
         path.write_bytes(data)
         time.sleep(0.5)
     return Image.open(path).convert("RGB")
+
+
+def set_frame(src):
+    global W, H
+    W, H = fetch_plan(src["plan_room"]["000"]).size
+
+
+def ink(img):
+    """Wall pixels: dark or coloured (LUH plans use black or green), but not the red room highlight."""
+    a = np.asarray(img).astype(int)
+    red = (a[:, :, 0] > 200) & (a[:, :, 1] < 60) & (a[:, :, 2] < 60)
+    return (a.sum(axis=2) < 384) & ~red
 
 
 def to_plan_frame(img, reg):
@@ -89,7 +102,11 @@ def dilate(m, r=1):
 
 
 def osm_outline(osm_id):
-    """Outer rings of the building's OSM outline from the cached Overpass data."""
+    """Outer rings of the building's OSM outline (one id or a list) from the cached Overpass data."""
+    if isinstance(osm_id, list):
+        return [r for i in osm_id for r in osm_outline(i)]
+    if not osm_id:
+        return []
     typ, oid = osm_id.split("/")
     for f in sorted(glob.glob(str(RAW / "osm_cluster_*.json"))):
         for el in json.loads(Path(f).read_text(encoding="utf-8"))["elements"]:
@@ -199,6 +216,7 @@ def rdp(pts, eps=1.5):
 
 def build(bid, debug=False):
     src = json.loads((ROOT / "data" / "indoor" / bid / "source.json").read_text(encoding="utf-8"))
+    set_frame(src)
     geo = Georef(src["georef"])
     px_per_m = src["georef"]["scale"]
     rooms_all = json.loads((ROOT / "web" / "data" / "rooms.json").read_text(encoding="utf-8")).get(bid, [])
@@ -223,9 +241,7 @@ def build(bid, debug=False):
     for code, reg in src["levels"].items():
         img = to_plan_frame(fetch_plan(src["plan_room"][code]), reg)
         plans[code] = img
-        rgb = np.asarray(img)
-        black = (rgb < 128).all(axis=2)           # not the red room highlight
-        walls = dilate(erode(black, 1), 1)        # opening removes thin door swings, text, furniture lines
+        walls = dilate(erode(ink(img), 1), 1)     # opening removes thin door swings, text, furniture lines
         free = ~walls
         clear = np.zeros((H, W))
         m = free.copy()
@@ -287,16 +303,19 @@ def build(bid, debug=False):
         code = rid.split(".")[1]
         if code not in src["levels"] or rid in src.get("skip_rooms", {}):
             continue
-        a = np.asarray(fetch_plan(rid)).astype(int)
-        red = (a[:, :, 0] > 200) & (a[:, :, 1] < 60) & (a[:, :, 2] < 60)
-        ys, xs = np.nonzero(red)
-        if not len(xs):
-            warnings.append(f"{rid}: no red highlight")
-            continue
-        i = np.argmin((xs - xs.mean()) ** 2 + (ys - ys.mean()) ** 2)   # a red pixel near the centroid
-        reg = src["levels"][code]
-        x, y = xs[i] * reg["s"] + reg["dx"], ys[i] * reg["s"] + reg["dy"]
-        forced = rid in src.get("force_rooms", {})
+        if rid in src.get("room_points", {}):                # hand-placed, e.g. near the door of a big hall
+            x, y = src["room_points"][rid]
+        else:
+            a = np.asarray(fetch_plan(rid)).astype(int)
+            red = (a[:, :, 0] > 200) & (a[:, :, 1] < 60) & (a[:, :, 2] < 60)
+            ys, xs = np.nonzero(red)
+            if not len(xs):
+                warnings.append(f"{rid}: no red highlight")
+                continue
+            i = np.argmin((xs - xs.mean()) ** 2 + (ys - ys.mean()) ** 2)   # a red pixel near the centroid
+            reg = src["levels"][code]
+            x, y = xs[i] * reg["s"] + reg["dx"], ys[i] * reg["s"] + reg["dy"]
+        forced = rid in src.get("force_rooms", {}) or rid in src.get("room_points", {})
         if not forced and not (0 <= x < W and 0 <= y < H and inside[int(y), int(x)]):
             warnings.append(f"{rid}: highlight lies outside the building outline (inset drawing?), skipped")
             continue
@@ -433,15 +452,70 @@ def build(bid, debug=False):
 
 # ---------------------------------------------------------------- fit
 
-def fit(bid):
-    """Fit plan→OSM georeference (starting from source.json) and register upper floors by FFT correlation."""
+def exterior(base):
+    """Outer boundary of the building on a plan: close gaps, flood the outside, take its edge."""
+    closed = dilate(base, 6)
+    im = Image.fromarray(np.where(closed, 0, 255).astype(np.uint8))
+    padded = Image.new("L", (W + 2, H + 2), 255)
+    padded.paste(im, (1, 1))
+    ImageDraw.floodfill(padded, (0, 0), 128)
+    outside = np.asarray(padded)[1:-1, 1:-1] == 128
+    foot = erode(~outside, 6)              # undo the closing
+    return foot & ~erode(foot, 2)
+
+
+def coarse_georef(base, rings):
+    """Global search over rotation and scale (FFT correlation for the shift) at 1/4 resolution."""
+    allp = [p for r in rings for p in r]
+    lat0 = sum(p[0] for p in allp) / len(allp)
+    lon0 = sum(p[1] for p in allp) / len(allp)
+    k = math.cos(math.radians(lat0))
+    pts = []
+    for ring in rings:
+        for a, b in zip(ring, ring[1:]):
+            n = max(1, int(math.dist(a, b) * 111320))
+            pts += [(a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n) for i in range(n)]
+    E = np.array([(lon - lon0) * 111320 * k for lat, lon in pts])
+    N = np.array([(lat - lat0) * 111320 for lat, lon in pts])
+    f = 4
+    small = base[: H // f * f, : W // f * f].reshape(H // f, f, W // f, f).any(axis=(1, 3))
+    D = dilate(small, 1).astype(float)
+    FD = np.fft.rfft2(D)
+    hl, wl = D.shape
+    ys, xs = np.nonzero(base)
+    s0 = math.hypot(xs.max() - xs.min(), ys.max() - ys.min()) / math.hypot(E.max() - E.min(), N.max() - N.min())
+    best = None
+    for s in s0 * np.arange(0.6, 1.5, 0.03):
+        for deg in range(0, 360, 2):
+            th = math.radians(deg)
+            x = s * (E * math.cos(th) - N * math.sin(th)) / f + wl / 2
+            y = -s * (E * math.sin(th) + N * math.cos(th)) / f + hl / 2
+            R = np.zeros_like(D)
+            xi, yi = x.round().astype(int), y.round().astype(int)
+            ok = (xi >= 0) & (xi < wl) & (yi >= 0) & (yi < hl)
+            R[yi[ok], xi[ok]] = 1
+            c = np.fft.irfft2(FD * np.conj(np.fft.rfft2(R)), s=D.shape)
+            i = np.unravel_index(c.argmax(), c.shape)
+            v = c[i] / R.sum()
+            if best is None or v > best[0]:
+                dy, dx = (i[0] - hl if i[0] > hl // 2 else i[0]), (i[1] - wl if i[1] > wl // 2 else i[1])
+                best = (v, th, s, W / 2 + f * dx, H / 2 + f * dy)
+    print(f"  coarse fit: {math.degrees(best[1]):.0f}°, {best[2]:.2f} px/m, score {best[0]:.2f}", file=sys.stderr)
+    return {"lat0": round(lat0, 6), "lon0": round(lon0, 6), "theta": best[1], "scale": best[2], "tx": best[3], "ty": best[4]}
+
+
+def fit(bid, coarse=False):
+    """Fit plan→OSM georeference and register the upper floors onto the ground floor (FFT correlation)."""
     src = json.loads((ROOT / "data" / "indoor" / bid / "source.json").read_text(encoding="utf-8"))
-    g = dict(src["georef"])
-    base = np.asarray(fetch_plan(src["plan_room"]["000"]).convert("L")) < 128
+    set_frame(src)
+    base = ink(fetch_plan(src["plan_room"]["000"]))
+    rings = osm_outline(src["osm_outline"])
+    edge = exterior(base)                  # OSM maps exterior walls only
+    g = coarse_georef(edge, rings) if coarse or "georef" not in src else dict(src["georef"])
 
     geo = Georef(g)
     pts = []
-    for ring in osm_outline(src["osm_outline"]):
+    for ring in rings:
         for a, b in zip(ring, ring[1:]):
             n = max(1, int(math.dist(a, b) * 111320 / 0.5))
             pts += [((a[0] + (b[0] - a[0]) * i / n), (a[1] + (b[1] - a[1]) * i / n)) for i in range(n)]
@@ -457,7 +531,7 @@ def fit(bid):
 
     p = [g["theta"], g["scale"], g["tx"], g["ty"]]
     for r, steps in ((8, (0.01, 0.02, 4)), (3, (0.003, 0.005, 1)), (3, (0.001, 0.002, 0.5))):
-        D = dilate(base, r)
+        D = dilate(edge, r)
         best = score(p, D)
         improved = True
         while improved:
@@ -469,6 +543,7 @@ def fit(bid):
                     sc = score(c, D)
                     if sc > best:
                         best, p, improved = sc, c, True
+    print(f"  refined: {math.degrees(p[0]):.1f}°, {p[1]:.3f} px/m, {best:.0%} of the outline on walls", file=sys.stderr)
     print(json.dumps({"georef": {"lat0": g["lat0"], "lon0": g["lon0"], "theta": round(p[0], 7), "scale": round(p[1], 6),
                                  "tx": round(p[2], 3), "ty": round(p[3], 3)}}))
 
@@ -480,7 +555,7 @@ def fit(bid):
     for code, room in src["plan_room"].items():
         if code == "000":
             continue
-        m = (np.asarray(fetch_plan(room).convert("L")) < 128).astype(np.uint8) * 255
+        m = ink(fetch_plan(room)).astype(np.uint8) * 255
         best = None
         for s in np.arange(0.80, 1.25, 0.005):
             a = np.asarray(Image.fromarray(m).resize((int(W * s), int(H * s)), Image.BILINEAR)) / 255.0
@@ -501,5 +576,6 @@ if __name__ == "__main__":
     ap.add_argument("command", choices=["fit", "build"])
     ap.add_argument("building")
     ap.add_argument("--debug", action="store_true", help="write overlay PNGs to data/raw/")
+    ap.add_argument("--coarse", action="store_true", help="fit: search rotation/scale from scratch")
     a = ap.parse_args()
-    fit(a.building) if a.command == "fit" else build(a.building, a.debug)
+    fit(a.building, a.coarse) if a.command == "fit" else build(a.building, a.debug)
