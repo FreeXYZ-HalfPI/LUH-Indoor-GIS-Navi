@@ -9,6 +9,8 @@
   Output `data/indoor/<b>/rooms.json` (+ GeoJSON) is used by the app and by
   `build_indoor.py`. The "Room info" link is shown only for public rooms.
 - 3101 Schneiderberg-Gebäude: 261 rooms found (9 public), 232 routable
+- 3110 Hauptmensa: 234 rooms found (8 public), 217 routable
+- 1101 Hauptgebäude: 1227 rooms found (57 public), 1035 routable
 - Indoor routing for two more example buildings: 3101 Schneiderberg-Gebäude
   and 3110 Hauptmensa (3 example buildings in total)
 - `build_indoor.py fit --coarse`: automatic georeferencing by matching the
