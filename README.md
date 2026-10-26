@@ -24,10 +24,13 @@ another across the campus:
    building entrances, using OpenStreetMap footpaths.
 3. It tells you the floor and wing of the target room and shows the official
    floor plan.
-4. Later: door-to-door indoor routing, and QR codes for "You are here".
+4. Inside the **Hauptgebäude (1101)** it already routes door to door: corridors,
+   stairs and lifts, drawn on the floor plans (pilot, approximate). More
+   buildings and QR codes for "You are here" will follow.
 
 🚀 **Try it:** <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>
-(example: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107))
+(examples: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107),
+[inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407))
 
 ➡ Full idea: **[docs/CONCEPT.md](docs/CONCEPT.md)** · Plan: **[ROADMAP.md](ROADMAP.md)** ·
 Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
@@ -55,10 +58,10 @@ sensors and no IMU.*
 
 ## Repository layout
 ```
-docs/    concept, architecture, data sources
-tools/   Python scripts that build the data (LUH rooms, OSM walk graph)
+docs/    concept, architecture, data sources, indoor graph format
+tools/   Python scripts that build the data (LUH rooms, OSM walk graph, indoor graphs)
 web/     the static mobile web app (served by GitHub Pages)
-data/    raw cached downloads (not committed) and manual entrance overrides
+data/    indoor sources per building, entrance overrides, raw cache (not committed)
 ```
 
 ## Run locally

@@ -24,13 +24,17 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [x] Deploy to GitHub Pages (workflow in `.github/workflows/pages.yml`)
 - [ ] Field test on campus Welfengarten with real students; collect feedback
 
-## Phase 2: Better data & indoor routing for pilot buildings
+## Phase 2: Better data & indoor routing for pilot buildings 🚧
 - [ ] Verify and add missing building entrances (OSM edits + local overrides)
-- [ ] Indoor graph format (GeoJSON: nodes = doors/stairs/elevators/junctions,
-      edges = corridors), one file per building and floor
-- [ ] Digitise the pilot building **1101 Hauptgebäude** from the floor plans
-- [ ] Indoor + outdoor routing combined into one route
-- [ ] Floor plan viewer with the route drawn on top
+- [x] Indoor graph format ([docs/INDOOR_FORMAT.md](docs/INDOOR_FORMAT.md)): rough
+      corridors by hand, everything else derived from the CAFM floor plans
+      (`tools/build_indoor.py`)
+- [x] Digitise the pilot building **1101 Hauptgebäude** (5 floors, 48 of 57
+      public rooms, 15 entrances, 12 staircases, 3 lifts; approximate)
+- [x] Indoor + outdoor routing combined into one route (door to door)
+- [x] Floor plan viewer with the route drawn on top
+- [ ] Walk the 1101 routes on site and correct `data/indoor/1101/source.json`
+- [ ] Next buildings: 3703 TI-Gebäude, 3403 WMR, 1102 Bibliothek
 
 ## Phase 3: Positioning without GPS
 - [ ] QR codes / short codes at entrances, stairs and junctions ("You are here")

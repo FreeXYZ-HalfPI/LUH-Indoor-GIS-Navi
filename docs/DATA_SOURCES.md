@@ -6,6 +6,7 @@
 | Room list per building | `https://info.cafm.uni-hannover.de/de/building/<id>/rooms` | Crawled; IDs only | © LUH |
 | Room details & floor plan image | `https://info.cafm.uni-hannover.de/de/room/<room-id>`, image `…/images/room/floorplan/<room-id>` | **Linked**, never copied. The image loads directly from LUH servers | © LUH |
 | Building coordinates & address | Standortfinder search endpoint `https://standortfinder.uni-hannover.de/search` (POST `search=<building-id>`) | Fetched once per building | © LUH |
+| Indoor graph (corridors, room positions) | Derived from the CAFM floor plan images by `tools/build_indoor.py` | Only the derived graph is committed; the images stay on LUH servers and are cached locally in `data/raw/` | © LUH (derived), see Permission |
 | Footpaths, building outlines, entrances | OpenStreetMap via the Overpass API | `tools/build_walk_graph.py` builds `web/data/walkgraph.json` | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/) |
 | Map tiles | `tile.openstreetmap.org` | Background map in the app | © OpenStreetMap contributors. [Tile usage policy](https://operations.osmfoundation.org/policies/tiles/) |
 

@@ -16,9 +16,15 @@ let places, graph, map, routeLayer;
 
 async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
-  const [buildings, rooms, walk] = await Promise.all([load("buildings.json"), load("rooms.json"), load("walkgraph.json")]);
+  const [buildings, rooms, walk, indoorList] = await Promise.all([
+    load("buildings.json"),
+    load("rooms.json"),
+    load("walkgraph.json"),
+    load("indoor/index.json").catch(() => []),
+  ]);
   places = new Places(buildings, rooms);
   graph = new WalkGraph(walk);
+  for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) graph.addIndoor(indoor);
 
   initMap(buildings);
   initPicker("from");
@@ -252,72 +258,172 @@ function update(push = true) {
   const name = (b) => esc(`${b.id} ${b.name}`);
   const addr = (b) => esc([b.street, b.house_number].filter(Boolean).join(" "));
   const kind = (e) => (e.kind === "main" ? t.mainEntrance : "");
+  const dirOf = (b, p) => t.dirs[compass([b.lat, b.lon], p)];
+  const mins = (m) => Math.max(1, Math.round(m / WALK_M_PER_MIN));
 
   if (from.type === "room") steps.push(t.stepStartRoom(from.room.id, name(fb), t.floor(from.room.floor)));
   else steps.push(t.stepStartBuilding(name(fb)));
 
-  if (fb.id === tb.id) {
+  const sameCluster = graph.buildings[fb.id]?.cluster === graph.buildings[tb.id]?.cluster;
+  const r = sameCluster ? graph.route(from, to, { avoidSteps: state.avoidSteps }) : null;
+  const trivial = r && !r.legs.length; // same building, no indoor data: start entrance = goal entrance
+  let indoorLegs = [];
+
+  if (r && !trivial) {
+    summary = t.total(formatDistance(r.distance), mins(r.time));
+    if (!r.start.indoor && r.start.entrance && fb.id !== tb.id) {
+      if (from.type === "room" && from.room.floor !== 0) steps.push(t.stepGoDown(t.floor(from.room.floor)));
+      steps.push(t.stepExit(dirOf(fb, [r.start.entrance.lat, r.start.entrance.lon]), kind(r.start.entrance)));
+    }
+    r.legs.forEach((leg, i) => {
+      const next = r.legs[i + 1];
+      if (leg.kind === "indoor") {
+        const fl = t.floor(leg.level);
+        const d = formatDistance(leg.distance);
+        if (!next) steps.push(t.stepIndoorTo(fl, d, to.room.id));
+        else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type));
+        else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d));
+      } else if (leg.kind === "vertical") {
+        steps.push(t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
+      } else if (leg.kind === "door") {
+        const b = places.building(leg.building);
+        steps.push(leg.enter ? t.stepEnter(name(b), addr(b), dirOf(b, leg.at), "") : t.stepExit(dirOf(b, leg.at), ""));
+      } else {
+        steps.push(t.stepWalk(formatDistance(leg.distance), mins(leg.distance), leg.steps));
+      }
+    });
+    if (!r.end.indoor) {
+      if (r.end.entrance && r.legs.at(-1).kind === "outdoor")
+        steps.push(t.stepEnter(name(tb), addr(tb), dirOf(tb, [r.end.entrance.lat, r.end.entrance.lon]), kind(r.end.entrance)));
+      if (to.type === "room") {
+        steps.push(to.room.floor === 0 ? t.stepStayFloor(t.floor(0)) : t.stepFloor(t.floor(to.room.floor)));
+        steps.push(t.stepFindRoom(to.room.id, to.room.wing ? t.wing(to.room.wing) : ""));
+      }
+    }
+    indoorLegs = r.legs.filter((l) => l.kind === "indoor");
+    if (indoorLegs.length) notes.push(t.indoorApprox);
+    const estimated = [fb.id, tb.id].some((id) => graph.buildings[id]?.estimated && !(r.start.indoor && r.end.indoor));
+    if (estimated) notes.push(t.estimated);
+
+    const all = [];
+    for (const leg of r.legs) {
+      if (!leg.coords) continue;
+      all.push(...leg.coords);
+      if (leg.kind === "outdoor") {
+        L.polyline(leg.coords, { color: "#0066cc", weight: 6, opacity: 0.85 }).addTo(routeLayer);
+        L.polyline(leg.coords, { color: "#fff", weight: 2, opacity: 0.9, dashArray: "1 10" }).addTo(routeLayer);
+      } else {
+        L.polyline(leg.coords, { color: "#7b2cbf", weight: 5, opacity: 0.85, dashArray: "8 6" })
+          .bindTooltip(t.floor(leg.level))
+          .addTo(routeLayer);
+      }
+    }
+    L.marker(r.coords[0], { icon: pin("from", "A") }).addTo(routeLayer);
+    L.marker(r.coords.at(-1), { icon: pin("to", "B") }).addTo(routeLayer);
+    map.fitBounds(L.latLngBounds(all.length ? all : r.coords), { padding: [30, 30], maxZoom: 19 });
+  } else if (fb.id === tb.id) {
     notes.push(t.sameBuilding(name(tb)));
     L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
     map.setView([tb.lat, tb.lon], 18);
+    if (to.type === "room") {
+      const startFloor = from.type === "room" ? from.room.floor : 0;
+      steps.push(to.room.floor === startFloor ? t.stepStayFloor(t.floor(to.room.floor)) : t.stepFloor(t.floor(to.room.floor)));
+      steps.push(t.stepFindRoom(to.room.id, to.room.wing ? t.wing(to.room.wing) : ""));
+    }
   } else {
     if (from.type === "room" && from.room.floor !== 0) steps.push(t.stepGoDown(t.floor(from.room.floor)));
-    const r = graph.route(fb.id, tb.id, { avoidSteps: state.avoidSteps });
-    const sameCluster = graph.buildings[fb.id]?.cluster === graph.buildings[tb.id]?.cluster;
-
-    if (r && sameCluster) {
-      const mins = Math.max(1, Math.round(r.distance / WALK_M_PER_MIN));
-      summary = t.total(formatDistance(r.distance), mins);
-      steps.push(t.stepExit(t.dirs[compass([fb.lat, fb.lon], [r.fromEntrance.lat, r.fromEntrance.lon])], kind(r.fromEntrance)));
-      steps.push(t.stepWalk(formatDistance(r.distance), mins, r.steps));
-      steps.push(t.stepEnter(name(tb), addr(tb), t.dirs[compass([tb.lat, tb.lon], [r.toEntrance.lat, r.toEntrance.lon])], kind(r.toEntrance)));
-      if (graph.buildings[fb.id]?.estimated || graph.buildings[tb.id]?.estimated) notes.push(t.estimated);
-
-      const line = L.polyline(r.coords, { color: "#0066cc", weight: 6, opacity: 0.85 }).addTo(routeLayer);
-      L.polyline(r.coords, { color: "#fff", weight: 2, opacity: 0.9, dashArray: "1 10" }).addTo(routeLayer);
-      L.marker(r.coords[0], { icon: pin("from", "A") }).addTo(routeLayer);
-      L.marker(r.coords.at(-1), { icon: pin("to", "B") }).addTo(routeLayer);
-      map.fitBounds(line.getBounds(), { padding: [30, 30] });
-    } else {
-      const km = (haversine([fb.lat, fb.lon], [tb.lat, tb.lon]) / 1000).toFixed(1);
-      notes.push(sameCluster ? t.noRoute : `${t.farApart(km)} <a href="https://www.gvh.de/" target="_blank" rel="noopener">gvh.de</a>`);
-      steps.push(t.stepGoTo(name(tb), addr(tb)));
-      const line = L.polyline([[fb.lat, fb.lon], [tb.lat, tb.lon]], { color: "#888", weight: 3, dashArray: "6 8" }).addTo(routeLayer);
-      L.marker([fb.lat, fb.lon], { icon: pin("from", "A") }).addTo(routeLayer);
-      L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
-      map.fitBounds(line.getBounds(), { padding: [30, 30] });
+    const km = (haversine([fb.lat, fb.lon], [tb.lat, tb.lon]) / 1000).toFixed(1);
+    notes.push(sameCluster ? t.noRoute : `${t.farApart(km)} <a href="https://www.gvh.de/" target="_blank" rel="noopener">gvh.de</a>`);
+    steps.push(t.stepGoTo(name(tb), addr(tb)));
+    if (to.type === "room") {
+      steps.push(t.stepFloor(t.floor(to.room.floor)));
+      steps.push(t.stepFindRoom(to.room.id, to.room.wing ? t.wing(to.room.wing) : ""));
     }
-  }
-
-  if (to.type === "room") {
-    const startFloor = fb.id === tb.id && from.type === "room" ? from.room.floor : 0;
-    steps.push(to.room.floor === startFloor ? t.stepStayFloor(t.floor(to.room.floor)) : t.stepFloor(t.floor(to.room.floor)));
-    steps.push(t.stepFindRoom(to.room.id, to.room.wing ? t.wing(to.room.wing) : ""));
+    const line = L.polyline([[fb.lat, fb.lon], [tb.lat, tb.lon]], { color: "#888", weight: 3, dashArray: "6 8" }).addTo(routeLayer);
+    L.marker([fb.lat, fb.lon], { icon: pin("from", "A") }).addTo(routeLayer);
+    L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
+    map.fitBounds(line.getBounds(), { padding: [30, 30] });
   }
   steps.push(t.stepArrive);
 
+  const plans = indoorLegs.length ? routePlans(indoorLegs, from, to) : [];
+  if (to.type === "room" && !r?.end.indoor) plans.push({ room: to.room.id, title: plans.length ? `${t.floor(to.room.floor)} · ${t.building} ${tb.id}` : "" });
   out.innerHTML = `
     ${summary ? `<p class="summary">${summary}</p>` : ""}
     ${notes.map((n) => `<p class="note">${n}</p>`).join("")}
     <ol class="steps">${steps.map((s) => `<li>${s}</li>`).join("")}</ol>
-    ${to.type === "room" ? floorplanBlock(to.room.id) : ""}`;
+    ${plans.length ? floorplanBlock(plans, to) : ""}`;
   const btn = out.querySelector("#show-plan");
   if (btn)
     btn.addEventListener("click", () => {
-      const img = out.querySelector("#plan-img");
-      img.src = `${CAFM}/images/room/floorplan/${encodeURIComponent(to.room.id)}`;
-      img.hidden = false;
+      out.querySelectorAll(".plan image[data-src]").forEach((img) => {
+        img.addEventListener("error", () => (img.closest("figure").hidden = true));
+        img.setAttribute("href", img.dataset.src);
+        img.closest("figure").hidden = false;
+      });
       btn.remove();
     });
 }
 
-function floorplanBlock(id) {
-  const info = `${CAFM}/${getLang()}/room/${encodeURIComponent(id)}`;
+/** One floor plan per building floor the route passes indoors, with the route drawn on top. */
+function routePlans(legs, from, to) {
+  const groups = new Map();
+  for (const leg of legs) {
+    const key = `${leg.building}:${leg.level}`;
+    if (!groups.has(key)) groups.set(key, { building: leg.building, level: leg.level, lines: [] });
+    groups.get(key).lines.push(leg.px);
+  }
+  return [...groups.values()].map((g) => {
+    const lv = graph.indoor[g.building].levels[String(g.level)];
+    const pick = [to, from].find((p) => p.type === "room" && p.building.id === g.building && p.room.floor === g.level);
+    const toImage = ([x, y]) => [(x - lv.dx) / lv.s, (y - lv.dy) / lv.s];
+    return {
+      room: pick ? pick.room.id : lv.room,
+      grey: !pick, // another room's plan: hide its red highlight
+      title: t.planTitle(t.floor(g.level), g.building),
+      lines: g.lines.map((l) => l.map(toImage)),
+    };
+  });
+}
+
+function floorplanBlock(plans, to) {
+  const figs = plans
+    .map((p) => {
+      // zoom to the part of the plan the route uses
+      let vb = [0, 0, 1600, 1200];
+      if (p.lines) {
+        const pts = p.lines.flat();
+        const xs = pts.map((q) => q[0]);
+        const ys = pts.map((q) => q[1]);
+        let [x0, x1, y0, y1] = [Math.min(...xs) - 90, Math.max(...xs) + 90, Math.min(...ys) - 90, Math.max(...ys) + 90];
+        const w = Math.max(x1 - x0, 480);
+        const h = Math.max(y1 - y0, w * 0.6);
+        x0 = Math.max(0, Math.min(1600 - w, (x0 + x1 - w) / 2));
+        y0 = Math.max(0, Math.min(1200 - h, (y0 + y1 - h) / 2));
+        vb = [x0, y0, w, h].map((v) => Math.round(v));
+      }
+      const lines = (p.lines || [])
+        .map((l) => {
+          const pts = l.map(([x, y]) => `${x.toFixed(0)},${y.toFixed(0)}`).join(" ");
+          const [sx, sy] = l[0];
+          const [ex, ey] = l.at(-1);
+          return `<polyline points="${pts}"/><circle class="s" cx="${sx.toFixed(0)}" cy="${sy.toFixed(0)}" r="8"/><circle class="e" cx="${ex.toFixed(0)}" cy="${ey.toFixed(0)}" r="8"/>`;
+        })
+        .join("");
+      const src = `${CAFM}/images/room/floorplan/${encodeURIComponent(p.room)}`;
+      return `<figure hidden>${p.title ? `<figcaption>${p.title}</figcaption>` : ""}
+        <svg class="plan-svg" viewBox="${vb.join(" ")}" role="img" aria-label="${esc(p.title || p.room)}">
+          <rect x="0" y="0" width="1600" height="1200" fill="#fff"/>
+          <image data-src="${src}" width="1600" height="1200" class="${p.grey ? "grey" : ""}"/>${lines}
+        </svg></figure>`;
+    })
+    .join("");
+  const info = to.type === "room" ? `<p><a href="${CAFM}/${getLang()}/room/${encodeURIComponent(to.room.id)}" target="_blank" rel="noopener">${t.openInfo} ${to.room.id} ↗</a></p>` : "";
   return `<section class="plan">
     <h3>${t.floorplan}</h3>
-    <button id="show-plan" type="button">${t.showPlan}</button> <small>${t.planNote}</small>
-    <img id="plan-img" hidden alt="${id}" onerror="this.hidden=true">
-    <p><a href="${info}" target="_blank" rel="noopener">${t.openInfo} ${id} ↗</a></p>
+    <button id="show-plan" type="button">${plans.some((p) => p.lines) ? t.showPlans : t.showPlan}</button> <small>${t.planNote}</small>
+    ${figs}
+    ${info}
   </section>`;
 }
 

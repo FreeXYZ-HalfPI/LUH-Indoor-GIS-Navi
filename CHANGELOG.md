@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- Phase 2 pilot: indoor routing for building 1101 (Hauptgebäude), door to
+  door across 5 floors, with stairs/lifts and "avoid steps" using lifts
+- `tools/build_indoor.py`: georeferences CAFM floor plans to the OSM outline,
+  registers floors, snaps hand-drawn corridors to the plan and connects rooms
+  and entrances through the door openings; exports app JSON + GeoJSON
+- Indoor graph format documented in `docs/INDOOR_FORMAT.md`
+- Route-aware floor plans: each floor the route uses, zoomed, with the path drawn
 - Phase 1 MVP web app (`web/`): room/building search, on-device walking route
   between the best entrance pair, step-by-step guidance with floor and wing,
   CAFM floor-plan preview, German/English, shareable links, offline PWA
