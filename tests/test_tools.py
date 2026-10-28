@@ -15,11 +15,13 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT / "tools"))     # the tools are scripts, not a package
 
 import build_indoor  # noqa: E402
 import crawl_rooms  # noqa: E402
 
+# A trimmed copy of a real Rauminfo room page: the script holds a label word on
+# purpose (it must be ignored), and the area label is split over two <dt>.
 ROOM_PAGE = """<html><body><script>var x = "Raumart";</script>
 <h1>Raum 3101.000.A020</h1>
 <dt>Lageplan</dt><dd>Erdgeschoss</dd>
@@ -35,11 +37,13 @@ class CrawlerTest(unittest.TestCase):
                          {"floor_name": "Erdgeschoss", "area_m2": 48.37, "type": "Besprechungsraum"})
 
     def test_room_labels(self):
+        # wing letters, digits and suffix letters, including the odd forms found in 1101
         for label, parts in {"A020": ("A", "020", ""), "B063A": ("B", "063", "A"), "A61A": ("A", "61", "A"),
                              "011I": ("", "011", "I"), "068C": ("", "068", "C")}.items():
             self.assertEqual(crawl_rooms.LABEL_RE.match(label).groups(), parts)
 
     def test_hull_of_a_square_with_inner_points(self):
+        # inner points and a point on an edge (10, 5) must not be hull corners
         pts = np.array([[0, 0], [10, 0], [10, 10], [0, 10], [5, 5], [3, 7], [10, 5]])
         self.assertEqual(sorted(map(tuple, crawl_rooms.hull(pts))), [(0, 0), (0, 10), (10, 0), (10, 10)])
 
@@ -58,6 +62,7 @@ class CrawlerTest(unittest.TestCase):
         self.assertEqual(mask.sum(), 200)
 
     def test_floor_digit(self):
+        # room numbers on floor 3 start with 3; basement U01 rooms start with 1
         self.assertEqual([crawl_rooms.floor_digit(c) for c in ("000", "003", "U01")], [0, 3, 1])
 
 
@@ -66,10 +71,12 @@ class BuilderTest(unittest.TestCase):
         self.assertEqual([build_indoor.level_num(c) for c in ("000", "004", "U01", "-02")], [0, 4, -1, -2])
 
     def test_rdp_keeps_corners(self):
+        # a 0.4 px wiggle is noise, the right angle at (10, 0) is a corner
         line = [(0, 0), (5, 0.4), (10, 0), (10, 5), (10, 10)]
         self.assertEqual(build_indoor.rdp(line, 1.0), [(0, 0), (10, 0), (10, 10)])
 
     def test_georef_round_trip(self):
+        # to_latlon must be the exact inverse of to_px, or rooms drift on the map
         g = build_indoor.Georef({"lat0": 52.3826, "lon0": 9.7172, "theta": 0.09, "scale": 6.15, "tx": 700, "ty": 720})
         x, y = g.to_px(52.3830, 9.7180)
         lat, lon = g.to_latlon(x, y)
@@ -88,6 +95,7 @@ class AppDataTest(unittest.TestCase):
                       for b in json.loads((data / "indoor" / "index.json").read_text(encoding="utf-8"))}
 
     def test_indoor_rooms_are_searchable(self):
+        # a routable room the search cannot find would be unreachable in the app
         for b, d in self.indoor.items():
             known = set(self.rooms.get(b, []))
             with self.subTest(building=b):
@@ -95,6 +103,7 @@ class AppDataTest(unittest.TestCase):
                 self.assertFalse(set(d.get("outlines", {})) - known)
 
     def test_room_nodes_and_edges_are_valid(self):
+        # broken indices would crash the router in the browser, where nobody sees the error
         for b, d in self.indoor.items():
             n = len(d["nodes"])
             with self.subTest(building=b):
@@ -104,6 +113,7 @@ class AppDataTest(unittest.TestCase):
                 self.assertTrue(all(lvl in levels for *_, lvl in d["nodes"]))
 
     def test_outlines_lie_on_the_plan(self):
+        # at least 3 points each; a generous frame catches a wrong floor registration
         for b, d in self.indoor.items():
             w, h = d["plan_size"]
             with self.subTest(building=b):
@@ -112,6 +122,7 @@ class AppDataTest(unittest.TestCase):
                     self.assertTrue(all(-w <= v <= 2 * w for v in flat))
 
     def test_crawl_files_match_app_list(self):
+        # every crawled room must reach the app's room list, and the counts must add up
         for f in (ROOT / "data" / "indoor").glob("*/rooms.json"):
             crawl = json.loads(f.read_text(encoding="utf-8"))
             with self.subTest(building=crawl["building"]):

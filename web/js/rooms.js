@@ -4,8 +4,10 @@
 // Room IDs look like BBBB.FFF.RRRR, e.g. 1101.000.E028:
 //   BBBB building, FFF floor (000 ground, 001 first, U01 basement), RRRR room.
 
+// 4-digit building, floor (optional U/- for basements, 2–3 digits), room number
 const ROOM_RE = /^(\d{4})\.([U-]?\d{2,3})\.([\w-]+)$/i;
 
+/** Split a room id into its parts, or null if it is not one. */
 export function parseRoomId(id) {
   const m = ROOM_RE.exec(id.trim());
   if (!m) return null;
@@ -14,17 +16,21 @@ export function parseRoomId(id) {
   let floor;
   if (fc[0] === "U" || fc[0] === "-") floor = -parseInt(fc.slice(1), 10);
   else floor = parseInt(fc, 10);
+  // a leading letter is the wing (E028 → wing E); some buildings have no wings
   const wing = /^[A-Z]/i.test(room) ? room[0].toUpperCase() : null;
   return { id: `${building}.${fc}.${room.toUpperCase()}`, building, floorCode: fc, floor, room: room.toUpperCase(), wing };
 }
 
 /** Normalise user input like "1101 e028", "1101-000-E028" or "1101.000.e028". */
 function normalise(q) {
+  // spaces, commas, slashes and underscores all become the dot of a room id
   return q.trim().toUpperCase().replace(/[\s,/_]+/g, ".").replace(/\.{2,}/g, ".");
 }
 
+// lower case without accents, ß → ss: "Hauptgebaude" and "hauptgebäude" both find Hauptgebäude
 const fold = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss");
 
+/** All buildings and rooms the app knows, and the search over them. */
 export class Places {
   constructor(buildings, rooms) {
     this.buildings = new Map(buildings.map((b) => [b.id, b]));
@@ -32,10 +38,10 @@ export class Places {
     for (const [bid, list] of Object.entries(rooms)) {
       for (const id of list) {
         const r = parseRoomId(id);
-        if (r && this.buildings.has(bid)) this.rooms.push(r);
+        if (r && this.buildings.has(bid)) this.rooms.push(r); // a room needs a building on the map
       }
     }
-    this.roomIndex = new Map(this.rooms.map((r) => [r.id, r]));
+    this.roomIndex = new Map(this.rooms.map((r) => [r.id, r])); // id → room, for exact lookups
   }
 
   building(id) {
@@ -54,7 +60,12 @@ export class Places {
     return { type: "room", key: `r:${r.id}`, room: r, building: this.buildings.get(r.building) };
   }
 
-  /** Ranked suggestions for a free-text query. */
+  /**
+   * Ranked suggestions for a free-text query.
+   * Scores order the kinds of match: an exact code beats a prefix, a prefix beats
+   * a match inside a name. Short queries only match from the start, so typing "1"
+   * does not list thousands of rooms.
+   */
   search(q, limit = 12) {
     const raw = q.trim();
     if (!raw) return [];
@@ -63,6 +74,7 @@ export class Places {
     const out = [];
     const seen = new Set();
     const push = (score, place) => {
+      // each place once, with its first (best) score
       if (!seen.has(place.key)) {
         seen.add(place.key);
         out.push({ score, place });

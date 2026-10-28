@@ -1,10 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Offline support: app shell + data are cached; map tiles are cached as they are viewed.
-const VERSION = "v8";
+//
+// Students often have weak mobile data inside big buildings, so the app must
+// still route there once it has been opened once.
+// Bump on every change to the app or its data: a new name makes the browser install
+// the new files and "activate" delete the old cache.
+const VERSION = "v9";
 const SHELL = `shell-${VERSION}`;
-const TILES = "tiles-v1";
-const MAX_TILES = 600;
+const TILES = "tiles-v1"; // tiles do not change with the app, so they keep their cache
+const MAX_TILES = 600; // ~10 MB: enough for the campus around you, small enough for any phone
 
+// everything the app needs to start and route offline
 const ASSETS = [
   "./",
   "index.html",
@@ -27,6 +33,7 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (e) => {
+  // skipWaiting: use the new version at once instead of after all tabs are closed
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
 
@@ -39,6 +46,7 @@ self.addEventListener("activate", (e) => {
   );
 });
 
+/** Delete the oldest tiles above MAX_TILES (cache keys keep their insertion order). */
 async function trimTiles() {
   const c = await caches.open(TILES);
   const keys = await c.keys();
@@ -49,6 +57,7 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET") return;
 
+  // cache first for tiles: they rarely change, and it spares the OSM servers
   if (url.hostname === "tile.openstreetmap.org") {
     e.respondWith(
       caches.open(TILES).then(async (c) => {
@@ -70,6 +79,7 @@ self.addEventListener("fetch", (e) => {
           if (res.ok) caches.open(SHELL).then((c) => c.put(e.request, res.clone()));
           return res;
         })
+        // offline: the cached file; for an unknown page the app itself
         .catch(() => caches.match(e.request, { ignoreSearch: true }).then((r) => r || caches.match("index.html"))),
     );
   }

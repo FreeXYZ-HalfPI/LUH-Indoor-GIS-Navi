@@ -29,6 +29,13 @@
   coloured wall lines, any image size, several OSM outlines per building,
   hand-placed `room_points`
 - `data/buildings_override.json` for names missing in the LUH data
+### Changed
+- Code readability: every tool and app module now explains its decisions in
+  comments ("why", not only "what"), and long functions are split into small
+  named steps (`build_indoor.build`, `crawl_rooms.crawl`, the walk-graph
+  builder, the router and the guidance in `app.js`). Outputs are unchanged:
+  rebuilt data is byte-identical and 6,050 test routes match the old router.
+
 ### Fixed
 - Floor plans of portrait buildings (3101, 3110) were squeezed, so the route
   was drawn beside the building; the plan size now comes from the indoor data

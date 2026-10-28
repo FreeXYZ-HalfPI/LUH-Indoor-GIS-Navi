@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // German / English UI strings. Functions take parameters, strings don't.
+//
+// A plain object per language, no i18n library: two languages do not need one,
+// and a translator can edit this file without knowing any tooling.
 
 const dict = {
   en: {
@@ -118,20 +121,25 @@ const dict = {
   },
 };
 
+/** 1 → 1st, 2 → 2nd, 11 → 11th, 23 → 23rd. */
 function ordinal(n) {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
+  // 21–23 etc. via (v - 20) % 10, 1–3 via s[v]; 11–13 hit neither and get "th"
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
+// saved choice first, then the browser language; German speakers get German
 let lang = (() => {
   try {
     const saved = localStorage.getItem("lang");
     if (saved in dict) return saved;
-  } catch {}
+  } catch {} // localStorage is blocked in some private modes
   return (navigator.language || "en").toLowerCase().startsWith("de") ? "de" : "en";
 })();
 
+// t.key reads the current language and falls back to English, so a missing
+// German string shows English instead of "undefined"
 export const t = new Proxy({}, { get: (_, k) => dict[lang][k] ?? dict.en[k] });
 export const getLang = () => lang;
 export function setLang(l) {
@@ -141,6 +149,7 @@ export function setLang(l) {
   } catch {}
 }
 
+/** 437 → "440 m", 1250 → "1.3 km" ("1,3 km" in German). Rounded: the routes are estimates. */
 export function formatDistance(m) {
   return m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1).replace(".", lang === "de" ? "," : ".")} km`;
 }
