@@ -35,7 +35,7 @@ const fold = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,
 const TITLE_WORDS = new Set(["pd", "habil", "mba", "msc", "bsc", "ma", "ba"]);
 function nameTokens(name) {
   return fold(name)
-    .split(/\s+/)
+    .split(/[\s,;]+/) // commas separate degrees: "Christian Beckemeier, M. Sc."
     .filter((w) => w && !w.includes(".") && !/^\(.*\)$/.test(w) && !TITLE_WORDS.has(w));
 }
 

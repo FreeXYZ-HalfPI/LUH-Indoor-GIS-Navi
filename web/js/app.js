@@ -387,6 +387,9 @@ const minutes = (m) => Math.max(1, Math.round(m / WALK_M_PER_MIN));
 const roomText = (p) => (p.person ? `${p.room.id} – ${esc(p.person.name)}` : p.room.id);
 const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.room.wing) : "");
 
+// A name that ends with a degree ("M. Sc.") already ends the sentence: avoid "M. Sc.."
+const endSentence = (s) => s.replace(/\.(<\/b>)?\.$/, ".$1");
+
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
   if (push) writeHash();
@@ -409,7 +412,7 @@ function update(push = true) {
   out.innerHTML = `
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
-    <ol class="steps">${g.steps.map((s) => `<li>${s}</li>`).join("")}</ol>
+    <ol class="steps">${g.steps.map((s) => `<li>${endSentence(s)}</li>`).join("")}</ol>
     ${plans.length ? floorplanBlock(plans, to) : ""}`;
   const btn = out.querySelector("#show-plan");
   if (btn)

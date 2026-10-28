@@ -1,6 +1,16 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Hauptgebäude **H wing** and **E2xx strip** are routable: their rooms lie up
+  to 3.6 m outside the OSM outline (georeference drift at the ends of the
+  200 m building). Rooms up to 4 m outside now count as inside
+  (`ROOM_OUTLINE_TOLERANCE_M`); inset drawings, 4.6 m and more away, stay out.
+  1101: 1106 routable rooms (was 1082), 3101: 244 (was 240); people 299 of
+  302 door to door (was 293).
+- People search: names with a degree after a comma ("Christian Beckemeier,
+  M. Sc.") were not found by surname; no more "M. Sc.." at sentence ends.
+
 ### Added
 - **Find people:** type a name ("Christian Heipke", typos allowed: "Eping")
   and the app routes to that person's office; room popups list who sits there.

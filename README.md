@@ -44,13 +44,13 @@ another across the campus:
 
 - **1,722 rooms** in the 3 example buildings, found by the room crawler. LUH
   Rauminfo lists only 74 of them (the lecture and seminar rooms).
-- **1,544 rooms (90%) are routable** door to door, across floors and buildings
+- **1,572 rooms (91%) are routable** door to door, across floors and buildings
   ([coverage per floor](docs/COVERAGE.md)).
 - **Find people:** type a name instead of a room code ("Christian Heipke",
   even with a typo like "Eping" for Epping) and the app routes to their office.
   302 people of the Präsidium, 4 Dezernate and 12 institutes in 1101 and 3101,
   read from the contact cards on public LUH pages (`tools/crawl_people.py`, no
-  phone or e-mail); 293 of them door to door.
+  phone or e-mail); 299 of them door to door.
 - **Room explorer:** zoom in on a building with a purple dashed frame, pick a
   floor, tap any room and choose *Start here* / *Go here*. Public rooms show
   their type and size.

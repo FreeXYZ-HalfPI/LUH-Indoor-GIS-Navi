@@ -42,10 +42,12 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [x] Search for people (`tools/crawl_people.py`): 302 people in 1101 and 3101
       from public LUH contact cards (Präsidium, 4 Dezernate, 12 institutes);
       route by name, e.g. president → Prof. Heipke
+- [x] 1101 H wing and E2xx strip routable (outline tolerance): 1101 1106
+      routable rooms, 3101 244; 299 of 302 people door to door
 - [ ] More people: institutes without a team page with rooms (Angewandte
-      Mathematik, Didaktik der Mathematik und Physik, Simulation), the
-      ServiceCenter; map the 1101 H wing and the E2xx strip (outside the OSM
-      outline) so their people are routable door to door
+      Mathematik, Didaktik der Mathematik und Physik, Simulation), the ServiceCenter
+- [ ] 16 rooms in the 1101 H wing (e.g. H102) have no shape on the CAFM plans;
+      place them by hand (`room_points`) after a visit on site
 - [ ] Remaining unrouted rooms: no corridor visible on the plan (e.g. 1101
       C201–C209 strip), drawn outside the outline, or no red highlight
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`

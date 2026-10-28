@@ -59,6 +59,13 @@ ELEVATOR_M = 25            # waiting + riding, independent of the number of floo
 # take a "shortcut" through the courtyard or the street.
 OUTSIDE_PENALTY = 8
 
+# A room highlight up to this far outside the OSM outline still counts as inside.
+# The georeference is a single similarity transform, so at the far ends of a long
+# building (the Hauptgebäude is 200 m) the plan and the outline drift apart by a
+# few metres. Measured in 1101: real rooms lie at most 3.6 m outside, inset
+# drawings (a mezzanine drawn next to the plan) 4.6 m and more.
+ROOM_OUTLINE_TOLERANCE_M = 4
+
 # One metre in degrees of latitude (and of longitude at the equator).
 M_PER_DEGREE = 111320
 
@@ -512,9 +519,17 @@ def room_position(rid, src):
     return image_to_plan(*p, src["levels"][rid.split(".")[1]])
 
 
+def grow(mask, r):
+    """Dilate a mask by r pixels, one pixel at a time (far cheaper than one big (2r+1)² window)."""
+    for _ in range(r):
+        mask = dilate(mask, 1)
+    return mask
+
+
 def connect_rooms(graph, rids, src, inside):
     """Give every room a node. Returns (room → node, room → why it has none)."""
     w, h = inside.shape[1], inside.shape[0]
+    near = grow(inside, round(ROOM_OUTLINE_TOLERANCE_M * graph.px_per_m))
     room_nodes, unrouted = {}, {}
     for rid in rids:
         code = rid.split(".")[1]
@@ -533,7 +548,7 @@ def connect_rooms(graph, rids, src, inside):
         # Some plans show a small inset drawing (another wing, a mezzanine) next to
         # the building; a highlight there must not be linked to the corridors.
         forced = rid in src.get("force_rooms", {}) or rid in src.get("room_points", {})
-        if not forced and not (0 <= x < w and 0 <= y < h and inside[int(y), int(x)]):
+        if not forced and not (0 <= x < w and 0 <= y < h and near[int(y), int(x)]):
             graph.warnings.append(f"{rid}: highlight lies outside the building outline (inset drawing?), skipped")
             unrouted[rid] = "outside the building outline"
             continue
