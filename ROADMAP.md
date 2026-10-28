@@ -39,6 +39,9 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
       1101 1227 rooms (1035 routable), 3101 261 (232), 3110 234 (217)
 - [x] Trace corridors for the 1101 2nd-floor mezzanine and the attic floors
       3101/003 and 3110/004: 1101 1082 routable, 3101 240, 3110 222
+- [x] Search for people (`tools/crawl_people.py`): 122 people in 1101 and 3101
+      from public LUH contact cards; route by name, e.g. president → Prof. Heipke
+- [ ] More people: team pages of the other institutes in the example buildings
 - [ ] Remaining unrouted rooms: no corridor visible on the plan (e.g. 1101
       C201–C209 strip), drawn outside the outline, or no red highlight
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`

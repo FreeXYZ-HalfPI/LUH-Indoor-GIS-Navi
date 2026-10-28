@@ -1,0 +1,860 @@
+{
+"generated": "2026-10-28",
+"attribution": "Names and office rooms from public web pages of Leibniz Universität Hannover",
+"people": [
+{
+"name": "Dr. Johannes Aastrup",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G122",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr.-Ing. Hamza Alkhatib",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B152",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Sahiba Arora",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.004.B406",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Jörn Bannert",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B105",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Wolfram Bauer",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F125",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr.-Ing. Holger Blume",
+"role": "Vizepräsident für Forschung, Impact und Transformation",
+"org": "Präsidium",
+"room": "1101.001.C101",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-forschung"
+},
+{
+"name": "Dr. Lukas Bonfert",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.C411",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Stina Brüger",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G121",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dipl.-Betriebsw. (FH) Christine Bödeker",
+"role": "Geschäftszimmer",
+"org": "Geodätisches Institut",
+"room": "3101.001.B155",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Kaixing Cao",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A450",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Lin Chen",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B220",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. David Santiago Gómez Cobos",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F127",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Davide Colpo",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A420",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Alessandro Pietro Contini",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F126",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Michael Cuntz",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A414",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Ulrich Derenthal",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A413",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Mareike Dorozynski",
+"role": "Gruppenleiterin",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.000.B045",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Jairo Alejandro Ovalle Duque",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.004.D403",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Leon Eickhoff",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A422",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Volker Epping",
+"role": "Präsidentin/Präsident",
+"org": "Präsidium",
+"room": "1101.001.A120",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/praesident"
+},
+{
+"name": "Dr.-Ing. Dominik Ernst",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Geodätisches Institut",
+"room": "3101.001.B154",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Marcel Erné",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.001.F127",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Joachim Escher",
+"role": "",
+"org": "Präsidium",
+"room": "1101.001.A111",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
+},
+{
+"name": "Dr. Pascal Fong",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G109",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Sophie Elisabeth Friesen",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.004.A420",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Eva Nicole Föglein",
+"role": "",
+"org": "Präsidium",
+"room": "1101.003.F338",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-finanzen"
+},
+{
+"name": "Prof. Dr. Julia Gillen",
+"role": "Vizepräsidentin für Bildung",
+"org": "Präsidium",
+"room": "1101.001.C101",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-bildung"
+},
+{
+"name": "Dr. Victor Gonzalez-Alonso",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G013",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "PD Dr. Michael J. Gruber",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.000.G010",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Tim Gräfnitz",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.004.D401",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Antje Günther",
+"role": "",
+"org": "Präsidium",
+"room": "1101.004.C407",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
+},
+{
+"name": "Dr. Zhicheng Han",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G121",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr.-Ing. habil. Christian Heipke",
+"role": "Geschäftsführender Leiter",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B143",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Álvaro Sánchez Hernández",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.004.D425",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Ben Heuer",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A412",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Viktoriia Hnatushenko",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B243",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Lena Hocke",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.C411",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Arne Hofmann",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F126",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Jörn Hohenhaus",
+"role": "",
+"org": "Präsidium",
+"room": "1101.003.F339",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/vize-finanzen"
+},
+{
+"name": "apl. Prof. Dr. Thorsten Holm",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.C402",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Klaus Hulek",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G131",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Karsten Jacobsen",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B108",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Anna Jagdmann",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A411",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Luke Karras",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G022",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Béla Klank",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A421",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Mohamed Amine Koubaa",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G114",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Natascha Krienen",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G021",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Andreas Krug",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.003.G319",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Man Yi Kwok",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.004.A420",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Lucas Lagarde",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G108",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Robin Christopher Tom Lahni",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.004.A422",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Wendelin Lutz",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G012",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Christian Grannemann, M.Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.000.B036",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Mohammadreza Heidarianbaei, M.Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B211",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Max Mehltretter",
+"role": "Gruppenleiter",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B138",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Johanna Eugenia Mettasch",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A420",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "PD Dr. Marco Meyer",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.004.B414",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Christoph Friedemann Minz",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.004.B414",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Ludvig Modin",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G109",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Rozhin Moftizadeh",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B161",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Bahareh Mohammadivojdan",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B120",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. rer. nat. Mona Morsy",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B134",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Mahdi Motagh",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B138",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Stevell Muller",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G113",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "David Munkacsi",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.D403",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Paul Mücksch",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.B406",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr.-Ing. Ingo Neumann",
+"role": "Geschäftsführende Leitung",
+"org": "Geodätisches Institut",
+"room": "3101.001.B159",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Johannes Thomas Oertel",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.002.E242",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Fabian Patzwaldt",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.004.D425",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Marzieh Baes, Ph.D.",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B138",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Simon Pietig",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G022",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Guillaume Jacques Bernard Pignon-Ywanne",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A452",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Andreas Piter",
+"role": "Gruppenleiter",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B137",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. More' Porzio",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G108",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Tian Qiu",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.B403",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Annette Radtke",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B151",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Margherita Recchia",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A422",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dipl.-Geol. Nadja Reusch",
+"role": "Assistenz der Geschäftsführung",
+"org": "Geodätisches Institut",
+"room": "3101.001.B157",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "apl. Prof. Dr. techn. Franz Rottensteiner",
+"role": "Stellvertretender Leiter",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B147",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dmytro Rudenko",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.B403",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Susanne Rudolph",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F124",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Claudia Sander",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B145",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Jacobus Ambrosius Sanders",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G105",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Alexander Dorndorf, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B123",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Amadeus Langer, M. Sc.",
+"role": "Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B237",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Barikisa Owusu Ansah, M. Sc.",
+"role": "Wissenschaftliche Hilfskräfte",
+"org": "Geodätisches Institut",
+"room": "3101.001.B107",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dinh Tuan Nguyen, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.000.B036",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Erik Rivas, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B109",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Hubert Kanyamahanga, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B134",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Imeime Uyo, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B133",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Jan Moritz Hartmann, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B121",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Kourosh Shahryarinia, M. Sc.",
+"role": "Stipendiatinnen und Stipendiaten",
+"org": "Geodätisches Institut",
+"room": "3101.002.B218",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Marvin Scherff, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B153",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Maximilian Meyer, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B220",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Mingyue Ma, M. Sc.",
+"role": "Doktorand",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B109",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Mohamad Wahbah, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B121",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Mohammad Mansouri Aghdaragh, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Geodätisches Institut",
+"room": "3101.001.B156",
+"source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Nathanael Hehs, M. Sc.",
+"role": "Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B237",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Paula Lippmann, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B222",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Rasho Ali, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.000.B036",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Ruslan Magarshak, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B133",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Samer Abualhanud, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.000.B036",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Shaochun Li, M. Sc.",
+"role": "",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.002.B220",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Sulaiman Fayez Hotaki, M. Sc.",
+"role": "PhD candidate",
+"org": "Institut für Photogrammetrie und GeoInformation",
+"room": "3101.001.B134",
+"source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Ursula Schmidt-Westphal",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F127",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Nathalie Scholz",
+"role": "",
+"org": "Präsidium",
+"room": "1101.001.A122",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/praesident"
+},
+{
+"name": "Prof. Dr. Stefan Schreieder",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.003.G315",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Elmar Schrohe",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G130",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Matthias Schütt",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.003.G316",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Xinyu Shao",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.A450",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Marcos Soriano Sola",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.C414",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Ronald Solodov",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.B403",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Isabel Stenger",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G111",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Alexander Strohmaier",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.F123",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Ute Szameitat",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.003.G312",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Linda Theophiel",
+"role": "",
+"org": "Präsidium",
+"room": "1101.001.A118",
+"source": "https://www.uni-hannover.de/universitaet/praesidium/praesident"
+},
+{
+"name": "Matteo Verni",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G110",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Alexandros Vlachos",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.002.E242",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Caitlin Louise Waddle",
+"role": "",
+"org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
+"room": "1101.004.C411",
+"source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Jessica Kejia Wang",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.000.G022",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "PD Dr. Alden Marie Seaburg Waters",
+"role": "",
+"org": "Institut für Analysis",
+"room": "1101.001.G103",
+"source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Lin Zhou",
+"role": "",
+"org": "Institut für Algebraische Geometrie",
+"room": "1101.001.G110",
+"source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+}
+]
+}

@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))     # the tools are scripts, not a package
 
 import build_indoor  # noqa: E402
+import crawl_people  # noqa: E402
 import crawl_rooms  # noqa: E402
 
 # A trimmed copy of a real Rauminfo room page: the script holds a label word on
@@ -64,6 +65,39 @@ class CrawlerTest(unittest.TestCase):
     def test_floor_digit(self):
         # room numbers on floor 3 start with 3; basement U01 rooms start with 1
         self.assertEqual([crawl_rooms.floor_digit(c) for c in ("000", "003", "U01")], [0, 3, 1])
+
+
+# The two layouts LUH pages use for people, trimmed. A contact card is rendered
+# twice (mobile and desktop), the second copy without the name.
+CARD_PAGE = """<div class="c-card  c-card--contact  c-card--contact--image">
+<div class="c-card--contact__title" translate="no"> Prof. Dr. Volker Epping </div>
+<div class="c-card--contact__misc"> Präsidentin/Präsident<br/> </div>
+<div class="c-card--contact__subtitle "> Telefon </div><a href="tel:+495117622201">+49 511 762 2201</a>
+<div class="c-card--contact__subtitle "> Raum </div>
+<a href="https://info.cafm.uni-hannover.de/room/1101/A120">A120</a>
+<div class="c-card--contact__content-container--desktop">
+<a href="https://info.cafm.uni-hannover.de/room/1101/A120">A120</a></div></div>"""
+LIST_PAGE = """<div class="c-contact-list__item__name"><span class="pname" translate="no"> Anna Jagdmann</span></div>
+<a href="https://info.cafm.uni-hannover.de/room/1101/A411" class="c-link"> A411 </a>
+<div class="c-contact-list__item__name"><span class="pname" translate="no"> Dr. B&ouml;deker</span></div>
+<a href="https://info.cafm.uni-hannover.de/room/3101/b 143" class="c-link"> B143 </a>"""
+
+
+class PeopleTest(unittest.TestCase):
+    def test_contact_card_once_without_phone(self):
+        self.assertEqual(crawl_people.parse_cards(CARD_PAGE),
+                         [{"name": "Prof. Dr. Volker Epping", "role": "Präsidentin/Präsident", "building": "1101", "number": "A120"}])
+
+    def test_contact_list(self):
+        cards = crawl_people.parse_cards(LIST_PAGE)
+        self.assertEqual([(c["name"], c["building"], c["number"]) for c in cards],
+                         [("Anna Jagdmann", "1101", "A411"), ("Dr. Bödeker", "3101", "B143")])
+
+    def test_resolve_room(self):
+        self.assertEqual(crawl_people.resolve_room("A120", ["1101.001.A120"]), "1101.001.A120")
+        # the same number on two floors: the first digit names the floor
+        self.assertEqual(crawl_people.resolve_room("A120", ["1101.000.A120", "1101.001.A120"]), "1101.001.A120")
+        self.assertIsNone(crawl_people.resolve_room("A120", []))
 
 
 class BuilderTest(unittest.TestCase):
@@ -120,6 +154,14 @@ class AppDataTest(unittest.TestCase):
                 for flat in d["outlines"].values():
                     self.assertGreaterEqual(len(flat), 6)
                     self.assertTrue(all(-w <= v <= 2 * w for v in flat))
+
+    def test_people_are_routable_and_minimal(self):
+        # every person must lead to a routable room, and no contact details may be stored
+        people = json.loads((ROOT / "web" / "data" / "people.json").read_text(encoding="utf-8"))["people"]
+        for p in people:
+            with self.subTest(person=p["name"]):
+                self.assertIn(p["room"], self.indoor[p["room"][:4]]["rooms"])
+                self.assertEqual(set(p), {"name", "role", "org", "room", "source"})
 
     def test_crawl_files_match_app_list(self):
         # every crawled room must reach the app's room list, and the counts must add up

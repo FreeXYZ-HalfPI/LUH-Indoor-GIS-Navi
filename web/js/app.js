@@ -3,7 +3,7 @@
 //
 // A static page, no framework and no build step: the app must run from any
 // web server (GitHub Pages) and be easy for students to read and change.
-import { Places } from "./rooms.js";
+import { Places, parseRoomId } from "./rooms.js";
 import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatDistance } from "./i18n.js";
 
@@ -17,7 +17,7 @@ const COLOR_INDOOR = "#7b2cbf"; // purple: everything indoors
 const $ = (sel) => document.querySelector(sel);
 // escape for innerHTML; names come from data files, never trust them as HTML
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
-// Place keys: "b:1101" for a building, "r:1101.000.E028" for a room
+// Place keys: "b:1101" for a building, "r:1101.000.E028" for a room, "p:christian-heipke" for a person
 const state = { from: null, to: null, avoidSteps: false };
 let places, graph, map, routeLayer;
 const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef)
@@ -27,13 +27,14 @@ const indoorData = {}; // building → generated indoor JSON (outlines, meta, ge
 async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
   // all data is loaded at start: routing then works offline and without waiting
-  const [buildings, rooms, walk, indoorList] = await Promise.all([
+  const [buildings, rooms, walk, indoorList, people] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
     load("indoor/index.json").catch(() => []), // the app still works outdoors without indoor data
+    load("people.json").catch(() => ({ people: [] })), // and without the people search
   ]);
-  places = new Places(buildings, rooms);
+  places = new Places(buildings, rooms, people.people);
   graph = new WalkGraph(walk);
   for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) {
     graph.addIndoor(indoor);
@@ -81,20 +82,24 @@ function applyTexts() {
 
 function placeLabel(p) {
   if (!p) return "";
+  if (p.person) return `${p.person.name} · ${p.room.id}`;
   if (p.type === "building") return `${p.building.id} ${p.building.name}`;
   return `${p.room.id} · ${p.building.name}`;
 }
 
 const address = (b) => [b.street, b.house_number].filter(Boolean).join(" ");
 
-/** Second line of a search result: address, or floor · wing · type. */
+/** Second line of a search result: address; role · institute · floor; or floor · wing · type · people. */
 function placeDetail(p) {
   if (p.type === "building") return `${t.building} · ${address(p.building)}`;
+  if (p.person) return [p.person.role, p.person.org, t.floor(p.room.floor)].filter(Boolean).join(" · ");
   const bits = [t.floor(p.room.floor)];
   if (p.room.wing) bits.push(t.wing(p.room.wing));
   const meta = roomMeta(p.room.id);
   if (meta) bits.push(meta);
   else if (!places.roomIndex.has(p.room.id)) bits.push(t.unlisted); // a typed code we cannot confirm
+  const people = places.peopleInRoom.get(p.room.id) || [];
+  if (people.length) bits.push(people.map((x) => x.name).join(", ")); // who sits here
   return bits.join(" · ");
 }
 
@@ -131,7 +136,7 @@ function initPicker(which) {
       li.role = "option";
       li.id = `${which}-opt-${i}`;
       li.className = i === active ? "active" : "";
-      li.innerHTML = `<span class="ico">${p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
+      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
       li.querySelector("b").textContent = placeLabel(p); // textContent: data is never parsed as HTML
       li.querySelector("small").textContent = placeDetail(p);
       // pointerdown, not click: it fires before the input's blur closes the list
@@ -180,7 +185,8 @@ function syncInputs() {
 
 function readHash() {
   const h = new URLSearchParams(location.hash.slice(1));
-  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : `r:${v}`); // 4 digits = a building
+  // 4 digits = a building, a room code = a room, anything else = a person (#to=christian-heipke)
+  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : `p:${v}`);
   const from = places.resolve(key(h.get("from")));
   const to = places.resolve(key(h.get("to")));
   state.from = from?.key ?? null;
@@ -344,7 +350,10 @@ function drawExplorer() {
   div.hidden = false;
   drawFloorControl(div, levels);
 
-  const chosen = new Map([[state.from, COLOR_FROM], [state.to, COLOR_TO]].filter(([k]) => k).map(([k, c]) => [k.slice(2), c]));
+  // room ids of start and destination (a person's key is not a room id, so resolve the keys)
+  const chosen = new Map(
+    [[state.from, COLOR_FROM], [state.to, COLOR_TO]].map(([k, c]) => [places.resolve(k)?.room?.id, c]).filter(([id]) => id),
+  );
   for (const d of shown) {
     for (const id of Object.keys(d.outlines)) {
       const r = places.resolve(`r:${id}`)?.room;
@@ -374,7 +383,9 @@ const entranceKind = (e) => (e.kind === "main" ? t.mainEntrance : "");
 // "north" etc.: on which side of the building an entrance is, the easiest hint without GPS
 const sideOf = (b, p) => t.dirs[compass([b.lat, b.lon], p)];
 const minutes = (m) => Math.max(1, Math.round(m / WALK_M_PER_MIN));
-const findRoomStep = (room) => t.stepFindRoom(room.id, room.wing ? t.wing(room.wing) : "");
+// "3101.001.B143 – Prof. Dr.-Ing. habil. Christian Heipke" when the place is a person
+const roomText = (p) => (p.person ? `${p.room.id} – ${esc(p.person.name)}` : p.room.id);
+const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.room.wing) : "");
 
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
@@ -444,7 +455,7 @@ function guidance(from, to) {
   const fb = from.building;
   const tb = to.building;
 
-  if (from.type === "room") steps.push(t.stepStartRoom(from.room.id, buildingName(fb), t.floor(from.room.floor)));
+  if (from.type === "room") steps.push(t.stepStartRoom(roomText(from), buildingName(fb), t.floor(from.room.floor)));
   else steps.push(t.stepStartBuilding(buildingName(fb)));
 
   // each campus has its own walk graph; across campuses there is no route to find
@@ -468,7 +479,7 @@ function guidance(from, to) {
     if (to.type === "room") {
       const startFloor = from.type === "room" ? from.room.floor : 0;
       steps.push(to.room.floor === startFloor ? t.stepStayFloor(t.floor(to.room.floor)) : t.stepFloor(t.floor(to.room.floor)));
-      steps.push(findRoomStep(to.room));
+      steps.push(findRoomStep(to));
     }
   } else {
     if (from.type === "room" && from.room.floor !== 0) steps.push(t.stepGoDown(t.floor(from.room.floor)));
@@ -478,7 +489,7 @@ function guidance(from, to) {
     steps.push(t.stepGoTo(buildingName(tb), buildingAddress(tb)));
     if (to.type === "room") {
       steps.push(t.stepFloor(t.floor(to.room.floor)));
-      steps.push(findRoomStep(to.room));
+      steps.push(findRoomStep(to));
     }
     const line = L.polyline([[fb.lat, fb.lon], [tb.lat, tb.lon]], { color: "#888", weight: 3, dashArray: "6 8" }).addTo(routeLayer);
     L.marker([fb.lat, fb.lon], { icon: pin("from", "A") }).addTo(routeLayer);
@@ -505,7 +516,7 @@ function routeSteps(r, from, to) {
       // an indoor sentence names where the leg ends: the room, a stair/lift or the exit
       const fl = t.floor(leg.level);
       const d = formatDistance(leg.distance);
-      if (!next) steps.push(t.stepIndoorTo(fl, d, to.room.id));
+      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)));
       else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type));
       else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d));
     } else if (leg.kind === "vertical") {
@@ -523,7 +534,7 @@ function routeSteps(r, from, to) {
       steps.push(t.stepEnter(buildingName(tb), buildingAddress(tb), sideOf(tb, [r.end.entrance.lat, r.end.entrance.lon]), entranceKind(r.end.entrance)));
     if (to.type === "room") {
       steps.push(to.room.floor === 0 ? t.stepStayFloor(t.floor(0)) : t.stepFloor(t.floor(to.room.floor)));
-      steps.push(findRoomStep(to.room));
+      steps.push(findRoomStep(to));
     }
   }
   return steps;

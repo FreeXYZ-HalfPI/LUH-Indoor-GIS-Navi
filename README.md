@@ -38,19 +38,24 @@ another across the campus:
 
 ## What works today
 
-| Room to room, door to door | Every room on the map, per floor |
-|---|---|
-| ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
+| Person to person | Room to room, door to door | Every room on the map, per floor |
+|---|---|---|
+| ![Route from the office of the LUH president (1101.001.A120) to the office of Prof. Heipke (3101.001.B143)](docs/img/person-to-person.jpg) | ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
 
 - **1,722 rooms** in the 3 example buildings, found by the room crawler. LUH
   Rauminfo lists only 74 of them (the lecture and seminar rooms).
 - **1,544 rooms (90%) are routable** door to door, across floors and buildings
   ([coverage per floor](docs/COVERAGE.md)).
+- **Find people:** type a name instead of a room code ("Christian Heipke",
+  even with a typo like "Eping" for Epping) and the app routes to their office.
+  122 people of the Präsidium and 5 institutes in 1101 and 3101, read from the
+  contact cards on public LUH pages (`tools/crawl_people.py`, no phone or e-mail).
 - **Room explorer:** zoom in on a building with a purple dashed frame, pick a
   floor, tap any room and choose *Start here* / *Go here*. Public rooms show
   their type and size.
 
-Try: [room A020 on the map](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#to=3101.000.A020) ·
+Try: [the president's office → Prof. Heipke](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=volker-epping&to=christian-heipke) ·
+[room A020 on the map](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#to=3101.000.A020) ·
 [3rd-floor office in the Hauptgebäude → Mensa 2nd floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.003.G315&to=3110.002.262) ·
 [2nd-floor mezzanine F220 → 3101 attic A320](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.002.F220&to=3101.003.A320)
 
@@ -61,6 +66,9 @@ python3 tools/crawl_rooms.py https://info.cafm.uni-hannover.de/de/building/3101/
 python3 tools/build_indoor.py build 3101
 python3 tools/coverage.py
 ```
+
+People: `python3 tools/crawl_people.py` reads the pages listed in
+[data/people_sources.json](data/people_sources.json).
 
 The crawler guesses room numbers per floor and wing, keeps those that have a
 CAFM floor plan, and reads each room's position and outline from its red
@@ -84,6 +92,7 @@ Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 - [x] Outdoor → indoor transition
 - [x] All rooms of a building, not only the public ones (room crawler)
 - [x] Room explorer on the map
+- [x] Search for people: route to a person's office
 - [x] Mobile interface, works offline
 - [ ] QR-code positioning
 - [ ] Accessible (step-free) routing with verified data ("Avoid steps" uses lifts today)
@@ -96,7 +105,7 @@ sensors and no IMU.*
 ## Repository layout
 ```
 docs/    concept, architecture, data sources, indoor graph format
-tools/   Python scripts that build the data (LUH rooms, room crawler, OSM walk graph, indoor graphs, coverage)
+tools/   Python scripts that build the data (LUH rooms, room and people crawlers, OSM walk graph, indoor graphs, coverage)
 tests/   offline tests for the tools and the generated data (python3 -m unittest discover tests)
 web/     the static mobile web app (served by GitHub Pages)
 data/    indoor sources per building, entrance overrides, raw cache (not committed)

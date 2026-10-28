@@ -1,0 +1,16 @@
+{
+ "about": "Public LUH web pages whose contact cards list people with building and room. tools/crawl_people.py reads them; only cards in a building with indoor data are kept. Only name, role and office room are stored (no phone, no e-mail). To remove a person, add the name to exclude.",
+ "pages": [
+  {"url": "https://www.uni-hannover.de/universitaet/praesidium/praesident", "org": "Präsidium"},
+  {"url": "https://www.uni-hannover.de/universitaet/praesidium/vize-finanzen", "org": "Präsidium"},
+  {"url": "https://www.uni-hannover.de/universitaet/praesidium/vize-forschung", "org": "Präsidium"},
+  {"url": "https://www.uni-hannover.de/universitaet/praesidium/vize-bildung", "org": "Präsidium"},
+  {"url": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung", "org": "Präsidium"},
+  {"url": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis", "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik"},
+  {"url": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis", "org": "Institut für Analysis"},
+  {"url": "https://www.iag.uni-hannover.de/institut/personenverzeichnis", "org": "Institut für Algebraische Geometrie"},
+  {"url": "https://www.ipi.uni-hannover.de/institut/team", "org": "Institut für Photogrammetrie und GeoInformation"},
+  {"url": "https://www.gih.uni-hannover.de/institut/team", "org": "Geodätisches Institut"}
+ ],
+ "exclude": []
+}

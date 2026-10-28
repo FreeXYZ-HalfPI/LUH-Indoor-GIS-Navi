@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 ### Added
+- **Find people:** type a name ("Christian Heipke", typos allowed: "Eping")
+  and the app routes to that person's office; room popups list who sits there.
+  Links work with names: `#from=volker-epping&to=christian-heipke`.
+  `tools/crawl_people.py` reads the contact cards of public LUH pages listed
+  in `data/people_sources.json` → `web/data/people.json` (122 people in 1101
+  and 3101; name, role, institute and room only).
 - **Room explorer** on the map: zoom in on a mapped building, pick a floor,
   tap any room to start or end a route there. Selected rooms are outlined;
   public rooms show type and size. The map now zooms to room level (21).
