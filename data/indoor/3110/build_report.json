@@ -1,0 +1,20 @@
+{
+ "building": "3110",
+ "generated": "2026-10-28",
+ "total": 234,
+ "routable": 222,
+ "unrouted": {
+  "3110.000.014": "no corridor reachable",
+  "3110.000.084": "no corridor reachable",
+  "3110.001.156": "no corridor reachable",
+  "3110.001.157": "no corridor reachable",
+  "3110.001.192": "no corridor reachable",
+  "3110.001.193": "no corridor reachable",
+  "3110.001.194": "no corridor reachable",
+  "3110.002.201B": "no corridor reachable",
+  "3110.002.201D": "no corridor reachable",
+  "3110.004.404": "no corridor reachable",
+  "3110.004.417": "no corridor reachable",
+  "3110.004.493": "no corridor reachable"
+ }
+}

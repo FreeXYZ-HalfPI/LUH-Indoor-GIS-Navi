@@ -24,3 +24,7 @@ pixels: `point` inside the room, `bbox`, convex `outline`) and, when the
 building has a georeferenced `source.json`, `lat`/`lon` and `outline_lonlat`.
 `extra` holds room numbers added by hand with `--extra` (odd numbers like
 `A61A` that the crawler cannot guess). `rooms.geojson` is the same for QGIS.
+
+`build_report.json` (written by `tools/build_indoor.py build`) lists every room
+the app cannot route to yet and why; `tools/coverage.py` turns the reports into
+[docs/COVERAGE.md](../docs/COVERAGE.md).

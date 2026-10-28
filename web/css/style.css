@@ -155,6 +155,14 @@ main { max-width: 760px; margin: 0 auto; padding: 12px 16px; }
   border-radius: 6px; border: 0; background: #003366; color: #fff; cursor: pointer;
 }
 
+.floor-ctl { background: #fff; display: flex; flex-direction: column; text-align: center; }
+.floor-ctl[hidden] { display: none; }
+.floor-ctl-title { font-size: 0.65rem; padding: 3px 4px 1px; color: #555; text-transform: uppercase; }
+.floor-ctl a { width: 34px; height: 30px; line-height: 30px; font-weight: 600; color: #003366; }
+.floor-ctl a.on { background: #003366; color: #fff; }
+.room-label { background: rgb(255 255 255 / 0.85); border: 0; box-shadow: none; padding: 0 3px; font-size: 0.7rem; font-weight: 600; }
+.room-label::before { display: none; }
+
 footer { max-width: 760px; margin: 0 auto; padding: 8px 16px 24px; font-size: 0.8rem; color: var(--muted); }
 
 #toast {

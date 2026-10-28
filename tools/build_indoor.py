@@ -225,6 +225,7 @@ def build(bid, debug=False):
         rooms_all = [r["id"] for r in crawl]
         listed = sorted(r["id"] for r in crawl if r["listed"])
     else:
+        crawl = []
         rooms_all = json.loads((ROOT / "web" / "data" / "rooms.json").read_text(encoding="utf-8")).get(bid, [])
         listed = rooms_all
     walk = json.loads((ROOT / "web" / "data" / "walkgraph.json").read_text(encoding="utf-8"))
@@ -306,9 +307,14 @@ def build(bid, debug=False):
 
     # rooms: the red highlight in each room's own floor plan
     room_nodes = {}
+    unrouted = {}                 # room → why it has no node (for the coverage report)
     for rid in rooms_all:
         code = rid.split(".")[1]
-        if code not in src["levels"] or rid in src.get("skip_rooms", {}):
+        if code not in src["levels"]:
+            unrouted[rid] = "floor not mapped"
+            continue
+        if rid in src.get("skip_rooms", {}):
+            unrouted[rid] = "skipped by hand"
             continue
         if rid in src.get("room_points", {}):                # hand-placed, e.g. near the door of a big hall
             x, y = src["room_points"][rid]
@@ -318,6 +324,7 @@ def build(bid, debug=False):
             ys, xs = np.nonzero(red)
             if not len(xs):
                 warnings.append(f"{rid}: no red highlight")
+                unrouted[rid] = "no red highlight on its plan"
                 continue
             i = np.argmin((xs - xs.mean()) ** 2 + (ys - ys.mean()) ** 2)   # a red pixel near the centroid
             reg = src["levels"][code]
@@ -325,10 +332,13 @@ def build(bid, debug=False):
         forced = rid in src.get("force_rooms", {}) or rid in src.get("room_points", {})
         if not forced and not (0 <= x < W and 0 <= y < H and inside[int(y), int(x)]):
             warnings.append(f"{rid}: highlight lies outside the building outline (inset drawing?), skipped")
+            unrouted[rid] = "outside the building outline"
             continue
         key = spur(code, x, y, "room", rid)
         if key:
             room_nodes[rid] = key
+        else:
+            unrouted[rid] = "no corridor reachable"
 
     # entrances from OSM (same coordinates as in walkgraph.json)
     entrances = []
@@ -386,6 +396,18 @@ def build(bid, debug=False):
                 continue
             edges.append([idx(v), idx(cur), round(length, 1), flags, mid])
 
+    outlines, meta = {}, {}
+    for r in crawl:
+        reg = src["levels"].get(r["floor"])
+        if reg and r["image"] and len(r["image"]["outline"]) >= 3:
+            ring = [(round(x * reg["s"] + reg["dx"]), round(y * reg["s"] + reg["dy"])) for x, y in r["image"]["outline"]]
+            k = max(range(len(ring)), key=lambda i: math.dist(ring[0], ring[i]))   # rdp needs two distinct ends
+            ring = rdp(ring[: k + 1], 1.5)[:-1] + rdp(ring[k:] + ring[:1], 1.5)[:-1]
+            if len(ring) >= 3:
+                outlines[r["id"]] = [c for p in ring for c in p]
+        if r.get("type"):
+            meta[r["id"]] = [r["type"], r.get("area_m2")]
+
     levels = {str(level_num(code)): {"code": code, **reg, "room": src["plan_room"][code]} for code, reg in src["levels"].items()}
     out = {
         "building": bid,
@@ -400,6 +422,8 @@ def build(bid, debug=False):
         "edges": edges,
         "rooms": {rid: index[k] for rid, k in sorted(room_nodes.items()) if k in index},
         "listed": listed,          # rooms with a public Rauminfo page
+        "outlines": outlines,      # {room: [x, y, x, y, …]} plan pixels, for the room explorer
+        "meta": meta,              # {room: [type, area m²]} for public rooms
         "entrances": [{"node": index[k], "lat": lat, "lon": lon} for k, lat, lon in entrances if k in index],
     }
     dest = ROOT / "web" / "data" / "indoor" / f"{bid}.json"
@@ -457,6 +481,11 @@ def build(bid, debug=False):
           f"{len(out['entrances'])} entrances", file=sys.stderr)
     if unreachable:
         print(f"  rooms not reachable from the entrances: {' '.join(unreachable)}", file=sys.stderr)
+    for rid in unreachable:
+        unrouted[rid] = "not reachable from the entrances"
+    report = {"building": bid, "generated": out["generated"], "total": len(rooms_all),
+              "routable": len(out["rooms"]) - len(unreachable), "unrouted": dict(sorted(unrouted.items()))}
+    (ROOT / "data" / "indoor" / bid / "build_report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
 
 
 # ---------------------------------------------------------------- fit

@@ -94,6 +94,10 @@ corridor segment through the free space and prefers the middle of a corridor.
 | `edges` | `[[a, b, length_m, flags, [x, y, x, y, …]], …]` intermediate geometry in plan pixels |
 | `rooms` | `{room_id: node}` |
 | `entrances` | `[{node, lat, lon}]`, matched to the OSM entrances in `walkgraph.json` |
+| `plan_size` | `[w, h]` of the CAFM plan images (portrait for 3101 and 3110) |
+| `listed` | rooms with a public Rauminfo page |
+| `outlines` | `{room_id: [x, y, x, y, …]}` simplified room outline in plan pixels (room explorer) |
+| `meta` | `{room_id: [type, area_m2]}` for public rooms |
 
 Edge flags: `1` stairs, `4` lift, `8` vertical connection (between floors).
 

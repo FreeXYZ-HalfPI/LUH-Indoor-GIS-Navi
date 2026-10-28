@@ -1,0 +1,29 @@
+{
+ "building": "3101",
+ "generated": "2026-10-28",
+ "total": 261,
+ "routable": 240,
+ "unrouted": {
+  "3101.000.A013Z": "outside the building outline",
+  "3101.000.A014Z": "outside the building outline",
+  "3101.000.A016Z": "outside the building outline",
+  "3101.000.A017Z": "outside the building outline",
+  "3101.000.A025Z": "outside the building outline",
+  "3101.000.A037Z": "outside the building outline",
+  "3101.000.A053Z": "outside the building outline",
+  "3101.000.A054Z": "outside the building outline",
+  "3101.000.A055Z": "outside the building outline",
+  "3101.000.A058Z": "outside the building outline",
+  "3101.000.A060Z": "outside the building outline",
+  "3101.000.A061Z": "outside the building outline",
+  "3101.000.A062Z": "outside the building outline",
+  "3101.000.A070Z": "outside the building outline",
+  "3101.000.A080": "outside the building outline",
+  "3101.000.B003Z": "outside the building outline",
+  "3101.000.B030Z": "outside the building outline",
+  "3101.000.B043Z": "outside the building outline",
+  "3101.000.B046Z": "outside the building outline",
+  "3101.000.B080": "outside the building outline",
+  "3101.001.B129": "no red highlight on its plan"
+ }
+}

@@ -1,5 +1,7 @@
 # LUH-Indoor-GIS-Navi
 
+[![Tests](https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi/actions/workflows/tests.yml/badge.svg)](https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi/actions/workflows/tests.yml)
+
 A Free Software prototype of an indoor navigation system for Leibniz
 Universität Hannover. It uses GIS data, graph-based routing and building
 floor plans.
@@ -34,6 +36,37 @@ another across the campus:
 [inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407),
 [lecture hall A104 → Hauptmensa 205A](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=3101.001.A104&to=3110.002.205A))
 
+## What works today
+
+| Room to room, door to door | Every room on the map, per floor |
+|---|---|
+| ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
+
+- **1,722 rooms** in the 3 example buildings, found by the room crawler. LUH
+  Rauminfo lists only 74 of them (the lecture and seminar rooms).
+- **1,544 rooms (90%) are routable** door to door, across floors and buildings
+  ([coverage per floor](docs/COVERAGE.md)).
+- **Room explorer:** zoom in on a building with a purple dashed frame, pick a
+  floor, tap any room and choose *Start here* / *Go here*. Public rooms show
+  their type and size.
+
+Try: [room A020 on the map](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#to=3101.000.A020) ·
+[3rd-floor office in the Hauptgebäude → Mensa 2nd floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.003.G315&to=3110.002.262) ·
+[2nd-floor mezzanine F220 → 3101 attic A320](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.002.F220&to=3101.003.A320)
+
+### Crawl all rooms of a building
+
+```bash
+python3 tools/crawl_rooms.py https://info.cafm.uni-hannover.de/de/building/3101/rooms
+python3 tools/build_indoor.py build 3101
+python3 tools/coverage.py
+```
+
+The crawler guesses room numbers per floor and wing, keeps those that have a
+CAFM floor plan, and reads each room's position and outline from its red
+highlight. It is polite (one request at a time, cached, resumable). See
+[data/README.md](data/README.md) and [docs/INDOOR_FORMAT.md](docs/INDOOR_FORMAT.md).
+
 ➡ Full idea: **[docs/CONCEPT.md](docs/CONCEPT.md)** · Plan: **[ROADMAP.md](ROADMAP.md)** ·
 Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 
@@ -45,14 +78,16 @@ Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 - 🗺️ **Open data.** OpenStreetMap plus public LUH building and room data.
 - 🆓 **Free Software.** [GNU GPL v3](LICENSE).
 
-## Features (planned)
-- Indoor routing
-- Multi-floor buildings
-- Outdoor → indoor transition
-- QR-code positioning
-- Accessible (step-free) routing
-- Mobile interface
-- Digital-twin integration
+## Features
+- [x] Indoor routing (3 example buildings, approximate)
+- [x] Multi-floor buildings, stairs and lifts
+- [x] Outdoor → indoor transition
+- [x] All rooms of a building, not only the public ones (room crawler)
+- [x] Room explorer on the map
+- [x] Mobile interface, works offline
+- [ ] QR-code positioning
+- [ ] Accessible (step-free) routing with verified data ("Avoid steps" uses lifts today)
+- [ ] Digital-twin integration
 
 The user journey: *Where are you? → Where do you want to go? → exact address
 of the classroom → best path → site plan oriented to where you are, with no
@@ -61,7 +96,8 @@ sensors and no IMU.*
 ## Repository layout
 ```
 docs/    concept, architecture, data sources, indoor graph format
-tools/   Python scripts that build the data (LUH rooms, OSM walk graph, indoor graphs)
+tools/   Python scripts that build the data (LUH rooms, room crawler, OSM walk graph, indoor graphs, coverage)
+tests/   offline tests for the tools and the generated data (python3 -m unittest discover tests)
 web/     the static mobile web app (served by GitHub Pages)
 data/    indoor sources per building, entrance overrides, raw cache (not committed)
 ```

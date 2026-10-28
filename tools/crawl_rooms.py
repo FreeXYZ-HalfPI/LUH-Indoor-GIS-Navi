@@ -6,6 +6,7 @@ Rauminfo (CAFM) floor plans.
   crawl_rooms.py 3101
   crawl_rooms.py https://info.cafm.uni-hannover.de/de/building/3101/rooms
   crawl_rooms.py 3101 --extra A61A,B099      odd room numbers read off the plan
+  crawl_rooms.py 1101 3101 3110              several buildings, one after the other
 
 Rauminfo lists only some rooms of a building (lecture and seminar rooms), but
 every floor plan prints the numbers of all rooms, and the plan image of any
@@ -173,7 +174,7 @@ def floor_digit(code):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("building", help="building id (3101) or its Rauminfo URL")
+    ap.add_argument("buildings", nargs="+", metavar="building", help="building id (3101) or its Rauminfo URL")
     ap.add_argument("--floors", help="floor codes to scan, e.g. U01,000,001 (default: floors of the public list, "
                                      "plus a quick look at the floor below and above)")
     ap.add_argument("--wings", help="wing letters to scan, e.g. A,B (default: letters of the public list)")
@@ -181,9 +182,15 @@ def main():
     ap.add_argument("--delay", type=float, default=0.1, help="pause between requests in seconds (default 0.1)")
     ap.add_argument("--refresh", action="store_true", help="ignore cached probes and plans")
     args = ap.parse_args()
+    if args.extra and len(args.buildings) > 1:
+        ap.error("--extra needs a single building")
+    for target in args.buildings:
+        crawl(target, args)
 
-    m = re.search(r"building/([^/]+)", args.building)
-    bid = m.group(1) if m else args.building.strip()
+
+def crawl(target, args):
+    m = re.search(r"building/([^/]+)", target)
+    bid = m.group(1) if m else target.strip()
     out_dir = ROOT / "data" / "indoor" / bid
     out_file = out_dir / "rooms.json"
     previous = json.loads(out_file.read_text(encoding="utf-8")) if out_file.exists() else {}
@@ -193,7 +200,8 @@ def main():
     # 1. public list
     listed = sorted(set(ROOM_RE.findall(get(f"{CAFM}/de/building/{bid}/rooms").decode("utf-8"))))
     if not listed:
-        sys.exit(f"no rooms listed for building {bid} – check the id/URL")
+        print(f"{bid}: no rooms listed – check the id/URL", file=sys.stderr)
+        return
     print(f"{bid}: {len(listed)} rooms in the public list", file=sys.stderr)
     for rid in listed:
         cache.d[rid] = True
@@ -309,7 +317,7 @@ def main():
     out = {
         "building": bid,
         "source": f"{CAFM}/de/building/{bid}/rooms",
-        "crawled": time.strftime("%Y-%m-%d"),
+        "crawled": previous["crawled"] if previous and not cache.n else time.strftime("%Y-%m-%d"),   # cache-only re-run
         "attribution": "Room numbers and floor plans © Leibniz Universität Hannover (Rauminfo/CAFM)",
         "floors": floors,
         "wings": wings,

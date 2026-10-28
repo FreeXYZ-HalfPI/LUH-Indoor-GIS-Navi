@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- **Room explorer** on the map: zoom in on a mapped building, pick a floor,
+  tap any room to start or end a route there. Selected rooms are outlined;
+  public rooms show type and size. The map now zooms to room level (21).
+- `tools/coverage.py` → `docs/COVERAGE.md`: rooms found / routable per floor
+  and why the rest is not routable yet (from the new `build_report.json`)
+- `crawl_rooms.py` takes several buildings in one run
+- Offline tests (`tests/`) and a GitHub Actions workflow running them
 - `tools/crawl_rooms.py`: finds **all** rooms of a building, not only the
   public ones. Rauminfo lists few rooms, but every floor plan exists for every
   room; the crawler guesses room numbers per floor and wing, keeps those with

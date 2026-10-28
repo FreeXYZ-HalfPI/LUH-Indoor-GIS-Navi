@@ -51,6 +51,9 @@ const dict = {
     total: (m, min) => `${m} · ${min} min walk`,
     fromHere: "Start here",
     toHere: "Go here",
+    floorCtl: "Floor",
+    floorShort: (f) => (f === 0 ? "G" : f > 0 ? String(f) : `B${-f}`),
+    area: (a) => `${a.toLocaleString("en", { maximumFractionDigits: 0 })} m²`,
     about: "About",
     aboutText:
       'Free Software (GPL-3.0) · Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · Building and room data © Leibniz Universität Hannover · <a href="https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi">Source code &amp; feedback</a>',
@@ -105,6 +108,9 @@ const dict = {
     total: (m, min) => `${m} · ${min} Min. zu Fuß`,
     fromHere: "Start hier",
     toHere: "Ziel hier",
+    floorCtl: "Etage",
+    floorShort: (f) => (f === 0 ? "EG" : f > 0 ? String(f) : `U${-f}`),
+    area: (a) => `${a.toLocaleString("de", { maximumFractionDigits: 0 })} m²`,
     about: "Über",
     aboutText:
       'Freie Software (GPL-3.0) · Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende · Gebäude- und Raumdaten © Leibniz Universität Hannover · <a href="https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi">Quellcode &amp; Feedback</a>',

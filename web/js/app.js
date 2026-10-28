@@ -11,6 +11,7 @@ const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 const state = { from: null, to: null, avoidSteps: false };
 let places, graph, map, routeLayer;
+const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef)
 
 // ---------- boot ----------
 
@@ -24,7 +25,10 @@ async function boot() {
   ]);
   places = new Places(buildings, rooms);
   graph = new WalkGraph(walk);
-  for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) graph.addIndoor(indoor);
+  for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) {
+    graph.addIndoor(indoor);
+    indoorData[indoor.building] = indoor;
+  }
 
   initMap(buildings);
   initPicker("from");
@@ -76,7 +80,9 @@ function placeDetail(p) {
   if (p.type === "building") return `${t.building} · ${addr}`;
   const bits = [t.floor(p.room.floor)];
   if (p.room.wing) bits.push(t.wing(p.room.wing));
-  if (!places.roomIndex.has(p.room.id)) bits.push(t.unlisted);
+  const meta = roomMeta(p.room.id);
+  if (meta) bits.push(meta);
+  else if (!places.roomIndex.has(p.room.id)) bits.push(t.unlisted);
   return bits.join(" · ");
 }
 
@@ -202,7 +208,8 @@ function toast(msg) {
 function initMap(buildings) {
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView([52.3826, 9.7175], 15);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
+    maxZoom: 21, // room explorer: zoom past the tiles (scaled up from 19)
+    maxNativeZoom: 19,
     // the OSM tile policy requires a Referer; send only our origin (the page default is no-referrer)
     referrerPolicy: "strict-origin-when-cross-origin",
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -231,6 +238,117 @@ function initMap(buildings) {
     });
   }
   routeLayer = L.layerGroup().addTo(map);
+  initExplorer();
+}
+
+// ---------- room explorer: every room of the mapped buildings, per floor ----------
+
+const EXPLORER_ZOOM = 18;
+let explorerLayer, floorCtl;
+let explorerLevel = 0;
+
+/** "Hörsaal · 192 m²" for public rooms, else "". */
+function roomMeta(id) {
+  const m = indoorData[id.slice(0, 4)]?.meta?.[id];
+  return m ? [m[0], m[1] ? t.area(m[1]) : ""].filter(Boolean).join(" · ") : "";
+}
+
+/** Room outline as lat/lon ring, or null. */
+function roomRing(id) {
+  const d = indoorData[id.slice(0, 4)];
+  const flat = d?.outlines?.[id];
+  if (!flat) return null;
+  const { lat: A, lon: B } = d.georef;
+  const ring = [];
+  for (let i = 0; i < flat.length; i += 2) {
+    const [x, y] = [flat[i], flat[i + 1]];
+    ring.push([A[0] + A[1] * x + A[2] * y, B[0] + B[1] * x + B[2] * y]);
+  }
+  return ring;
+}
+
+function initExplorer() {
+  explorerLayer = L.layerGroup().addTo(map);
+  // grey footprints show which buildings have rooms to explore
+  for (const d of Object.values(indoorData)) {
+    const ids = Object.keys(d.outlines || {});
+    if (!ids.length) continue;
+    d.bounds = L.latLngBounds(ids.flatMap((id) => roomRing(id)));
+    L.rectangle(d.bounds, { color: "#7b2cbf", weight: 1, dashArray: "4 4", fill: false, interactive: false }).addTo(map);
+  }
+  floorCtl = L.control({ position: "topright" });
+  floorCtl.onAdd = () => {
+    const div = L.DomUtil.create("div", "leaflet-bar floor-ctl");
+    L.DomEvent.disableClickPropagation(div);
+    return div;
+  };
+  floorCtl.addTo(map);
+  map.on("zoomend moveend", drawExplorer);
+  drawExplorer();
+}
+
+function visibleIndoor() {
+  if (map.getZoom() < EXPLORER_ZOOM) return [];
+  const view = map.getBounds();
+  return Object.values(indoorData).filter((d) => d.bounds?.intersects(view));
+}
+
+function drawExplorer() {
+  explorerLayer.clearLayers();
+  const shown = visibleIndoor();
+  const div = floorCtl.getContainer();
+  const levels = [...new Set(shown.flatMap((d) => Object.keys(d.levels).map(Number)))].sort((a, b) => b - a);
+  if (!levels.length) {
+    div.hidden = true;
+    return;
+  }
+  if (!levels.includes(explorerLevel)) explorerLevel = levels.includes(0) ? 0 : levels.at(-1);
+  div.hidden = false;
+  div.innerHTML = `<span class="floor-ctl-title">${t.floorCtl}</span>` +
+    levels.map((l) => `<a href="#" role="button" data-l="${l}" class="${l === explorerLevel ? "on" : ""}" title="${esc(t.floor(l))}">${t.floorShort(l)}</a>`).join("");
+  div.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      explorerLevel = Number(a.dataset.l);
+      drawExplorer();
+    }),
+  );
+  const chosen = new Map([[state.from, "#2e8540"], [state.to, "#c8102e"]].filter(([k]) => k).map(([k, c]) => [k.slice(2), c]));
+  for (const d of shown) {
+    for (const id of Object.keys(d.outlines)) {
+      const r = places.resolve(`r:${id}`)?.room;
+      if (!r || r.floor !== explorerLevel) continue;
+      const routable = id in d.rooms;
+      const poly = L.polygon(roomRing(id), {
+        weight: chosen.has(id) ? 3 : 1,
+        color: chosen.get(id) || (routable ? "#7b2cbf" : "#888"),
+        fillColor: d.meta?.[id] ? "#f4a300" : routable ? "#b794f4" : "#bbb",
+        fillOpacity: chosen.has(id) ? 0.5 : 0.25,
+      }).addTo(explorerLayer);
+      poly.bindTooltip(r.room, { direction: "center", className: "room-label", permanent: map.getZoom() >= 20 });
+      poly.on("click", (e) => roomPopup(id, e.latlng));
+    }
+  }
+}
+
+function roomPopup(id, latlng) {
+  const place = places.resolve(`r:${id}`);
+  const div = document.createElement("div");
+  div.className = "popup";
+  div.innerHTML = `<b></b><br><small></small><div class="popup-btns"><button data-w="from"></button><button data-w="to"></button></div>`;
+  div.querySelector("b").textContent = id;
+  div.querySelector("small").textContent = placeDetail(place);
+  div.querySelector('[data-w="from"]').textContent = t.fromHere;
+  div.querySelector('[data-w="to"]').textContent = t.toHere;
+  div.querySelectorAll("button").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state[btn.dataset.w] = `r:${id}`;
+      syncInputs();
+      map.closePopup();
+      update();
+    }),
+  );
+  L.popup().setLatLng(latlng).setContent(div).openOn(map);
 }
 
 const pin = (cls, label) =>
@@ -245,10 +363,19 @@ function update(push = true) {
   const from = places.resolve(state.from);
   const to = places.resolve(state.to);
   $("#share").hidden = !(from && to);
+  const focus = to?.type === "room" ? to : from?.type === "room" ? from : null;
+  if (focus) explorerLevel = focus.room.floor;
+  for (const [p, color] of [[from, "#2e8540"], [to, "#c8102e"]]) {
+    const ring = p?.type === "room" && roomRing(p.room.id);
+    if (ring) L.polygon(ring, { color, weight: 2, fillOpacity: 0.45, interactive: false }).addTo(routeLayer);
+  }
+  drawExplorer();
   if (!from || !to) {
     out.innerHTML = "";
     const one = from || to;
-    if (one) map.setView([one.building.lat, one.building.lon], 17);
+    const ring = one?.type === "room" && roomRing(one.room.id);
+    if (ring) map.fitBounds(L.latLngBounds(ring).pad(1.5), { maxZoom: 19 });
+    else if (one) map.setView([one.building.lat, one.building.lon], 17);
     return;
   }
 
