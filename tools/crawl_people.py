@@ -103,6 +103,12 @@ def room_index(bid):
     return index
 
 
+def routable_rooms(bid):
+    """Room ids the indoor graph of a building can route to (web/data/indoor/<b>.json)."""
+    path = ROOT / "web" / "data" / "indoor" / f"{bid}.json"
+    return set(json.loads(path.read_text(encoding="utf-8"))["rooms"]) if path.exists() else set()
+
+
 def resolve_room(number, ids):
     """The full room id for a room number, or None.
 
@@ -153,6 +159,12 @@ def main():
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=0), encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)}: {len(people)} people in {len({p['room'][:4] for p in people})} buildings",
           file=sys.stderr)
+    # rooms without an indoor route still work (route to the building, then floor and room),
+    # but they are worth knowing: tools/coverage.py says why each one is not routable
+    unrouted = [p for p in people if p["room"] not in routable_rooms(p["room"][:4])]
+    if unrouted:
+        print(f"  {len(people) - len(unrouted)} door to door; {len(unrouted)} in rooms not routable yet: "
+              + ", ".join(sorted({p['room'] for p in unrouted})), file=sys.stderr)
     if unresolved:
         print(f"  {len(unresolved)} rooms not in the crawled room list (re-crawl with --extra?): "
               + "; ".join(unresolved), file=sys.stderr)

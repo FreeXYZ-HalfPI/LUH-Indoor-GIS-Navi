@@ -48,8 +48,9 @@ another across the campus:
   ([coverage per floor](docs/COVERAGE.md)).
 - **Find people:** type a name instead of a room code ("Christian Heipke",
   even with a typo like "Eping" for Epping) and the app routes to their office.
-  122 people of the Präsidium and 5 institutes in 1101 and 3101, read from the
-  contact cards on public LUH pages (`tools/crawl_people.py`, no phone or e-mail).
+  302 people of the Präsidium, 4 Dezernate and 12 institutes in 1101 and 3101,
+  read from the contact cards on public LUH pages (`tools/crawl_people.py`, no
+  phone or e-mail); 293 of them door to door.
 - **Room explorer:** zoom in on a building with a purple dashed frame, pick a
   floor, tap any room and choose *Start here* / *Go here*. Public rooms show
   their type and size.

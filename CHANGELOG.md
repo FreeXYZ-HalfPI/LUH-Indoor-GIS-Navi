@@ -6,8 +6,10 @@
   and the app routes to that person's office; room popups list who sits there.
   Links work with names: `#from=volker-epping&to=christian-heipke`.
   `tools/crawl_people.py` reads the contact cards of public LUH pages listed
-  in `data/people_sources.json` → `web/data/people.json` (122 people in 1101
-  and 3101; name, role, institute and room only).
+  in `data/people_sources.json` → `web/data/people.json` (302 people in 1101
+  and 3101: Präsidium, Dezernate 1/3/5/6 and 12 institutes found with the
+  Standortfinder; name, role, institute and room only). People whose room is
+  not routable yet (9) get a route to the building, then floor and room.
 - **Room explorer** on the map: zoom in on a mapped building, pick a floor,
   tap any room to start or end a route there. Selected rooms are outlined;
   public rooms show type and size. The map now zooms to room level (21).

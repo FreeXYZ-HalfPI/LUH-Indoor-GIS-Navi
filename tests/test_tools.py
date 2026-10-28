@@ -155,12 +155,14 @@ class AppDataTest(unittest.TestCase):
                     self.assertGreaterEqual(len(flat), 6)
                     self.assertTrue(all(-w <= v <= 2 * w for v in flat))
 
-    def test_people_are_routable_and_minimal(self):
-        # every person must lead to a routable room, and no contact details may be stored
+    def test_people_are_findable_and_minimal(self):
+        # every person must lead to a known room of a mapped building (rooms that are not
+        # routable yet still get a route to the building), and no contact details may be stored
         people = json.loads((ROOT / "web" / "data" / "people.json").read_text(encoding="utf-8"))["people"]
         for p in people:
             with self.subTest(person=p["name"]):
-                self.assertIn(p["room"], self.indoor[p["room"][:4]]["rooms"])
+                self.assertIn(p["room"][:4], self.indoor)
+                self.assertIn(p["room"], self.rooms[p["room"][:4]])
                 self.assertEqual(set(p), {"name", "role", "org", "room", "source"})
 
     def test_crawl_files_match_app_list(self):

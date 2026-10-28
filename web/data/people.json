@@ -10,11 +10,32 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Sven Abend",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D224",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Mouine Abidi",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
 "name": "Prof. Dr.-Ing. Hamza Alkhatib",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Geodätisches Institut",
 "room": "3101.001.B152",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Sebastian Anskeit",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
 },
 {
 "name": "Dr. Sahiba Arora",
@@ -31,11 +52,67 @@
 "source": "https://www.gih.uni-hannover.de/institut/team"
 },
 {
+"name": "Priyanka Barik",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D226",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Holger Barkow",
+"role": "",
+"org": "Dezernat 5 – Finanzen",
+"room": "1101.002.B215",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/finanzen/mitarbeit"
+},
+{
 "name": "Prof. Dr. Wolfram Bauer",
 "role": "",
 "org": "Institut für Analysis",
 "room": "1101.001.F125",
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Vivienne Beckord",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E128",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Maike Beier",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E128",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Thaisa Fernandes Bergamo",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A242",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Yvonne Beyer",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D115",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Prof. Dr. Roger Bielawski",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C401",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Peer Biesterfeld",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D003",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Prof. Dr.-Ing. Holger Blume",
@@ -45,11 +122,39 @@
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-forschung"
 },
 {
+"name": "Katharina Bodesohn",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.003.F333",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
 "name": "Dr. Lukas Bonfert",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.C411",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr. Jonathan Bowden",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.000.G015",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr.-Ing. Sabrina Breitenkamp",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E229",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Eva Maria Bresemann",
+"role": "Oberingenieurinnen/Oberingenieure",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H018",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Stina Brüger",
@@ -59,11 +164,32 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Tobias Bullwinkel",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D228",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Dr. Kremena Burkhard",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A231",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Dipl.-Betriebsw. (FH) Christine Bödeker",
 "role": "Geschäftszimmer",
 "org": "Geodätisches Institut",
 "room": "3101.001.B155",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Jonas Böhm",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D226",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
 },
 {
 "name": "Dr. Kaixing Cao",
@@ -73,11 +199,32 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Mariah Rubelyn Cariaso",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E239",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Vivek Chandra",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D308",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
 "name": "Dr.-Ing. Lin Chen",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.002.B220",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Xingrun Chen",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
 },
 {
 "name": "Dr. David Santiago Gómez Cobos",
@@ -108,6 +255,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Birgitt Denner-Müller",
+"role": "Geschäftszimmer",
+"org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
+"room": "1101.003.F328",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6"
+},
+{
 "name": "Prof. Dr. Ulrich Derenthal",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
@@ -129,6 +283,20 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Urda Düker",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.000.E033",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Antje Egert-Rösner",
+"role": "Geschäftszimmer",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E233",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
 "name": "Leon Eickhoff",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
@@ -136,11 +304,32 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Rebecca Herrmann, M. Eng.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.H102",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Prof. Dr. Volker Epping",
 "role": "Präsidentin/Präsident",
 "org": "Präsidium",
 "room": "1101.001.A120",
 "source": "https://www.uni-hannover.de/universitaet/praesidium/praesident"
+},
+{
+"name": "Dr. Nikolaos Eptaminitakis",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C418",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Sabine Erdmann",
+"role": "Geschäftszimmer",
+"org": "Institut für Mathematische Stochastik",
+"room": "1101.004.F439",
+"source": "https://www.ivfm.uni-hannover.de/institute/kontakt"
 },
 {
 "name": "Dr.-Ing. Dominik Ernst",
@@ -178,11 +367,60 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Kai Frye",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D226",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Dr. Sven Fröhlich",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D001",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Ilija Funk",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D001",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
 "name": "Eva Nicole Föglein",
 "role": "",
 "org": "Präsidium",
 "room": "1101.003.F338",
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-finanzen"
+},
+{
+"name": "Dr. Naceur Gaaloul",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D225",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "M. Sc. Athanasios Georgakopoulos",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C415",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Katja Germann",
+"role": "Geschäftsführung, Koordinatorin Gesundheitsmanagement",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D113",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Fritz von Gierke",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
 },
 {
 "name": "Prof. Dr. Julia Gillen",
@@ -192,11 +430,25 @@
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-bildung"
 },
 {
+"name": "Victoria Louise Godley",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E135",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
 "name": "Dr. Victor Gonzalez-Alonso",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.000.G013",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Kai Christian Grensemann",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D208",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
 },
 {
 "name": "PD Dr. Michael J. Gruber",
@@ -206,11 +458,32 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "M. Sc. Philipp Alexander Grunwald",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C415",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Dr. Tim Gräfnitz",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.004.D401",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Matthias Göbel",
+"role": "Sachgebietsleitung",
+"org": "Dezernat 3 – Gebäudemanagement",
+"room": "1101.000.D015",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3/elektro"
+},
+{
+"name": "Lion Günster",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D001",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Antje Günther",
@@ -220,6 +493,13 @@
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
 },
 {
+"name": "Dr. Felix Günther",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C420",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Dr. Zhicheng Han",
 "role": "",
 "org": "Institut für Analysis",
@@ -227,11 +507,60 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Naghmeh Heidari",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A231",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Jule Heier",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
 "name": "Prof. Dr.-Ing. habil. Christian Heipke",
 "role": "Geschäftsführender Leiter",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B143",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Alexander Heisterkamp",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D123",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/biophotonics/team"
+},
+{
+"name": "Berthold Helber",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D103",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Claudia Helle",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.003.E332",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Edo Henniges",
+"role": "Sachgebietsleitung",
+"org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
+"room": "1101.003.F326",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6"
+},
+{
+"name": "Dr. Alexander Herbst",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
 },
 {
 "name": "Dr. Álvaro Sánchez Hernández",
@@ -283,11 +612,25 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Anja Hoppenworth",
+"role": "",
+"org": "Dezernat 5 – Finanzen",
+"room": "1101.001.B118",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/finanzen/mitarbeit"
+},
+{
 "name": "Prof. Dr. Klaus Hulek",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.001.G131",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Bianca Iwan",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D003",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Dr.-Ing. Karsten Jacobsen",
@@ -304,6 +647,69 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Elfi Jeschina",
+"role": "Geschäftszimmer",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H006",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Christian Jordan",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A222",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Paul Kaebert",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Stephanie Kaisik",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D110",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Fridolin Jakob Kakuschke",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.E202",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Birgit Kalberlah",
+"role": "Geschäftszimmer",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H019",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Silvia Kannengießer",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.001.A143",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Madlen Karasch",
+"role": "Sachgebietsleitung",
+"org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
+"room": "1101.003.F316",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6"
+},
+{
+"name": "Dr. Leon Karpa",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D130",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
 "name": "Luke Karras",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
@@ -318,11 +724,60 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Eva Klein-Heßling",
+"role": "Stellvertretende Sachgebietsleitung",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D117",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "apl. Prof. Dr. Carsten Klempt",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.004.D409",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-atom-optics/team"
+},
+{
+"name": "Anna Klobuchowski",
+"role": "Sachgebietsleitung",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D114",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Karen Kock",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E135",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Lina Kornberger",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A231",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Mohamed Amine Koubaa",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.001.G114",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "apl. Prof. Dr. Milutin Kovacev",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D101",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Johanna Krause",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D230",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Natascha Krienen",
@@ -339,11 +794,32 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Thomas Kurbach",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C418",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Man Yi Kwok",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.004.A420",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Prof. Dr.-Ing. Stephan Köster",
+"role": "Geschäftsführende Leitung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E235",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Monika Ladewig",
+"role": "Stellvertretende Leitung",
+"org": "Dezernat 3 – Gebäudemanagement",
+"room": "1101.000.A007",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3/infrastruktur"
 },
 {
 "name": "Lucas Lagarde",
@@ -360,11 +836,74 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Julian David Lemburg",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D308",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Wei Liu",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
+},
+{
+"name": "Tatjana Loos",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D129",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
+},
+{
+"name": "Dr.-Ing. Corinna Lorey",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.003.E332",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Melly Lupita",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A224",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Dr. Wendelin Lutz",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.000.G012",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Valentina Ly, M.A.",
+"role": "Wissenschaftliche Hilfskräfte",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E237",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Anna Katharina Thoms, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E239",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Cedric Wellhausen, M.Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G304",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Chandrashekar Sahadev Kshourad, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E133",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "Christian Grannemann, M.Sc.",
@@ -374,11 +913,74 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Eric Dieter Böhler, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.000.E035",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Fabian Bergmann-Reichert, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E239",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Greta Hadler, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E231",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Jonah Elias Rogozinski, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H010",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Kasra Saadlou, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.000.E035",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Marie Hanemann, M.Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H010",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Maximilian Herbst, M.Sc.",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A231",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Mohammadreza Heidarianbaei, M.Sc.",
 "role": "PhD candidate",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.002.B211",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Jessica Matloch",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.003.F334",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Ibrahim El Mazbouh",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D003",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Dr.-Ing. Max Mehltretter",
@@ -388,11 +990,32 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Prof. Dr.-Ing. Axel Mertens",
+"role": "Professorinnen und Professoren",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H004",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Johanna Eugenia Mettasch",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.A420",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Robin Mevert",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D103",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Dr.-Ing. Robert Meyer",
+"role": "Oberingenieurinnen/Oberingenieure",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H020",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "PD Dr. Marco Meyer",
@@ -402,11 +1025,46 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Silke Meyer",
+"role": "Leitung",
+"org": "Dezernat 5 – Finanzen",
+"room": "1101.001.A127",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/finanzen"
+},
+{
+"name": "Madeleine-Yasmin Miltsch",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D108",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/biophotonics/team"
+},
+{
+"name": "Madeleine-Yasmin Miltsch",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D107",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-atom-optics/team"
+},
+{
 "name": "Dr. Christoph Friedemann Minz",
 "role": "",
 "org": "Institut für Analysis",
 "room": "1101.004.B414",
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Magdalena Carena Misslisch",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D227",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Ricarda Mletzko",
+"role": "Leitung",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.003.F332",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1"
 },
 {
 "name": "Ludvig Modin",
@@ -430,6 +1088,13 @@
 "source": "https://www.gih.uni-hannover.de/institut/team"
 },
 {
+"name": "Prof. Dr. Uwe Morgner",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D108",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
 "name": "Dr. rer. nat. Mona Morsy",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -437,11 +1102,25 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Dr. Philip Mosel",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D001",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
 "name": "Prof. Dr. Mahdi Motagh",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B138",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. rer. nat. Damian Motz",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E227",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "Dr. Stevell Muller",
@@ -465,11 +1144,39 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Julia Mühlenhof",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D117",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "M. Sc. Asmaa Naciri",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C413",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Prof. Dr.-Ing. Ingo Neumann",
 "role": "Geschäftsführende Leitung",
 "org": "Geodätisches Institut",
 "room": "3101.001.B159",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Julius Christian Niederstucke",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Prof. Dr.-Ing. Regina Nogueira",
+"role": "Professorinnen und Professoren",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E227",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "Johannes Thomas Oertel",
@@ -479,6 +1186,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Debjit Pal",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C419",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Fabian Patzwaldt",
 "role": "",
 "org": "Institut für Analysis",
@@ -486,11 +1200,46 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr.-Ing. Pablo Ballesteros Pazo",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.000.A022",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Bettina Peine-Bertram",
+"role": "Geschäftszimmer",
+"org": "Institut für Mathematische Stochastik",
+"room": "1101.004.F439",
+"source": "https://www.ivfm.uni-hannover.de/institute/kontakt"
+},
+{
+"name": "Dr. Daniela Pelz",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D117",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Luka Petersen",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.000.D001",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
 "name": "Marzieh Baes, Ph.D.",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B138",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dipl.-Jur. Beate Pieschel",
+"role": "Geschäftszimmer",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H006",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Simon Pietig",
@@ -514,6 +1263,27 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Dr.-Ing. Dagmar Pohl",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.001.E128",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Timo Maximilian Lukas Poll",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.E108",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Prof. Dr.-Ing. Bernd Ponick",
+"role": "Professorinnen und Professoren",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H008",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Dr. More' Porzio",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
@@ -535,6 +1305,34 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Dr. Ashwin Rajagopalan",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Han Rao",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D103",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Prof. Dr. Ernst Maria Rasel",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D111",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Miriam Rauer",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D115",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
 "name": "Margherita Recchia",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
@@ -547,6 +1345,13 @@
 "org": "Geodätisches Institut",
 "room": "3101.001.B157",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Karl-Heinz Rosenwinkel",
+"role": "Emeritierte und in den Ruhestand versetzte Professorinnen und Professoren",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E229",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "apl. Prof. Dr. techn. Franz Rottensteiner",
@@ -570,6 +1375,13 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Ann Sabu",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D306",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
 "name": "Claudia Sander",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -591,11 +1403,32 @@
 "source": "https://www.gih.uni-hannover.de/institut/team"
 },
 {
+"name": "Alexander Specht, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G307",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Alida Reinsch, M. Sc.",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A242",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Amadeus Langer, M. Sc.",
 "role": "Mitarbeiter in Technik und Verwaltung",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.002.B237",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Andreas Ridder, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H206",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Barikisa Owusu Ansah, M. Sc.",
@@ -605,6 +1438,34 @@
 "source": "https://www.gih.uni-hannover.de/institut/team"
 },
 {
+"name": "Ben Luca Schüring, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G307",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Cara-Nastasja Behrendt, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H203",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Christian Beckemeier, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H201",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Christina Bischoff, M. Sc.",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.001.A126",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Dinh Tuan Nguyen, M. Sc.",
 "role": "PhD candidate",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -612,11 +1473,39 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Elisa Schmid, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G307",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Emin Karakilic, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H216",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Erik Rivas, M. Sc.",
 "role": "PhD candidate",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B109",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Fiona Cena, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H216",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Hannah Luca Deters, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G304",
+"source": "https://www.pi.uni-hannover.de/se/team"
 },
 {
 "name": "Hubert Kanyamahanga, M. Sc.",
@@ -633,11 +1522,46 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Jakob Richard Christian Droste, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G304",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
 "name": "Jan Moritz Hartmann, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Geodätisches Institut",
 "room": "3101.001.B121",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Jan Niclas Laumann, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H016",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Jan Sander, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H201",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Johannes Stender, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H208",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Karen Patricia Garcia Angulo, M. Sc.",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A224",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
 },
 {
 "name": "Kourosh Shahryarinia, M. Sc.",
@@ -647,11 +1571,67 @@
 "source": "https://www.gih.uni-hannover.de/institut/team"
 },
 {
+"name": "Laura Reinhardt, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G304",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Leander Philipp Eschenmann, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.F105",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Manon Rebecca Fehse, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.H103",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Marc Herrmann, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G302",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Marius Paul Behrendt, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H206",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Marvin Hengelsberg, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H016",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Marvin Scherff, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Geodätisches Institut",
 "room": "3101.001.B153",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Max Langanke, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.H103",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Maximilian Bleicher, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H203",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Maximilian Meyer, M. Sc.",
@@ -661,11 +1641,46 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Maximilian Seydi Kilic, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E237",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Meike Jopert, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H010",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Michael Kuper, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H010",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Michael Mircea, M. Sc.",
+"role": "",
+"org": "Institut für Praktische Informatik",
+"room": "1101.003.G304",
+"source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
 "name": "Mingyue Ma, M. Sc.",
 "role": "Doktorand",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B109",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Mohamad Shheibar, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H204",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Mohamad Wahbah, M. Sc.",
@@ -689,6 +1704,13 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Norman Blanken, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H206",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Paula Lippmann, M. Sc.",
 "role": "PhD candidate",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -696,11 +1718,32 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Pieris Konrad Sourkounis, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H204",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Przemyslaw Lesniewski, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H003",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Rasho Ali, M. Sc.",
 "role": "PhD candidate",
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.000.B036",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "René Tammen, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H201",
+"source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
 "name": "Ruslan Magarshak, M. Sc.",
@@ -731,11 +1774,60 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Sven Aufderheide, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H216",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Sören Fröhling, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.H103",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Timo de Vries, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H010",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Tobias Manthey, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.002.H201",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Viktor Maximilian Willich, M. Sc.",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.001.F105",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr.-Ing. habil. Torsten Schlurmann",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.001.A121",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
 "name": "Prof. Dr. Ursula Schmidt-Westphal",
 "role": "",
 "org": "Institut für Analysis",
 "room": "1101.001.F127",
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Martin Scholz",
+"role": "Stellvertretende Leitung",
+"org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
+"room": "1101.003.C309",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6"
 },
 {
 "name": "Nathalie Scholz",
@@ -759,6 +1851,27 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Gundula Schröder",
+"role": "Geschäftszimmer",
+"org": "Dezernat 3 – Gebäudemanagement",
+"room": "1101.001.B102",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3"
+},
+{
+"name": "Dr. Johanna Kristina Schumacher",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.002.A231",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Melanie Eggert, geb. Schunert",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.A449",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Prof. Dr. Matthias Schütt",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
@@ -766,11 +1879,53 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Sekretariat",
+"role": "",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H006",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Baraa Shammout",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.003.D303",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
 "name": "Dr. Xinyu Shao",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.A450",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dr. Mirco Siercke",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D130",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Dr. Karandeep Jandu Singh",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.C419",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Abdulhamed Smisem",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.000.E035",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr. Knut Smoczyk",
+"role": "",
+"org": "Institut für Differentialgeometrie",
+"room": "1101.004.A415",
+"source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Dr. Marcos Soriano Sola",
@@ -787,11 +1942,39 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Svenja Spomer",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.003.F333",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Dr.-Ing. Jörn Steinbrink",
+"role": "Oberingenieurinnen/Oberingenieure",
+"org": "Institut für Antriebssysteme und Leistungselektronik",
+"room": "1101.000.H013",
+"source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
 "name": "Prof. Dr. Isabel Stenger",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.001.G111",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Knut Enno Stolzenberg",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D227",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
+},
+{
+"name": "Ronja Strobel",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E237",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "Prof. Dr. Alexander Strohmaier",
@@ -813,6 +1996,34 @@
 "org": "Präsidium",
 "room": "1101.001.A118",
 "source": "https://www.uni-hannover.de/universitaet/praesidium/praesident"
+},
+{
+"name": "Bianca Thiel",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D129",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/biophotonics/team"
+},
+{
+"name": "Mirja Thome",
+"role": "Sachgebietsleitung",
+"org": "Dezernat 3 – Gebäudemanagement",
+"room": "1101.001.B104",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3/bauinformationsmanagement"
+},
+{
+"name": "Prof. Dr. Eberhard Tiemann",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D127",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Prof. Dr. Andrea Trabattoni",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.001.D127",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
 },
 {
 "name": "Matteo Verni",
@@ -848,6 +2059,55 @@
 "org": "Institut für Analysis",
 "room": "1101.001.G103",
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Verena Welkerling",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D115",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Susanne Weller",
+"role": "Leitung",
+"org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
+"room": "1101.003.F349",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6"
+},
+{
+"name": "Dr.-Ing. Mario Welzel",
+"role": "",
+"org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
+"room": "3101.001.A142",
+"source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Thijs Wendrich",
+"role": "",
+"org": "Institut für Quantenoptik",
+"room": "1101.002.D220",
+"source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/quantum-sensing/team"
+},
+{
+"name": "Dipl.-Ing. Petra Wichert",
+"role": "Geschäftszimmer",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "1101.002.E233",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Rüdiger Wolf",
+"role": "Leitung",
+"org": "Dezernat 3 – Gebäudemanagement",
+"room": "1101.001.B103",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3"
+},
+{
+"name": "Tanja Wrosch",
+"role": "",
+"org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
+"room": "1101.001.D117",
+"source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
 },
 {
 "name": "Dr. Lin Zhou",
