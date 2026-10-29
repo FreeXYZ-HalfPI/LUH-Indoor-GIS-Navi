@@ -1,0 +1,11 @@
+{
+ "building": "3408",
+ "generated": "2026-10-29",
+ "total": 43,
+ "routable": 40,
+ "unrouted": {
+  "3408.017.1704": "no red highlight on its plan",
+  "3408.017.1721": "no red highlight on its plan",
+  "3408.U02.-220": "floor not mapped"
+ }
+}

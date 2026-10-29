@@ -68,3 +68,26 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] Orient the site plan to the user's view without sensors (pick a visible landmark)
 - [ ] Digital-twin / IFC integration if LUH provides BIM data
 - [ ] Timetable integration: "Navigate to my next lecture"
+
+## Future goals (written down, not started)
+
+These guide the next phases. Each needs its own concrete plan before work starts.
+
+**Next places to cover**
+- [ ] International Office (first stop for every exchange student)
+- [ ] Mensa and the university's public services: ServiceCenter,
+      Immatrikulationsamt, library, Studentenwerk counters, IT help desk
+
+**People the navigator is for**
+- [ ] **EULiST exchange students**: they come to Hannover for a short stay, or
+      leave for another EULiST university, and need to find their way from day one
+      (English first, offline, no account)
+- [ ] **Visitors at events** in the Hauptgebäude and at public ceremonies
+      (graduations, open days, conferences): guests who have never been on campus
+- [ ] **People with a specific physical disability**: needs more concrete ideas
+      first, e.g. with the university's Behindertenbeauftragte. Step-free
+      routes, door widths, lifts that work, accessible toilets, quiet routes
+- [ ] **New students** in their first weeks (Orientierungswoche): lecture halls,
+      seminar rooms, the offices they must visit
+- [ ] **Everyone at the university day to day**: students and staff who know
+      their own building but not the others

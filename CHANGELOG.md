@@ -1,6 +1,27 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- **Turn-by-turn directions:** every walk is split into straight runs, and
+  the steps say *turn left*, *turn right*, *bear slightly left*, … with an
+  arrow (`web/js/turns.js`). Small wiggles of corridors and footpaths are
+  ignored (indoors below 5 m, outdoors below 15 m).
+- **Distances in steps:** "30 steps (23 m)", with an average adult step of
+  0.75 m; the route summary too.
+- Two new buildings for the geodesy institutes: **3109 Verfügungsgebäude**
+  (IfE; 313 rooms, 298 routable, 2 staircases, 2 lifts) and **3408 Hochhaus
+  Appelstraße** (IKG; 18 floors, ring corridor, stairs and 2 lift groups).
+  The people search adds the IfE (19 people) and, after the 3408 crawl, IKG.
+- `ROADMAP.md`: future goals (International Office, Mensa and public
+  services; exchange students, event visitors, people with disabilities,
+  new students, everyone at the university).
+
+### Changed
+- The arrival message is general ("You have arrived at your destination"),
+  not about lectures.
+- `crawl_rooms.py`: room numbers are guessed as floor × 100 + room, so a
+  high-rise works (105 on floor 1, 1004 on floor 10).
+
 ### Fixed
 - Hauptgebäude **H wing** and **E2xx strip** are routable: their rooms lie up
   to 3.6 m outside the OSM outline (georeference drift at the ends of the

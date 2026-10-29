@@ -9,8 +9,9 @@ the crawler discovered; **routable** ones have a door-to-door route in the app.
 |---|---:|---:|---:|---:|---|
 | 1101 Hauptgebäude | 57 | 1227 | **1106** | 90% | 2026-10-26 |
 | 3101 Schneiderberg-Gebäude | 9 | 261 | **244** | 93% | 2026-10-26 |
+| 3109 Verfügungsgebäude | 26 | 313 | **298** | 95% | 2026-10-29 |
 | 3110 Hauptmensa | 8 | 234 | **222** | 95% | 2026-10-26 |
-| **total** | 74 | 1722 | **1572** | 91% | |
+| **total** | 100 | 2035 | **1870** | 92% | |
 
 Want to help? Pick a reason below, fix it in the building's `source.json`,
 run `python3 tools/build_indoor.py build <building>` and this script, and open a pull request.
@@ -72,6 +73,29 @@ Not routable yet:
 <details><summary>1 × no red highlight on its plan → place it by hand with `room_points`</summary>
 
 `3101.001.B129`
+</details>
+
+### 3109 Verfügungsgebäude
+
+| floor | rooms | routable |
+|---|---:|---:|
+| ground (`000`) | 52 | 52 |
+| +1 (`001`) | 63 | 62 |
+| +2 (`002`) | 59 | 58 |
+| +3 (`003`) | 63 | 62 |
+| +4 (`004`) | 65 | 64 |
+| +5 (`005`) | 11 | 0 |
+
+Not routable yet:
+
+<details><summary>11 × floor not mapped → register the floor (`build_indoor.py fit`) and trace its corridors</summary>
+
+`3109.005.538` `3109.005.539` `3109.005.540` `3109.005.541` `3109.005.545` `3109.005.546` `3109.005.547` `3109.005.548` `3109.005.549` `3109.005.550` `3109.005.554`
+</details>
+
+<details><summary>4 × skipped by hand → see `skip_rooms` in `source.json`</summary>
+
+`3109.001.141` `3109.002.241` `3109.003.341` `3109.004.441`
 </details>
 
 ### 3110 Hauptmensa

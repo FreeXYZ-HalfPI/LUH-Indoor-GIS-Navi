@@ -26,10 +26,14 @@ another across the campus:
    building entrances, using OpenStreetMap footpaths.
 3. It tells you the floor and wing of the target room and shows the official
    floor plan.
-4. In **3 example buildings** it already routes door to door: corridors,
-   stairs and lifts, drawn on the floor plans (pilot, approximate):
-   **1101 Hauptgebäude**, **3101 Schneiderberg-Gebäude** and **3110 Hauptmensa**.
-   More buildings and QR codes for "You are here" will follow.
+4. In **5 buildings** it already routes door to door: corridors, stairs and
+   lifts, drawn on the floor plans (pilot, approximate): **1101 Hauptgebäude**,
+   **3101 Schneiderberg-Gebäude** (IPI, GIH), **3109 Verfügungsgebäude** (IfE),
+   **3408 Hochhaus Appelstraße** (IKG) and **3110 Hauptmensa**. The geodesy
+   institutes IPI, GIH, IKG and IfE are the first targets.
+5. Directions say **left, right or straight on**, and distances come in
+   **steps** (an average adult step, 0.75 m) with the metres behind them:
+   "Turn left, then walk 30 steps (23 m)." 
 
 🚀 **Try it:** <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>
 (examples: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107),
@@ -42,20 +46,22 @@ another across the campus:
 |---|---|---|
 | ![Route from the office of the LUH president (1101.001.A120) to the office of Prof. Heipke (3101.001.B143)](docs/img/person-to-person.jpg) | ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
 
-- **1,722 rooms** in the 3 example buildings, found by the room crawler. LUH
-  Rauminfo lists only 74 of them (the lecture and seminar rooms).
-- **1,572 rooms (91%) are routable** door to door, across floors and buildings
+- **2,035 rooms** in the mapped buildings so far, found by the room crawler
+  (the Hochhaus 3408 is still being crawled). LUH Rauminfo lists only a few of
+  them (the lecture and seminar rooms).
+- **1,870 rooms (92%) are routable** door to door, across floors and buildings
   ([coverage per floor](docs/COVERAGE.md)).
 - **Find people:** type a name instead of a room code ("Christian Heipke",
   even with a typo like "Eping" for Epping) and the app routes to their office.
-  302 people of the Präsidium, 4 Dezernate and 12 institutes in 1101 and 3101,
-  read from the contact cards on public LUH pages (`tools/crawl_people.py`, no
-  phone or e-mail); 299 of them door to door.
+  321 people of the Präsidium, 4 Dezernate and 13 institutes in 1101, 3101 and
+  3109, read from the contact cards on public LUH pages (`tools/crawl_people.py`,
+  no phone or e-mail); 318 of them door to door. IKG follows with the 3408 crawl.
 - **Room explorer:** zoom in on a building with a purple dashed frame, pick a
   floor, tap any room and choose *Start here* / *Go here*. Public rooms show
   their type and size.
 
-Try: [the president's office → Prof. Heipke](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=volker-epping&to=christian-heipke) ·
+Try: [Prof. Heipke (IPI) → Prof. Flury (IfE)](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=christian-heipke&to=jakob-flury) ·
+[the president's office → Prof. Heipke](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=volker-epping&to=christian-heipke) ·
 [room A020 on the map](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#to=3101.000.A020) ·
 [3rd-floor office in the Hauptgebäude → Mensa 2nd floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.003.G315&to=3110.002.262) ·
 [2nd-floor mezzanine F220 → 3101 attic A320](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.002.F220&to=3101.003.A320)
@@ -88,7 +94,8 @@ Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 - 🆓 **Free Software.** [GNU GPL v3](LICENSE).
 
 ## Features
-- [x] Indoor routing (3 example buildings, approximate)
+- [x] Indoor routing (5 buildings, approximate)
+- [x] Turn-by-turn directions (left / right / straight on), distances in steps
 - [x] Multi-floor buildings, stairs and lifts
 - [x] Outdoor → indoor transition
 - [x] All rooms of a building, not only the public ones (room crawler)
@@ -98,6 +105,9 @@ Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 - [ ] QR-code positioning
 - [ ] Accessible (step-free) routing with verified data ("Avoid steps" uses lifts today)
 - [ ] Digital-twin integration
+- [ ] International Office, Mensa and public services; directions for exchange
+      students, event visitors, new students, people with disabilities
+      ([future goals](ROADMAP.md#future-goals-written-down-not-started))
 
 The user journey: *Where are you? → Where do you want to go? → exact address
 of the classroom → best path → site plan oriented to where you are, with no

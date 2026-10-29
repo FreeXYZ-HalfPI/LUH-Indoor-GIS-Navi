@@ -251,12 +251,19 @@ class Scanner:
         return self.cache.check(f"{self.bid}.{code}.{number}", self.delay)
 
     def candidates(self, code):
-        """Base numbers of every wing on a floor: A100 … A199 on floor 001."""
-        span = 10 ** (self.width - 1)
-        base = floor_digit(code) * span
+        """Base numbers of every wing on a floor: A100 … A199 on floor 001.
+
+        LUH numbers rooms as floor × 100 + room, so a high-rise has 105 on
+        floor 1 and 1004 on floor 10 (3408 Hochhaus). The width of the public
+        numbers is therefore not used for the range, only for very short
+        numbers (two digits: floor × 10 + room)."""
+        if self.width <= 2:
+            span, base = 10, floor_digit(code) * 10
+        else:
+            span, base = 100, abs(level_num(code)) * 100
         for w in self.wings:
             for n in range(base, base + span):
-                yield f"{w}{n:0{self.width}d}"
+                yield f"{w}{n:0{min(self.width, 3)}d}"   # zero-padded to 3: 005, 105, 1004
 
     def scan_floor(self, code):
         """All room numbers that exist on a floor, with their suffixes."""

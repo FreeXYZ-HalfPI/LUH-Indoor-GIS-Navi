@@ -62,6 +62,15 @@ class CrawlerTest(unittest.TestCase):
         self.assertTrue(30 <= x <= 49 and 10 <= y <= 19)
         self.assertEqual(mask.sum(), 200)
 
+    def test_candidates_follow_floor_times_100(self):
+        # a high-rise has 105 on floor 1 and 1004 on floor 10 (3408); wing letters work the same
+        scanner = crawl_rooms.Scanner.__new__(crawl_rooms.Scanner)
+        scanner.wings, scanner.width = [""], 4
+        self.assertEqual([next(iter(scanner.candidates(c))) for c in ("000", "001", "010")], ["000", "100", "1000"])
+        self.assertEqual(list(scanner.candidates("010"))[-1], "1099")
+        scanner.wings, scanner.width = ["A"], 3
+        self.assertEqual(list(scanner.candidates("004"))[:2], ["A400", "A401"])
+
     def test_floor_digit(self):
         # room numbers on floor 3 start with 3; basement U01 rooms start with 1
         self.assertEqual([crawl_rooms.floor_digit(c) for c in ("000", "003", "U01")], [0, 3, 1])

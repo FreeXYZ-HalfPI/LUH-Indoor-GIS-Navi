@@ -5,7 +5,8 @@
 // web server (GitHub Pages) and be easy for students to read and change.
 import { Places, parseRoomId } from "./rooms.js";
 import { WalkGraph, haversine, compass } from "./router.js";
-import { t, getLang, setLang, formatDistance } from "./i18n.js";
+import { t, getLang, setLang, formatWalk } from "./i18n.js";
+import { turnSteps } from "./turns.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
 const WALK_M_PER_MIN = 80; // ~4.8 km/h, a usual walking speed for route planners
@@ -388,7 +389,7 @@ const roomText = (p) => (p.person ? `${p.room.id} – ${esc(p.person.name)}` : p
 const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.room.wing) : "");
 
 // A name that ends with a degree ("M. Sc.") already ends the sentence: avoid "M. Sc.."
-const endSentence = (s) => s.replace(/\.(<\/b>)?\.$/, ".$1");
+const endSentence = (s) => s.replace(/\.(<\/b>)?\.(?=<ol|$)/, ".$1");
 
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
@@ -467,7 +468,7 @@ function guidance(from, to) {
   const trivial = r && !r.legs.length; // same building, no indoor data: start entrance = goal entrance
 
   if (r && !trivial) {
-    summary = t.total(formatDistance(r.distance), minutes(r.time));
+    summary = t.total(formatWalk(r.distance), minutes(r.time));
     steps.push(...routeSteps(r, from, to));
     indoorLegs = r.legs.filter((l) => l.kind === "indoor");
     if (indoorLegs.length) notes.push(t.indoorApprox);
@@ -503,7 +504,28 @@ function guidance(from, to) {
   return { steps, notes, summary, indoorLegs, route: r };
 }
 
-/** Turn-by-turn steps for a route: one sentence per leg, plus the way out and in. */
+// Shortest straight piece that gets its own turn instruction. Indoors a few metres
+// matter (a corridor corner, not a door recess); outdoors the OSM paths bend a lot, so only real turns count.
+const MIN_RUN_INDOOR_M = 5;
+const MIN_RUN_OUTDOOR_M = 15;
+
+/**
+ * Turn-by-turn list for one leg: "Walk 12 steps (9 m)." "Turn left, then walk 30 steps (23 m)."
+ * Empty when the leg is one straight walk: its sentence already says the distance.
+ */
+function turnList(leg) {
+  const parts = turnSteps(leg.coords, leg.kind === "indoor" ? MIN_RUN_INDOOR_M : MIN_RUN_OUTDOOR_M);
+  if (parts.length < 2) return "";
+  // the line on the map and the graph measure slightly differently; keep the leg total
+  const scale = leg.distance / parts.reduce((s, p) => s + p.metres, 0);
+  const items = parts.map((p) => {
+    const walk = formatWalk(p.metres * scale);
+    return `<li data-turn="${p.turn || "start"}">${p.turn ? t.turn(t.turnDirs[p.turn], walk) : t.turnFirst(walk)}</li>`;
+  });
+  return `<ol class="turns">${items.join("")}</ol>`;
+}
+
+/** Turn-by-turn steps for a route: one sentence per leg (with its turns), plus the way out and in. */
 function routeSteps(r, from, to) {
   const steps = [];
   const fb = from.building;
@@ -518,17 +540,17 @@ function routeSteps(r, from, to) {
     if (leg.kind === "indoor") {
       // an indoor sentence names where the leg ends: the room, a stair/lift or the exit
       const fl = t.floor(leg.level);
-      const d = formatDistance(leg.distance);
-      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)));
-      else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type));
-      else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d));
+      const d = formatWalk(leg.distance);
+      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)) + turnList(leg));
+      else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type) + turnList(leg));
+      else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d) + turnList(leg));
     } else if (leg.kind === "vertical") {
       steps.push(t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
     } else if (leg.kind === "door") {
       const b = places.building(leg.building);
       steps.push(leg.enter ? t.stepEnter(buildingName(b), buildingAddress(b), sideOf(b, leg.at), "") : t.stepExit(sideOf(b, leg.at), ""));
     } else {
-      steps.push(t.stepWalk(formatDistance(leg.distance), minutes(leg.distance), leg.steps));
+      steps.push(t.stepWalk(formatWalk(leg.distance), minutes(leg.distance), leg.steps) + turnList(leg));
     }
   });
   // ending at a building without indoor data: enter it and find the room by its number

@@ -1,0 +1,23 @@
+{
+ "building": "3109",
+ "generated": "2026-10-29",
+ "total": 313,
+ "routable": 298,
+ "unrouted": {
+  "3109.001.141": "skipped by hand",
+  "3109.002.241": "skipped by hand",
+  "3109.003.341": "skipped by hand",
+  "3109.004.441": "skipped by hand",
+  "3109.005.538": "floor not mapped",
+  "3109.005.539": "floor not mapped",
+  "3109.005.540": "floor not mapped",
+  "3109.005.541": "floor not mapped",
+  "3109.005.545": "floor not mapped",
+  "3109.005.546": "floor not mapped",
+  "3109.005.547": "floor not mapped",
+  "3109.005.548": "floor not mapped",
+  "3109.005.549": "floor not mapped",
+  "3109.005.550": "floor not mapped",
+  "3109.005.554": "floor not mapped"
+ }
+}

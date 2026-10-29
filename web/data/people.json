@@ -255,6 +255,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr.-Ing. Heiner Denker",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.426",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Birgitt Denner-Müller",
 "role": "Geschäftszimmer",
 "org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
@@ -311,6 +318,13 @@
 "source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
+"name": "Thomas Maschke, B. Eng.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.420",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Prof. Dr. Volker Epping",
 "role": "Präsidentin/Präsident",
 "org": "Präsidium",
@@ -351,6 +365,13 @@
 "org": "Präsidium",
 "room": "1101.001.A111",
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
+},
+{
+"name": "Prof. Dr.-Ing. Jakob Flury",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.418",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Dr. Pascal Fong",
@@ -794,6 +815,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr.-Ing. Johannes Kröger",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.429",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Dr. Thomas Kurbach",
 "role": "",
 "org": "Institut für Differentialgeometrie",
@@ -946,6 +974,13 @@
 "org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
 "room": "1101.000.E035",
 "source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Klarissa Emma Lachmann, M.Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.421",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Marie Hanemann, M.Sc.",
@@ -1149,6 +1184,13 @@
 "org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
 "room": "1101.001.D117",
 "source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Prof. Dr.-Ing. habil. Jürgen Müller",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.413",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "M. Sc. Asmaa Naciri",
@@ -1375,6 +1417,13 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr.-Ing. Fabian Ruwisch",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.402B",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Ann Sabu",
 "role": "",
 "org": "Institut für Quantenoptik",
@@ -1424,11 +1473,25 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Anat Schaper, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.422",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Andreas Ridder, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.002.H206",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Arpetha Chikkamavathur Sreekantaiah, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.424",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Barikisa Owusu Ansah, M. Sc.",
@@ -1443,6 +1506,13 @@
 "org": "Institut für Praktische Informatik",
 "room": "1101.003.G307",
 "source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Benedikt Geffert, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.403B",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Cara-Nastasja Behrendt, M. Sc.",
@@ -1464,6 +1534,13 @@
 "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
 "room": "3101.001.A126",
 "source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Dennis Kulemann, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.403",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Dinh Tuan Nguyen, M. Sc.",
@@ -1513,6 +1590,13 @@
 "org": "Institut für Photogrammetrie und GeoInformation",
 "room": "3101.001.B134",
 "source": "https://www.ipi.uni-hannover.de/institut/team"
+},
+{
+"name": "Igor Koch, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.423",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Imeime Uyo, M. Sc.",
@@ -1704,6 +1788,13 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Nina Fletling, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.414",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Norman Blanken, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
@@ -1744,6 +1835,13 @@
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.002.H201",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Reza Naeimaeiali, M. Sc.",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.402B",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Ruslan Magarshak, M. Sc.",
@@ -1879,6 +1977,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Prof. i.R. Dr.-Ing. Günter Seeber",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.422",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Sekretariat",
 "role": "",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
@@ -1991,6 +2096,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr.-Ing. Benjamin Tennstedt",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.430",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
 "name": "Linda Theophiel",
 "role": "",
 "org": "Präsidium",
@@ -2017,6 +2129,20 @@
 "org": "Institut für Quantenoptik",
 "room": "1101.001.D127",
 "source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/molecular-quantum-gases/team"
+},
+{
+"name": "Dr.-Ing. Ludger Timmen",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.401A",
+"source": "https://www.ife.uni-hannover.de/team"
+},
+{
+"name": "Prof. em. Dr.-Ing. Wolfgang Torge",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.401A",
+"source": "https://www.ife.uni-hannover.de/team"
 },
 {
 "name": "Prof. Dr. Andrea Trabattoni",
@@ -2115,6 +2241,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.001.G110",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Firat Örü",
+"role": "",
+"org": "Institut für Erdmessung",
+"room": "3109.004.402A",
+"source": "https://www.ife.uni-hannover.de/team"
 }
 ]
 }
