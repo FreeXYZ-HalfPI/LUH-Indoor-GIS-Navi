@@ -48,6 +48,11 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
       Mathematik, Didaktik der Mathematik und Physik, Simulation), the ServiceCenter
 - [ ] 16 rooms in the 1101 H wing (e.g. H102) have no shape on the CAFM plans;
       place them by hand (`room_points`) after a visit on site
+- [x] Geodesy institutes as first targets: IPI and GIH (3101), IfE (3109
+      Verfügungsgebäude, 298/313 rooms), IKG (3408 Hochhaus, 843/926 rooms)
+- [ ] 3408 floor 017: CAFM draws it without room highlights (45 rooms), place
+      them by hand; floor 018 (12 rooms) is not mapped yet
+- [x] Turn-by-turn directions (left / right / straight on) with distances in steps
 - [ ] Remaining unrouted rooms: no corridor visible on the plan (e.g. 1101
       C201–C209 strip), drawn outside the outline, or no red highlight
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`

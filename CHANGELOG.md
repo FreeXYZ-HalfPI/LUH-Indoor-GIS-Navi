@@ -10,8 +10,9 @@
   0.75 m; the route summary too.
 - Two new buildings for the geodesy institutes: **3109 Verfügungsgebäude**
   (IfE; 313 rooms, 298 routable, 2 staircases, 2 lifts) and **3408 Hochhaus
-  Appelstraße** (IKG; 18 floors, ring corridor, stairs and 2 lift groups).
-  The people search adds the IfE (19 people) and, after the 3408 crawl, IKG.
+  Appelstraße** (IKG; 926 rooms on 18 floors, 843 routable, ring corridor,
+  stairs and 2 lift groups). The people search adds IfE (19) and IKG (20):
+  343 people, 340 door to door. All buildings: 2713 of 2961 rooms routable.
 - `ROADMAP.md`: future goals (International Office, Mensa and public
   services; exchange students, event visitors, people with disabilities,
   new students, everyone at the university).
@@ -21,6 +22,9 @@
   server (GitHub Pages lets browsers cache for 10 minutes, so phones ran the
   old version), and an open page reloads once when a new version takes over.
 - Turn arrows are larger and the turn lines in full colour.
+- Lifts paid their waiting time on every floor (25 m per floor), so routes
+  climbed 6 floors by stairs. Now every lift stop links to every other stop and
+  a ride costs 20 m + 2 m per floor: stairs for 1–2 floors, the lift above.
 
 ### Changed
 - The arrival message is general ("You have arrived at your destination"),

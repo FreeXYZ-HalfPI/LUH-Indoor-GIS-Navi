@@ -50,9 +50,11 @@ STAIRS, ELEVATOR, VERTICAL = 1, 4, 8
 
 # Routing costs of vertical moves, in "metres of walking". The plans carry no
 # real stair geometry, so these are estimates that make the router prefer a
-# short walk over an extra floor, and stairs over a lift for one floor.
+# short walk over an extra floor. A lift costs mostly the wait, once per ride:
+# stairs win for 1–2 floors, the lift from 3 floors up (6 floors: 60 vs 32).
 STAIRS_M_PER_LEVEL = 10    # one flight of stairs
-ELEVATOR_M = 25            # waiting + riding, independent of the number of floors
+ELEVATOR_WAIT_M = 20       # waiting for the lift, once per ride
+ELEVATOR_M_PER_LEVEL = 2   # riding, per floor
 
 # Plans are cropped to the building, but window gaps in the outer wall look
 # like free space. Pixels outside the OSM outline cost 8× more, so paths never
@@ -471,7 +473,7 @@ class PixelGraph:
                 done.add((cur, path[-2]))
                 if flags & VERTICAL:          # stairs/lift: fixed cost, the plan shows no real geometry
                     floors = abs(level_num(v[0]) - level_num(cur[0]))
-                    length = ELEVATOR_M if flags & ELEVATOR else STAIRS_M_PER_LEVEL * floors
+                    length = ELEVATOR_WAIT_M + ELEVATOR_M_PER_LEVEL * floors if flags & ELEVATOR else STAIRS_M_PER_LEVEL * floors
                     shape = []
                 else:
                     length = sum(math.hypot(a[1] - b[1], a[2] - b[2]) for a, b in zip(path, path[1:])) / self.px_per_m
@@ -582,9 +584,15 @@ def connect_floors(graph, connectors):
     for c in connectors:
         nodes = [graph.spur(code, *c["at"], "connector", c["id"], radius=150) for code in c["levels"]]
         nodes = [n for n in nodes if n]       # a stair may pass a floor without a mapped exit
-        flags = VERTICAL | (ELEVATOR if c["type"] == "elevator" else STAIRS)
-        for a, b in zip(nodes, nodes[1:]):
-            graph.link(a, b, flags)
+        if c["type"] == "elevator":
+            # every stop to every other stop: one ride pays the wait once, however many
+            # floors it goes (a chain of floor-to-floor edges would pay it on every floor)
+            for i, a in enumerate(nodes):
+                for b in nodes[i + 1:]:
+                    graph.link(a, b, VERTICAL | ELEVATOR)
+        else:
+            for a, b in zip(nodes, nodes[1:]):
+                graph.link(a, b, VERTICAL | STAIRS)
 
 
 def room_outlines(crawl, src):

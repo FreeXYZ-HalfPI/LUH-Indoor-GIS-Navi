@@ -45,6 +45,13 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Heike Bank",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.602",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Dr.-Ing. Jörn Bannert",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Geodätisches Institut",
@@ -148,6 +155,13 @@
 "org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
 "room": "1101.002.E229",
 "source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "apl. Prof. Dr.-Ing. Claus Brenner",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.613",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Dr.-Ing. Eva Maria Bresemann",
@@ -367,6 +381,13 @@
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
 },
 {
+"name": "Dipl.-Inf. Colin Fischer",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.614",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Prof. Dr.-Ing. Jakob Flury",
 "role": "",
 "org": "Institut für Erdmessung",
@@ -400,6 +421,13 @@
 "org": "Institut für Quantenoptik",
 "room": "1101.000.D001",
 "source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/ultrafast-laser-laboratory/team"
+},
+{
+"name": "Dr.-Ing. Stefan Fuest",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.604",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Ilija Funk",
@@ -570,6 +598,13 @@
 "source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
+"name": "PD Dr.-Ing. Christine Helmer-Madhok",
+"role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "3408.008.801",
+"source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
 "name": "Edo Henniges",
 "role": "Sachgebietsleitung",
 "org": "Dezernat 6 – Studentische und Akademische Angelegenheiten",
@@ -708,6 +743,13 @@
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.000.H019",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr.-Ing. Vinu Kamalasanan",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.605",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Silvia Kannengießer",
@@ -904,6 +946,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.000.G012",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Martin Malara, M.A.",
+"role": "Mitarbeiterinnen und Mitarbeiter in Technik und Verwaltung",
+"org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
+"room": "3408.005.512D",
+"source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
 "name": "Valentina Ly, M.A.",
@@ -1487,11 +1536,25 @@
 "source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
+"name": "Annabelle Iwannek, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.616",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Arpetha Chikkamavathur Sreekantaiah, M. Sc.",
 "role": "",
 "org": "Institut für Erdmessung",
 "room": "3109.004.424",
 "source": "https://www.ife.uni-hannover.de/team"
+},
+{
+"name": "Artem Leichter, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.615",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Barikisa Owusu Ansah, M. Sc.",
@@ -1571,6 +1634,13 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Faezeh Sadat Mortazavi, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.607",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Fiona Cena, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
@@ -1583,6 +1653,13 @@
 "org": "Institut für Praktische Informatik",
 "room": "1101.003.G304",
 "source": "https://www.pi.uni-hannover.de/se/team"
+},
+{
+"name": "Harsha Vardhan Koduri, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.616",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Hubert Kanyamahanga, M. Sc.",
@@ -1632,6 +1709,20 @@
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.002.H201",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Jeson Lonappan, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.616",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Johannes Holz, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.611",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Johannes Stender, M. Sc.",
@@ -1760,6 +1851,13 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Mireille Fangueng, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.605",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Mohamad Shheibar, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
@@ -1795,11 +1893,32 @@
 "source": "https://www.ife.uni-hannover.de/team"
 },
 {
+"name": "Ning Qian, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.611",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Norman Blanken, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.002.H206",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Olga Shkedova, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.603",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Oskar Wage, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.611",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Paula Lippmann, M. Sc.",
@@ -1886,6 +2005,13 @@
 "source": "https://www.ial.uni-hannover.de/institut/team"
 },
 {
+"name": "Tim Jörg Peter Schimansky, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.611",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Timo de Vries, M. Sc.",
 "role": "Wissenschaftliche Mitarbeiterinnen und Mitarbeiter",
 "org": "Institut für Antriebssysteme und Leistungselektronik",
@@ -1905,6 +2031,13 @@
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.001.F105",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Yiming Xu, M. Sc.",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.616",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Prof. Dr.-Ing. habil. Torsten Schlurmann",
@@ -1956,6 +2089,13 @@
 "source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-3"
 },
 {
+"name": "Dipl.-Ing. Malte Jan Schulze",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.610",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
+},
+{
 "name": "Dr. Johanna Kristina Schumacher",
 "role": "",
 "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
@@ -1989,6 +2129,13 @@
 "org": "Institut für Antriebssysteme und Leistungselektronik",
 "room": "1101.000.H006",
 "source": "https://www.ial.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr.-Ing. habil. Monika Sester",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.601",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Baraa Shammout",
@@ -2115,6 +2262,13 @@
 "org": "Institut für Quantenoptik",
 "room": "1101.001.D129",
 "source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/biophotonics/team"
+},
+{
+"name": "Dipl.-Ing. Frank Thiemann",
+"role": "",
+"org": "Institut für Kartographie und Geoinformatik",
+"room": "3408.006.606",
+"source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
 "name": "Mirja Thome",

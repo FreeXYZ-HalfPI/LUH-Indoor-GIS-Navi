@@ -48,21 +48,21 @@ another across the campus:
 |---|---|---|
 | ![Route from the office of the LUH president (1101.001.A120) to the office of Prof. Heipke (3101.001.B143)](docs/img/person-to-person.jpg) | ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
 
-- **2,035 rooms** in the mapped buildings so far, found by the room crawler
-  (the Hochhaus 3408 is still being crawled). LUH Rauminfo lists only a few of
-  them (the lecture and seminar rooms).
-- **1,870 rooms (92%) are routable** door to door, across floors and buildings
+- **2,961 rooms** in the 5 mapped buildings, found by the room crawler. LUH
+  Rauminfo lists only 143 of them (the lecture and seminar rooms).
+- **2,713 rooms (92%) are routable** door to door, across floors and buildings
   ([coverage per floor](docs/COVERAGE.md)).
 - **Find people:** type a name instead of a room code ("Christian Heipke",
   even with a typo like "Eping" for Epping) and the app routes to their office.
-  321 people of the Präsidium, 4 Dezernate and 13 institutes in 1101, 3101 and
-  3109, read from the contact cards on public LUH pages (`tools/crawl_people.py`,
-  no phone or e-mail); 318 of them door to door. IKG follows with the 3408 crawl.
+  343 people of the Präsidium, 4 Dezernate and 14 institutes in 1101, 3101,
+  3109 and 3408, read from the contact cards on public LUH pages
+  (`tools/crawl_people.py`, no phone or e-mail); 340 of them door to door.
 - **Room explorer:** zoom in on a building with a purple dashed frame, pick a
   floor, tap any room and choose *Start here* / *Go here*. Public rooms show
   their type and size.
 
-Try: [Prof. Heipke (IPI) → Prof. Flury (IfE)](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=christian-heipke&to=jakob-flury) ·
+Try: [Prof. Heipke (IPI) → Prof. Sester (IKG, 6th floor of the Hochhaus)](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=christian-heipke&to=monika-sester) ·
+[Prof. Heipke (IPI) → Prof. Flury (IfE)](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=christian-heipke&to=jakob-flury) ·
 [the president's office → Prof. Heipke](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=volker-epping&to=christian-heipke) ·
 [room A020 on the map](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#to=3101.000.A020) ·
 [3rd-floor office in the Hauptgebäude → Mensa 2nd floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.003.G315&to=3110.002.262) ·
