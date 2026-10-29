@@ -16,6 +16,12 @@
   services; exchange students, event visitors, people with disabilities,
   new students, everyone at the university).
 
+### Fixed
+- Updates arrive at once: the service worker revalidates every file with the
+  server (GitHub Pages lets browsers cache for 10 minutes, so phones ran the
+  old version), and an open page reloads once when a new version takes over.
+- Turn arrows are larger and the turn lines in full colour.
+
 ### Changed
 - The arrival message is general ("You have arrived at your destination"),
   not about lectures.

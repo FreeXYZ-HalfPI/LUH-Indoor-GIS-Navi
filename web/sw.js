@@ -5,7 +5,7 @@
 // still route there once it has been opened once.
 // Bump on every change to the app or its data: a new name makes the browser install
 // the new files and "activate" delete the old cache.
-const VERSION = "v13";
+const VERSION = "v14";
 const SHELL = `shell-${VERSION}`;
 const TILES = "tiles-v1"; // tiles do not change with the app, so they keep their cache
 const MAX_TILES = 600; // ~10 MB: enough for the campus around you, small enough for any phone
@@ -76,9 +76,12 @@ self.addEventListener("fetch", (e) => {
   }
 
   if (url.origin === location.origin) {
-    // network first so updates arrive quickly, cache as offline fallback
+    // network first so updates arrive quickly, cache as offline fallback.
+    // cache: "no-cache" asks the server whether the file changed (a cheap 304 if not);
+    // without it the browser may answer from its own HTTP cache, which GitHub Pages
+    // allows for 10 minutes, and the app would run old code after a release.
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: "no-cache" })
         .then((res) => {
           if (res.ok) caches.open(SHELL).then((c) => c.put(e.request, res.clone()));
           return res;

@@ -659,7 +659,14 @@ function floorplanBlock(plans, to) {
 // ---------- service worker ----------
 
 // offline use after the first visit; a failure (e.g. file:// or private mode) only loses that
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+if ("serviceWorker" in navigator) {
+  // reload once when a new version takes over, so an open page does not keep running old code
+  const hadController = !!navigator.serviceWorker.controller; // not on the very first visit
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (hadController) location.reload();
+  });
+  navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {}); // always fetch a fresh sw.js
+}
 
 boot().catch((e) => {
   document.body.classList.remove("loading");

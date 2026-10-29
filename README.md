@@ -33,7 +33,9 @@ another across the campus:
    institutes IPI, GIH, IKG and IfE are the first targets.
 5. Directions say **left, right or straight on**, and distances come in
    **steps** (an average adult step, 0.75 m) with the metres behind them:
-   "Turn left, then walk 30 steps (23 m)." 
+   "Turn left, then walk 30 steps (23 m)."
+
+   ![Turn-by-turn directions from Prof. Heipke's office (3101) to Prof. Flury's office (3109): each walk split into arrows and steps](docs/img/turn-by-turn.jpg)
 
 🚀 **Try it:** <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>
 (examples: [Hauptgebäude E028 → TI-Gebäude 3703.001.107](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=3703.001.107),
