@@ -58,21 +58,73 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
 - Scope for now: these **3 example buildings**. More buildings come later.
 
-## Phase 3: Positioning without GPS
-- [ ] QR codes / short codes at entrances, stairs and junctions ("You are here")
-- [ ] Printable QR sign generator for the university
-- [ ] Deep links: `…/#from=1101.000.E028&to=3403.001.123` (shareable, e.g. in StudIP)
+## Path to a real-world solution
 
-## Phase 4: Accessibility & polish
-- [ ] Step-free routing (elevators, ramps) using LUH barrier-free data
-- [ ] Screen-reader friendly route text, high-contrast mode
-- [ ] Links to the public-transport planner for distant campuses (Garbsen, Herrenhausen)
-- [ ] Automated data refresh (scheduled GitHub Action)
+Plan from the project evaluation of 2026-11-05 (see [docs/RISKS.md](docs/RISKS.md)).
+Phases 0–2 above are the prototype. The order below matters: trust and
+permission come before scale. Phase B starts now and runs in parallel.
 
-## Phase 5: Ideas
+### Phase A: Make the pilot trustworthy (1–2 months)
+- [ ] Field-test the 5 buildings: 30–50 routes per building (cross-floor and
+      cross-building) with 5–10 real students; fix `source.json`
+- [ ] "Report a problem with this route" link that opens a pre-filled GitHub
+      issue with the from/to IDs only (no personal data)
+- [ ] JavaScript tests for `router.js`, `turns.js`, `rooms.js`
+- [ ] CI check: every routable room reaches an entrance; no route cuts
+      through a third building
+- [ ] Show confidence per building and floor: "approximate" vs "verified on site"
+- [ ] Cheap pilot gaps: H-wing `room_points`, 3408 floors 017/018, 1101 floor 005,
+      1101 C201–C209 strip
+
+### Phase B: Legal and institutional foundation (start now)
+- [ ] Contact LUH (Dezernat 3 / Gebäudemanagement, CAFM team, Rechenzentrum,
+      Datenschutzbeauftragte): written permission for the derived data, an official
+      export (CAD/DWG/IFC, room lists, entrances), a named contact
+      (draft: [docs/LUH_REQUEST.md](docs/LUH_REQUEST.md))
+- [ ] Find a university sponsor (the geodesy institutes, Zentrale Studienberatung)
+- [ ] Decide on people search: approval and opt-out process, or limit to offices
+      (Dezernate, institute secretariats)
+- [ ] Privacy statement and imprint (required for a public site in Germany)
+- [ ] Hosting plan: a `*.uni-hannover.de` subdomain, GitHub stays the open-source home
+
+### Phase C: Data that scales (3–6 months)
+- [ ] Importer for official CAD/IFC data into the existing indoor format, if LUH provides it
+- [ ] Otherwise semi-automatic tracing: medial axis of the free space, detected
+      door openings, a small review editor for contributors
+- [ ] Lazy loading per building (index file + service worker caches opened buildings)
+- [ ] Scheduled GitHub Action: refresh room lists and flag changes
+- [ ] 15–20 buildings that cover the daily traffic (library, main lecture halls,
+      Nordstadt and Welfengarten buildings)
+
+### Phase D: Positioning and accessibility (parallel with C)
+- [ ] QR / short codes at entrances, stairs and lifts ("You are here", on the
+      device only) and a printable sign generator; start with 1101 and 3101
+- [ ] Deep links for StudIP (`…/#from=…&to=…`, already supported by the app)
+- [ ] Step-free routing with the Behindertenbeauftragte: door widths, ramps, lift
+      availability, staff-only lifts, accessible toilets; "avoid steps" as a hard
+      constraint on request
+- [ ] Audit the UI: screen reader, contrast, font scaling, high-contrast mode
+
+### Phase E: Launch (about month 6–9)
+- [ ] Official launch before a winter semester: Orientierungswoche, university
+      website, StudIP, flyer with a QR code
+- [ ] Own map tiles (self-hosted or commercial); the public OSM tile server is
+      not for production traffic
+- [ ] Aggregate, privacy-preserving metrics only, with a written policy
+- [ ] Monitoring of broken data (routability regressions in CI) and a named
+      person who answers issues
+
+### Phase F: Grow into a service
+- [ ] Other campuses (Garbsen, Herrenhausen, Linden) and links to the GVH / Üstra planner
+- [ ] Event mode and an International Office / EULiST guide in English
+- [ ] Timetable integration ("navigate to my next lecture"), processed on the device
+- [ ] Live status of lift outages and closures from a feed that facility management keeps
+- [ ] Handover: 3–5 maintainers, funding (university project or student-initiative
+      fund), documented transfer to a university team
+
+### Ideas (not planned)
 - [ ] Orient the site plan to the user's view without sensors (pick a visible landmark)
 - [ ] Digital-twin / IFC integration if LUH provides BIM data
-- [ ] Timetable integration: "Navigate to my next lecture"
 
 ## Future goals (written down, not started)
 

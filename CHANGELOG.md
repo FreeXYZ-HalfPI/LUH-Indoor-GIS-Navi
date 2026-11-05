@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 ### Added
+- **Roadmap to a real-world solution** (`ROADMAP.md` phases A–F), risk list
+  (`docs/RISKS.md`) and a draft request to LUH (`docs/LUH_REQUEST.md`).
 - **Turn-by-turn directions:** every walk is split into straight runs, and
   the steps say *turn left*, *turn right*, *bear slightly left*, … with an
   arrow (`web/js/turns.js`). Small wiggles of corridors and footpaths are
