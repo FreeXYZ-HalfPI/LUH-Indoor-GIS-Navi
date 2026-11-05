@@ -10,6 +10,9 @@ and a small hand-made source file (data/indoor/<building>/source.json).
   build_indoor.py build 1101   write web/data/indoor/1101.json and
                                data/indoor/1101/1101.geojson
                                (--debug also writes overlay PNGs to data/raw/)
+  build_indoor.py status 1101  only update which floors are verified on site
+                               ("verified" in source.json) in the app data;
+                               no floor plans, no network ("all": every building)
 
 How a build works, in short:
   1. Every floor plan image is turned into a cost map: walls are impassable,
@@ -77,6 +80,62 @@ def level_num(code):
 
     LUH writes basement floors as U01, U02 …; numbers make them sortable."""
     return -int(code[1:]) if code[0] in "U-" else int(code)
+
+
+def verified_levels(src):
+    """Floors checked on site, from source.json: {"verified": {"000": "2026-11-20"}}.
+
+    Returns {level number as string: date}, the keys of the app's "levels".
+    A floor code that is not mapped, or a date that is not YYYY-MM-DD, is an
+    error: a typo must never mark a floor as verified."""
+    out = {}
+    for code, date in src.get("verified", {}).items():
+        if code not in src["levels"]:
+            raise ValueError(f"verified: floor {code} is not in levels")
+        try:
+            time.strptime(date, "%Y-%m-%d")
+        except (TypeError, ValueError):
+            raise ValueError(f"verified: floor {code}: {date!r} is not a date like 2026-11-20") from None
+        out[str(level_num(code))] = date
+    return out
+
+
+def apply_status(out, src):
+    """Write the confidence of each floor into the app data: levels[n]["verified"]
+    is the date of the on-site check, and "approximate" stays true until every
+    mapped floor has been checked."""
+    done = verified_levels(src)
+    for n, lvl in out["levels"].items():
+        lvl.pop("verified", None)
+        if n in done:
+            lvl["verified"] = done[n]
+    out["approximate"] = not all("verified" in lvl for lvl in out["levels"].values())
+    return out
+
+
+def app_data_path(bid):
+    return ROOT / "web" / "data" / "indoor" / f"{bid}.json"
+
+
+def write_app_data(bid, out):
+    dest = app_data_path(bid)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")   # compact: it is downloaded by phones
+
+
+def status(bid):
+    """Update only the floor confidence in web/data/indoor/<bid>.json from source.json.
+
+    Needs no floor plans and no network, so marking a floor as verified after a
+    field test does not need a full rebuild."""
+    src = read_json(ROOT / "data" / "indoor" / bid / "source.json")
+    out = read_json(app_data_path(bid))
+    if src is None or out is None:
+        raise SystemExit(f"{bid}: no source.json or no built app data; run `build {bid}` first")
+    write_app_data(bid, apply_status(out, src))
+    done = [lvl["code"] for lvl in out["levels"].values() if "verified" in lvl]
+    print(f"{bid}: {len(done)}/{len(out['levels'])} floors verified on site"
+          + (f" ({', '.join(done)})" if done else ""), file=sys.stderr)
 
 
 def read_json(path, default=None):
@@ -694,7 +753,7 @@ def build(bid, debug=False):
               for code, reg in src["levels"].items()}
     out = {
         "building": bid,
-        "approximate": True,
+        "approximate": True,       # set by apply_status() below
         "generated": time.strftime("%Y-%m-%d"),
         "attribution": "Derived from LUH Rauminfo floor plans © Leibniz Universität Hannover; outline © OpenStreetMap contributors (ODbL)",
         "georef": geo.affine(),
@@ -709,9 +768,9 @@ def build(bid, debug=False):
         "meta": meta,              # {room: [type, area m²]} for public rooms
         "entrances": [{"node": index[n], "lat": lat, "lon": lon} for n, lat, lon in entrances if n in index],
     }
-    dest = ROOT / "web" / "data" / "indoor" / f"{bid}.json"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")   # compact: it is downloaded by phones
+    apply_status(out, src)
+    write_app_data(bid, out)
+    dest = app_data_path(bid)
     available = sorted(p.stem for p in dest.parent.glob("*.json") if p.stem != "index")
     (dest.parent / "index.json").write_text(json.dumps(available), encoding="utf-8")   # the app has no directory listing
 
@@ -891,12 +950,15 @@ def fit(bid, coarse=False):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["fit", "build"])
+    ap.add_argument("command", choices=["fit", "build", "status"])
     ap.add_argument("building")
     ap.add_argument("--debug", action="store_true", help="write overlay PNGs to data/raw/")
     ap.add_argument("--coarse", action="store_true", help="fit: search rotation/scale from scratch")
     a = ap.parse_args()
     if a.command == "fit":
         fit(a.building, a.coarse)
+    elif a.command == "status":
+        for bid in json.loads((ROOT / "web" / "data" / "indoor" / "index.json").read_text()) if a.building == "all" else [a.building]:
+            status(bid)
     else:
         build(a.building, a.debug)

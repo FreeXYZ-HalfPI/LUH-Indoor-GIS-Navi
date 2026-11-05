@@ -76,7 +76,8 @@ outline), `skip_rooms` (rooms drawn as insets).
   "connectors": [
     { "id": "S-lichthof-nw", "type": "stairs",   "at": [890,640], "levels": ["000","001","002","003"] },
     { "id": "L-main",        "type": "elevator", "at": [1076,598], "levels": ["000","001","002","003","004"] }
-  ]
+  ],
+  "verified": { "000": "2026-11-20" }   // optional: floors walked on site, with the date of the check
 }
 ```
 
@@ -89,7 +90,8 @@ corridor segment through the free space and prefers the middle of a corridor.
 |---|---|
 | `georef` | `{lat:[a0,a1,a2], lon:[b0,b1,b2]}` plan pixel → WGS84 |
 | `px_per_m` | plan pixels per metre |
-| `levels` | `{"0": {code:"000", s, dx, dy, room:"1101.000.E028"}}` keyed by numeric level |
+| `levels` | `{"0": {code:"000", s, dx, dy, room:"1101.000.E028", verified:"2026-11-20"}}` keyed by numeric level; `verified` only on floors checked on site |
+| `approximate` | `true` until every mapped floor is verified |
 | `nodes` | `[[x, y, level], …]` in plan pixels |
 | `edges` | `[[a, b, length_m, flags, [x, y, x, y, …]], …]` intermediate geometry in plan pixels |
 | `rooms` | `{room_id: node}` |
@@ -106,5 +108,26 @@ Numeric levels: `000` → 0, `001` → 1, `U01` → −1.
 ## Quality
 
 The pilot data is **approximate**. It is derived from floor plans, not
-surveyed. The app says so. Corrections from people who know the building are
+surveyed. The app says so, per floor: a route on floors that nobody has
+checked gets one "approximate" note; once a floor is verified, every indoor
+step is tagged *✓ checked on site* or *≈ approximate*.
+
+### Marking a floor as verified
+
+After a field test has walked the routes of a floor and its `source.json`
+corrections are in, add the floor and the date of the check:
+
+```jsonc
+"verified": { "000": "2026-11-20", "001": "2026-11-20" }
+```
+
+```bash
+python3 tools/build_indoor.py status 3101   # updates web/data/indoor/3101.json; no floor plans, no network
+python3 tools/coverage.py                   # the "on site" column in docs/COVERAGE.md
+```
+
+A floor code that is not mapped, or a date that is not `YYYY-MM-DD`, stops
+the tool. The tests fail when `source.json` and the app data disagree.
+Remove a floor from `verified` (and run `status` again) when it is rebuilt or
+the building changes. Corrections from people who know the building are
 very welcome: edit `source.json`, run the builder and open a pull request.

@@ -72,7 +72,9 @@ permission come before scale. Phase B starts now and runs in parallel.
 - [x] JavaScript tests for `router.js`, `turns.js`, `rooms.js` (`tests/js/`)
 - [x] CI check: every routable room reaches an entrance; no route cuts
       through a third building (`tests/js/data.test.mjs`)
-- [ ] Show confidence per building and floor: "approximate" vs "verified on site"
+- [x] Show confidence per building and floor: "approximate" vs "verified on site"
+      (`"verified"` in `source.json`, `build_indoor.py status`, tags in the directions,
+      column in [docs/COVERAGE.md](docs/COVERAGE.md))
 - [ ] Cheap pilot gaps: H-wing `room_points`, 3408 floors 017/018, 1101 floor 005,
       1101 C201–C209 strip
 

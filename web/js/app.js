@@ -8,6 +8,7 @@ import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
 import { reportUrl } from "./report.js";
+import { routeFloors, confidence } from "./confidence.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
 const WALK_M_PER_MIN = 80; // ~4.8 km/h, a usual walking speed for route planners
@@ -479,7 +480,8 @@ function guidance(from, to) {
     summary = t.total(formatWalk(r.distance), minutes(r.time));
     steps.push(...routeSteps(r, from, to));
     indoorLegs = r.legs.filter((l) => l.kind === "indoor");
-    if (indoorLegs.length) notes.push(t.indoorApprox);
+    const note = confidenceNote(routeFloors(r.legs, graph.indoor));
+    if (note) notes.push(note);
     // a guessed entrance only matters when the route really starts or ends at a door
     const estimated = [fb.id, tb.id].some((id) => graph.buildings[id]?.estimated && !(r.start.indoor && r.end.indoor));
     if (estimated) notes.push(t.estimated);
@@ -510,6 +512,29 @@ function guidance(from, to) {
   }
   steps.push(t.stepArrive);
   return { steps, notes, summary, indoorLegs, route: r };
+}
+
+/** The note on how far the indoor part can be trusted: approximate, checked on site, or a mix (per floor). */
+function confidenceNote(floors) {
+  const c = confidence(floors);
+  if (!c) return "";
+  if (c === "approximate") return t.indoorApprox;
+  const name = (f) => `${buildingName(places.building(f.building))}, ${t.floor(f.level)}`;
+  const ok = floors.filter((f) => f.verified).map((f) => `${name(f)} (${esc(formatDate(f.verified))})`).join("; ");
+  if (c === "verified") return t.indoorVerified(ok);
+  return t.indoorMixed(ok, floors.filter((f) => !f.verified).map(name).join("; "));
+}
+
+/** "2026-11-20" → "20 Nov 2026" / "20.11.2026" in the app's language. */
+function formatDate(iso) {
+  const d = new Date(`${iso}T12:00:00`); // noon: no time zone moves it to another day
+  return isNaN(d) ? iso : d.toLocaleDateString(getLang() === "de" ? "de-DE" : "en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+/** A small tag after an indoor step: checked on site (with the date) or approximate. */
+function confidenceTag(leg) {
+  const date = graph.indoor[leg.building]?.levels?.[String(leg.level)]?.verified;
+  return date ? ` <span class="conf ok">${t.confOk(esc(formatDate(date)))}</span>` : ` <span class="conf">${t.confApprox}</span>`;
 }
 
 // Shortest straight piece that gets its own turn instruction. Indoors a few metres
@@ -543,15 +568,18 @@ function routeSteps(r, from, to) {
     if (from.type === "room" && from.room.floor !== 0) steps.push(t.stepGoDown(t.floor(from.room.floor)));
     steps.push(t.stepExit(sideOf(fb, [r.start.entrance.lat, r.start.entrance.lon]), entranceKind(r.start.entrance)));
   }
+  // tags per indoor step only once some floor of the route was checked: with none, the one note says it all
+  const tags = confidence(routeFloors(r.legs, graph.indoor)) !== "approximate";
   r.legs.forEach((leg, i) => {
     const next = r.legs[i + 1];
     if (leg.kind === "indoor") {
       // an indoor sentence names where the leg ends: the room, a stair/lift or the exit
       const fl = t.floor(leg.level);
       const d = formatWalk(leg.distance);
-      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)) + turnList(leg));
-      else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type) + turnList(leg));
-      else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d) + turnList(leg));
+      const tag = tags ? confidenceTag(leg) : "";
+      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)) + tag + turnList(leg));
+      else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type) + tag + turnList(leg));
+      else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d) + tag + turnList(leg));
     } else if (leg.kind === "vertical") {
       steps.push(t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
     } else if (leg.kind === "door") {
