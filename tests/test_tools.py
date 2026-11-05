@@ -127,6 +127,39 @@ class BuilderTest(unittest.TestCase):
         self.assertAlmostEqual(lon, 9.7180, places=7)
 
 
+class StatusTest(unittest.TestCase):
+    """Floors verified on site (source.json "verified") → the app data."""
+
+    SRC = {"levels": {"000": {}, "001": {}, "U01": {}}}
+
+    def app(self):
+        return {"levels": {"0": {"code": "000"}, "1": {"code": "001"}, "-1": {"code": "U01"}}, "approximate": True}
+
+    def test_no_floor_verified(self):
+        out = build_indoor.apply_status(self.app(), self.SRC)
+        self.assertTrue(out["approximate"])
+        self.assertFalse(any("verified" in lvl for lvl in out["levels"].values()))
+
+    def test_some_and_all_floors_verified(self):
+        some = build_indoor.apply_status(self.app(), {**self.SRC, "verified": {"001": "2026-11-20", "U01": "2026-11-21"}})
+        self.assertEqual(some["levels"]["1"]["verified"], "2026-11-20")
+        self.assertEqual(some["levels"]["-1"]["verified"], "2026-11-21")
+        self.assertNotIn("verified", some["levels"]["0"])
+        self.assertTrue(some["approximate"])
+        every = {c: "2026-11-20" for c in self.SRC["levels"]}
+        self.assertFalse(build_indoor.apply_status(self.app(), {**self.SRC, "verified": every})["approximate"])
+
+    def test_unverifying_a_floor_removes_its_date(self):
+        out = build_indoor.apply_status(self.app(), {**self.SRC, "verified": {"000": "2026-11-20"}})
+        out = build_indoor.apply_status(out, self.SRC)
+        self.assertNotIn("verified", out["levels"]["0"])
+
+    def test_typos_are_errors(self):
+        for bad in ({"002": "2026-11-20"}, {"000": "20.11.2026"}, {"000": "2026-13-01"}, {"000": None}):
+            with self.assertRaises(ValueError, msg=bad):
+                build_indoor.verified_levels({**self.SRC, "verified": bad})
+
+
 class AppDataTest(unittest.TestCase):
     """The generated files in web/data must agree with each other."""
 
@@ -154,6 +187,15 @@ class AppDataTest(unittest.TestCase):
                 self.assertTrue(all(0 <= a < n and 0 <= c < n and length >= 0 for a, c, length, *_ in d["edges"]))
                 levels = {int(k) for k in d["levels"]}
                 self.assertTrue(all(lvl in levels for *_, lvl in d["nodes"]))
+
+    def test_verified_floors_match_the_sources(self):
+        # a field test is recorded in source.json; forgetting `build_indoor.py status` would hide it in the app
+        for b, d in self.indoor.items():
+            src = json.loads((ROOT / "data" / "indoor" / b / "source.json").read_text(encoding="utf-8"))
+            with self.subTest(building=b):
+                expect = build_indoor.apply_status(json.loads(json.dumps(d)), src)
+                self.assertEqual(d["levels"], expect["levels"], "run: python3 tools/build_indoor.py status " + b)
+                self.assertEqual(d["approximate"], expect["approximate"])
 
     def test_outlines_lie_on_the_plan(self):
         # at least 3 points each; a generous frame catches a wrong floor registration

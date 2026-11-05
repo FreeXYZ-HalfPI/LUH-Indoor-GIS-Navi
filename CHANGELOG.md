@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 ### Added
+- **Confidence per floor:** a floor can be marked as *verified on site* after a
+  field test (`"verified": {"000": "2026-11-20"}` in `source.json`, then
+  `python3 tools/build_indoor.py status <building>`, which needs no floor plans
+  or network). The directions say which floors of a route were checked and tag
+  each indoor step *✓ checked on site* or *≈ approximate*; `docs/COVERAGE.md`
+  gets an "on site" column. No floor is verified yet.
 - **"Report a problem with this route"** link under the directions: opens a
   new GitHub issue filled in with the start and destination codes, the
   "avoid steps" setting and a link back to the route. A person is reported as

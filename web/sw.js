@@ -5,7 +5,7 @@
 // still route there once it has been opened once.
 // Bump on every change to the app or its data: a new name makes the browser install
 // the new files and "activate" delete the old cache.
-const VERSION = "v16";
+const VERSION = "v17";
 const SHELL = `shell-${VERSION}`;
 const TILES = "tiles-v1"; // tiles do not change with the app, so they keep their cache
 const MAX_TILES = 600; // ~10 MB: enough for the campus around you, small enough for any phone
@@ -20,6 +20,7 @@ const ASSETS = [
   "js/router.js",
   "js/turns.js",
   "js/report.js",
+  "js/confidence.js",
   "js/i18n.js",
   "data/buildings.json",
   "data/rooms.json",
