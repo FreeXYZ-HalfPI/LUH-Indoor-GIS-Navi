@@ -69,9 +69,9 @@ permission come before scale. Phase B starts now and runs in parallel.
       cross-building) with 5–10 real students; fix `source.json`
 - [ ] "Report a problem with this route" link that opens a pre-filled GitHub
       issue with the from/to IDs only (no personal data)
-- [ ] JavaScript tests for `router.js`, `turns.js`, `rooms.js`
-- [ ] CI check: every routable room reaches an entrance; no route cuts
-      through a third building
+- [x] JavaScript tests for `router.js`, `turns.js`, `rooms.js` (`tests/js/`)
+- [x] CI check: every routable room reaches an entrance; no route cuts
+      through a third building (`tests/js/data.test.mjs`)
 - [ ] Show confidence per building and floor: "approximate" vs "verified on site"
 - [ ] Cheap pilot gaps: H-wing `room_points`, 3408 floors 017/018, 1101 floor 005,
       1101 C201–C209 strip

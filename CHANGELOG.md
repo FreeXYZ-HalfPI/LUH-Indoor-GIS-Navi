@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 ### Added
+- **JavaScript tests** for the router, the turn-by-turn steps and the search
+  (`tests/js/`, Node 22+ built-in test runner, no npm packages), and a
+  **routability check** on the generated data: every indoor entrance joins an
+  OSM entrance, every routable room reaches an entrance of its building, and
+  routes between buildings never cut through a third one. Runs in CI.
 - **Roadmap to a real-world solution** (`ROADMAP.md` phases A–F), risk list
   (`docs/RISKS.md`) and a draft request to LUH (`docs/LUH_REQUEST.md`).
 - **Turn-by-turn directions:** every walk is split into straight runs, and
