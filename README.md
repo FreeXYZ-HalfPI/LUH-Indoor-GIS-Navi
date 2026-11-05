@@ -85,6 +85,7 @@ highlight. It is polite (one request at a time, cached, resumable). See
 [data/README.md](data/README.md) and [docs/INDOOR_FORMAT.md](docs/INDOOR_FORMAT.md).
 
 ➡ Full idea: **[docs/CONCEPT.md](docs/CONCEPT.md)** · Plan: **[ROADMAP.md](ROADMAP.md)** ·
+Field test: **[docs/field-test/](docs/field-test/README.md)** ·
 Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 
 ## Principles
@@ -118,7 +119,7 @@ sensors and no IMU.*
 ## Repository layout
 ```
 docs/    concept, architecture, data sources, indoor graph format
-tools/   Python scripts that build the data (LUH rooms, room and people crawlers, OSM walk graph, indoor graphs, coverage)
+tools/   Python scripts that build the data (LUH rooms, room and people crawlers, OSM walk graph, indoor graphs, coverage, field-test routes)
 tests/   offline tests: Python tools and data (python3 -m unittest discover tests),
          web app JavaScript and routability (node --test "tests/js/*.test.mjs", Node 22+)
 web/     the static mobile web app (served by GitHub Pages)

@@ -80,3 +80,21 @@ test("routes between mapped buildings never cut through a third building", () =>
   }
   assert.equal(failed.length, 0, `bad routes ${show(failed)}`);
 });
+
+test("every field-test route (docs/field-test/routes.csv) is routable door to door", () => {
+  // the checklists are generated once and printed; a rebuild must not break them unnoticed
+  const csv = readFileSync(new URL("../../docs/field-test/routes.csv", import.meta.url), "utf8").trim().split(/\r?\n/);
+  const head = csv[0].split(",");
+  const col = (row, name) => row[head.indexOf(name)];
+  const place = (id) => (id.includes(".") ? room(id.slice(0, 4), id) : outside(id));
+  const failed = [];
+  for (const line of csv.slice(1)) {
+    const row = line.split(","); // no field holds a comma: codes, yes/no and links only
+    const [a, z] = [col(row, "from"), col(row, "to")];
+    const r = graph.route(place(a), place(z), { avoidSteps: col(row, "avoid_steps") === "yes" });
+    const indoorEnds = [a, z].filter((id) => id.includes(".")).length;
+    if (!r || [r.start.indoor, r.end.indoor].filter(Boolean).length !== indoorEnds) failed.push(`${a} → ${z}`);
+  }
+  assert.ok(csv.length > 1);
+  assert.equal(failed.length, 0, `field-test routes without a door-to-door route ${show(failed)} (rerun tools/field_test.py)`);
+});

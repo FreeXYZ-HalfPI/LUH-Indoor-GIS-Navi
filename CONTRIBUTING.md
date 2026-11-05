@@ -8,9 +8,10 @@ Thanks for helping students find their lecture rooms! 🎓
 - **Map entrances in OpenStreetMap.** Add `entrance=main` / `entrance=yes`
   nodes on LUH building outlines. Then re-run `tools/build_walk_graph.py`.
 - **Digitise a building** (Phase 2). See [docs/INDOOR_FORMAT.md](docs/INDOOR_FORMAT.md).
-- **Check the Hauptgebäude routes on site.** Tell us where the app sends you
-  the wrong way (the *Report a problem with this route* link under the
-  directions opens a filled-in issue). When all routes of a floor are right,
+- **Walk test routes on site.** The [field-test kit](docs/field-test/README.md)
+  has checklists of 40 routes per building. Or walk any route and tell us
+  where the app sends you the wrong way (the *Report a problem with this
+  route* link under the directions opens a filled-in issue). When all routes of a floor are right,
   maintainers mark it as verified: see
   [Marking a floor as verified](docs/INDOOR_FORMAT.md#marking-a-floor-as-verified).
 - **Code:** UI, routing, translations, accessibility.
