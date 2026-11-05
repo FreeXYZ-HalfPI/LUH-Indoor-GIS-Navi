@@ -20,6 +20,7 @@ sys.path.insert(0, str(ROOT / "tools"))     # the tools are scripts, not a packa
 import build_indoor  # noqa: E402
 import crawl_people  # noqa: E402
 import crawl_rooms  # noqa: E402
+import field_test  # noqa: E402
 
 # A trimmed copy of a real Rauminfo room page: the script holds a label word on
 # purpose (it must be ignored), and the area label is split over two <dt>.
@@ -158,6 +159,55 @@ class StatusTest(unittest.TestCase):
         for bad in ({"002": "2026-11-20"}, {"000": "20.11.2026"}, {"000": "2026-13-01"}, {"000": None}):
             with self.assertRaises(ValueError, msg=bad):
                 build_indoor.verified_levels({**self.SRC, "verified": bad})
+
+
+class FieldTestTest(unittest.TestCase):
+    """tools/field_test.py picks routes from the real app data."""
+
+    @classmethod
+    def setUpClass(cls):
+        data = ROOT / "web" / "data"
+        info = {b["id"]: b for b in json.loads((data / "buildings.json").read_text(encoding="utf-8"))}
+        cls.b = {bid: field_test.Building(json.loads((data / "indoor" / f"{bid}.json").read_text(encoding="utf-8")), info[bid])
+                 for bid in json.loads((data / "indoor" / "index.json").read_text(encoding="utf-8"))}
+
+    def routes(self, bid, n=40, seed=1):
+        import random
+        others = field_test.nearest(self.b[bid], [o for k, o in self.b.items() if k != bid])
+        return field_test.pick_routes(self.b[bid], others, n, random.Random(seed)), others
+
+    def test_mix_coverage_and_validity(self):
+        for bid, b in self.b.items():
+            routes, others = self.routes(bid)
+            with self.subTest(building=bid):
+                self.assertEqual(len(routes), 40)
+                pairs = [(r["from"], r["to"]) for r in routes]
+                self.assertEqual(len(set(pairs)), len(pairs))               # no route twice
+                ends = {p for pair in pairs for p in pair}
+                known = set(b.pos) | {bid} | {rid for o in others for rid in o.pos}
+                self.assertFalse(ends - known)                               # only routable rooms or this building
+                floors = {r["to"].split(".")[1] for r in routes if r["kind"] == "entrance"}
+                self.assertEqual(floors, set(b.codes))                       # every floor from outside
+                self.assertTrue(any(r["avoid_steps"] for r in routes))       # the lifts get tested
+                for r in routes:
+                    kind = r["kind"]
+                    a, z = r["from"].split("."), r["to"].split(".")
+                    if kind == "same-floor":
+                        self.assertEqual((a[0], a[1]), (z[0], z[1]))
+                    elif kind == "cross-floor":
+                        self.assertEqual(a[0], z[0])
+                        self.assertNotEqual(a[1], z[1])
+                    elif kind == "cross-building":
+                        self.assertNotEqual(a[0], z[0])
+                        self.assertIn(bid, (a[0], z[0]))
+
+    def test_same_seed_same_routes(self):
+        self.assertEqual(self.routes("3101", seed=7)[0], self.routes("3101", seed=7)[0])
+        self.assertNotEqual(self.routes("3101", seed=7)[0], self.routes("3101", seed=8)[0])
+
+    def test_links_open_the_route(self):
+        r = {"from": "3101", "to": "3101.001.B151", "avoid_steps": True}
+        self.assertEqual(field_test.app_link(r), field_test.APP + "#from=3101&to=3101.001.B151&steps=0")
 
 
 class AppDataTest(unittest.TestCase):

@@ -67,6 +67,9 @@ permission come before scale. Phase B starts now and runs in parallel.
 ### Phase A: Make the pilot trustworthy (1–2 months)
 - [ ] Field-test the 5 buildings: 30–50 routes per building (cross-floor and
       cross-building) with 5–10 real students; fix `source.json`
+  - [x] Test kit: protocol, 40 routes per building, checklists and a results
+        table ([docs/field-test/](docs/field-test/README.md), `tools/field_test.py`)
+  - [ ] Run the test rounds
 - [x] "Report a problem with this route" link that opens a pre-filled GitHub
       issue with the from/to IDs only (no personal data; `web/js/report.js`)
 - [x] JavaScript tests for `router.js`, `turns.js`, `rooms.js` (`tests/js/`)
