@@ -119,7 +119,8 @@ sensors and no IMU.*
 ```
 docs/    concept, architecture, data sources, indoor graph format
 tools/   Python scripts that build the data (LUH rooms, room and people crawlers, OSM walk graph, indoor graphs, coverage)
-tests/   offline tests for the tools and the generated data (python3 -m unittest discover tests)
+tests/   offline tests: Python tools and data (python3 -m unittest discover tests),
+         web app JavaScript and routability (node --test "tests/js/*.test.mjs", Node 22+)
 web/     the static mobile web app (served by GitHub Pages)
 data/    indoor sources per building, entrance overrides, raw cache (not committed)
 ```
