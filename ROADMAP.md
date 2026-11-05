@@ -87,6 +87,8 @@ permission come before scale. Phase B starts now and runs in parallel.
 - [ ] Decide on people search: approval and opt-out process, or limit to offices
       (Dezernate, institute secretariats)
 - [ ] Privacy statement and imprint (required for a public site in Germany)
+  - [x] Drafts with placeholders, German and English ([docs/legal/](docs/legal/README.md))
+  - [ ] Fill in, have them checked (LUH data protection officer), publish in the app
 - [ ] Hosting plan: a `*.uni-hannover.de` subdomain, GitHub stays the open-source home
 
 ### Phase C: Data that scales (3–6 months)
