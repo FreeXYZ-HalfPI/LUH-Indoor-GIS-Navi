@@ -20,3 +20,14 @@ jobs:
           python-version: "3.12"
       - run: pip install numpy pillow
       - run: python -m unittest discover tests -v
+
+  # Unit tests for the web app's JavaScript and a routability check of the
+  # generated data, with Node's built-in test runner (no npm packages).
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test "tests/js/*.test.mjs"

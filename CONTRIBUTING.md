@@ -13,7 +13,14 @@ Thanks for helping students find their lecture rooms! 🎓
 - **Code:** UI, routing, translations, accessibility.
 
 ## Development setup
-No build step and no Node.js required.
+No build step and no Node.js required to run the app.
+
+Tests (all offline):
+
+```bash
+python3 -m unittest discover tests   # data tools and generated data (needs numpy, pillow)
+node --test "tests/js/*.test.mjs"   # router, turns, rooms; every routable room reaches an entrance (Node 22+, no npm packages)
+```
 
 ```bash
 # serve the web app locally
