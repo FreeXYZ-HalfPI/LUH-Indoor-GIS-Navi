@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 ### Added
+- **"Report a problem with this route"** link under the directions: opens a
+  new GitHub issue filled in with the start and destination codes, the
+  "avoid steps" setting and a link back to the route. A person is reported as
+  their office room, never by name.
 - **JavaScript tests** for the router, the turn-by-turn steps and the search
   (`tests/js/`, Node 22+ built-in test runner, no npm packages), and a
   **routability check** on the generated data: every indoor entrance joins an
