@@ -7,6 +7,7 @@ import { Places, parseRoomId } from "./rooms.js";
 import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
+import { reportUrl } from "./report.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
 const WALK_M_PER_MIN = 80; // ~4.8 km/h, a usual walking speed for route planners
@@ -414,7 +415,8 @@ function update(push = true) {
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
     <ol class="steps">${g.steps.map((s) => `<li>${endSentence(s)}</li>`).join("")}</ol>
-    ${plans.length ? floorplanBlock(plans, to) : ""}`;
+    ${plans.length ? floorplanBlock(plans, to) : ""}
+    ${reportBlock(from, to, !!g.route)}`;
   const btn = out.querySelector("#show-plan");
   if (btn)
     // plans are images from the university server: load them only on request (mobile data, privacy)
@@ -426,6 +428,12 @@ function update(push = true) {
       });
       btn.remove();
     });
+}
+
+/** The "Report a problem with this route" link under the directions (room codes only, see report.js). */
+function reportBlock(from, to, found) {
+  const href = reportUrl(from, to, { appUrl: location.origin + location.pathname, avoidSteps: state.avoidSteps, found, text: t.reportText });
+  return `<p class="report"><a href="${esc(href)}" target="_blank" rel="noopener">${t.report}</a><br><small>${t.reportNote}</small></p>`;
 }
 
 /** Draw the start and destination rooms and switch the explorer to their floor. */
