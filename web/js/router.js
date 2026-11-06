@@ -123,6 +123,7 @@ export class WalkGraph {
       rooms,
       levels: data.levels,
       size: data.plan_size,
+      pxPerM: data.px_per_m, // plan pixels per metre (distance of a room to the route)
       approximate: data.approximate,
       listed: data.listed && new Set(data.listed), // a Set: looked up for every room in search results
     };

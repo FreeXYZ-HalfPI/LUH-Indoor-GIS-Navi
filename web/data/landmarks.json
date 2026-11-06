@@ -1,0 +1,13 @@
+{
+ "about": "Rooms people recognise (library, student council, ...). The directions name them when the route passes. Hand-written; add more as 'room code': {'en': ..., 'de': ...}.",
+ "rooms": {
+  "3101.002.B205": {
+   "en": "GuG student council room",
+   "de": "GuG-Fachschaftsraum"
+  },
+  "3101.001.B124": {
+   "en": "GIH library",
+   "de": "GIH-Bibliothek"
+  }
+ }
+}

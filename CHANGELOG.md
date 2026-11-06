@@ -1,6 +1,13 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- **Shorter indoor directions.** Indoor steps no longer list step counts, metres
+  or a turn-by-turn sublist. A step says where to turn (left/right only), which
+  known room you pass and where it ends: "On the 1st floor, turn left, follow the
+  corridor past B124 (GIH library) to room 3101.001.B147." Rooms people recognise
+  live in `web/data/landmarks.json` (hand-written; add more). A route to a person
+  ends with "Say hi to <name>! 👋". Outdoor steps are unchanged.
 ### Fixed
 - **The map follows the floor of the route.** The start room and the indoor
   route were drawn on whatever floor was shown, so a route from 3101.001.B154 to

@@ -25,6 +25,7 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 // Place keys: "b:1101" for a building, "r:1101.000.E028" for a room, "p:christian-heipke" for a person
 const state = { from: null, to: null, avoidSteps: false };
 let places, graph, map, routeLayer;
+let landmarks = {}; // room code → {en, de}: rooms people recognise (data/landmarks.json)
 const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef)
 
 // ---------- boot ----------
@@ -32,13 +33,15 @@ const indoorData = {}; // building → generated indoor JSON (outlines, meta, ge
 async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
   // all data is loaded at start: routing then works offline and without waiting
-  const [buildings, rooms, walk, indoorList, people] = await Promise.all([
+  const [buildings, rooms, walk, indoorList, people, lm] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
     load("indoor/index.json").catch(() => []), // the app still works outdoors without indoor data
     load("people.json").catch(() => ({ people: [] })), // and without the people search
+    load("landmarks.json").catch(() => ({ rooms: {} })), // and without landmarks in the directions
   ]);
+  landmarks = lm.rooms;
   places = new Places(buildings, rooms, people.people);
   graph = new WalkGraph(walk);
   for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) {
@@ -568,7 +571,7 @@ function guidance(from, to) {
     L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
     map.fitBounds(line.getBounds(), { padding: [30, 30] });
   }
-  steps.push(t.stepArrive);
+  steps.push(to.person ? t.stepArrivePerson(to.room.id, esc(to.person.name)) : t.stepArrive);
   return { steps, notes, summary, indoorLegs, route: r };
 }
 
@@ -616,6 +619,46 @@ function turnList(leg) {
   return `<ol class="turns">${items.join("")}</ol>`;
 }
 
+// Rooms nearer to the route than this count as "passed" (plan scale, a corridor is ~2-3 m wide).
+const LANDMARK_M = 5;
+// Only real turns are named indoors; at most this many per leg (a long list is noise).
+const MAX_TURNS = 2;
+
+/** Squared distance of point p to segment a-b (all [x, y]) and where on the segment (0..1) it is closest. */
+function toSegment(p, a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1];
+  const len2 = dx * dx + dy * dy;
+  const u = len2 ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len2)) : 0;
+  return { d2: (p[0] - a[0] - u * dx) ** 2 + (p[1] - a[1] - u * dy) ** 2, u };
+}
+
+/** Landmark rooms the leg passes, in walking order: ["<b>B205</b> (GuG student council room)", …]. */
+function landmarksAlong(leg, skip) {
+  const d = graph.indoor[leg.building];
+  if (!d || !leg.px || leg.px.length < 2) return [];
+  const found = [];
+  for (const [id, names] of Object.entries(landmarks)) {
+    const node = d.rooms[id];
+    const room = places.resolve(`r:${id}`)?.room;
+    if (node == null || !room || room.floor !== leg.level || skip.has(id)) continue;
+    let best = { d2: Infinity, at: 0 };
+    for (let i = 1; i < leg.px.length; i++) {
+      const s = toSegment(graph.px[node], leg.px[i - 1], leg.px[i]);
+      if (s.d2 < best.d2) best = { d2: s.d2, at: i - 1 + s.u };
+    }
+    if (Math.sqrt(best.d2) / d.pxPerM <= LANDMARK_M) found.push({ at: best.at, text: t.landmark(room.room, names[getLang()] || names.en) });
+  }
+  return found.sort((a, b) => a.at - b.at).map((f) => f.text);
+}
+
+/** "turn left, follow the corridor past B205 (…)": the way along one indoor leg, in a few words. */
+function indoorHow(leg, from, to) {
+  const parts = turnSteps(leg.coords, MIN_RUN_INDOOR_M).slice(1); // the first part has no turn
+  const turns = parts.map((p) => (/^(sharp)?(Left|Right)$/i.test(p.turn) ? p.turn.replace(/^sharp/i, "").toLowerCase() : null)).filter(Boolean).slice(0, MAX_TURNS);
+  const skip = new Set([from.room?.id, to.room?.id]); // the start and the goal are named anyway
+  return t.indoorHow(turns.map((w) => t.turnWord[w]), landmarksAlong(leg, skip));
+}
+
 /** Turn-by-turn steps for a route: one sentence per leg (with its turns), plus the way out and in. */
 function routeSteps(r, from, to) {
   const steps = [];
@@ -633,12 +676,12 @@ function routeSteps(r, from, to) {
     if (leg.kind === "indoor") {
       // an indoor sentence names where the leg ends: the room, a stair/lift or the exit
       const fl = t.floor(leg.level);
-      const d = formatWalk(leg.distance);
+      const how = indoorHow(leg, from, to);
       const tag = tags ? confidenceTag(leg) : "";
       const at = floorTag(leg.level);
-      if (!next) steps.push(at + t.stepIndoorTo(fl, d, roomText(to)) + tag + turnList(leg));
-      else if (next.kind === "vertical") steps.push(at + t.stepIndoorToVertical(fl, d, next.type) + tag + turnList(leg));
-      else if (next.kind === "door") steps.push(at + t.stepIndoorToExit(fl, d) + tag + turnList(leg));
+      if (!next) steps.push(at + t.stepIndoorTo(fl, how, to.room.id) + tag);
+      else if (next.kind === "vertical") steps.push(at + t.stepIndoorToVertical(fl, how, next.type) + tag);
+      else if (next.kind === "door") steps.push(at + t.stepIndoorToExit(fl, how) + tag);
     } else if (leg.kind === "vertical") {
       steps.push(floorTag(leg.toLevel) + t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
     } else if (leg.kind === "door") {
