@@ -121,6 +121,11 @@ main { max-width: 760px; margin: 0 auto; padding: 12px 16px; }
 .summary { font-size: 1.15rem; font-weight: 700; margin: 4px 0 8px; }
 .note { background: var(--warn-bg); padding: 8px 10px; border-radius: 8px; font-size: 0.9rem; }
 .steps { padding-left: 1.4em; margin: 8px 0; }
+/* route confidence: dots and word (never colour alone) */
+.conf-level { white-space: nowrap; }
+.conf-high { color: #2e8540; }
+.conf-medium { color: #8a6100; }
+.conf-low { color: #c8102e; }
 /* confidence tag after an indoor step: approximate (grey) or checked on site (green) */
 .conf { display: inline-block; font-size: 0.75rem; padding: 0 6px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; vertical-align: 0.1em; }
 .conf.ok { border-color: #2e8540; color: #2e8540; }

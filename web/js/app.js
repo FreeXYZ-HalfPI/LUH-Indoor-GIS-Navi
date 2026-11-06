@@ -9,7 +9,7 @@ import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
 import { reportUrl } from "./report.js";
-import { routeFloors, confidence } from "./confidence.js";
+import { routeFloors, confidence, routeConfidence } from "./confidence.js";
 import { TILE_URL, TILE_ATTRIBUTION, TILE_MAX_NATIVE_ZOOM } from "./config.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
@@ -541,13 +541,25 @@ function guidance(from, to) {
     summary = t.total(formatWalk(r.distance), minutes(r.time));
     steps.push(...routeSteps(r, from, to));
     indoorLegs = r.legs.filter((l) => l.kind === "indoor");
-    const note = confidenceNote(routeFloors(r.legs, graph.indoor));
-    if (note) notes.push(note);
+    const floors = routeFloors(r.legs, graph.indoor);
     // a guessed entrance only matters when the route really starts or ends at a door
-    const estimated = [fb.id, tb.id].some((id) => graph.buildings[id]?.estimated && !(r.start.indoor && r.end.indoor));
+    const estimated =
+      (!r.start.indoor && !!graph.buildings[fb.id]?.estimated) || (!r.end.indoor && !!graph.buildings[tb.id]?.estimated);
+    const conf = routeConfidence({
+      floors,
+      startIndoor: r.start.indoor || from.type === "building", // "from the building" has no room to map
+      endIndoor: r.end.indoor || to.type === "building",
+      estimatedEntrance: estimated,
+      unconfirmedRoom: [from, to].some((p) => p.type === "room" && !places.roomIndex.has(p.room.id)),
+    });
+    notes.push(confidenceBadge(conf));
+    // the badge says it all unless some floors were checked on site: then name them, with their dates
+    const note = ["verified", "partlyVerified"].includes(conf.reasons[0]) ? confidenceNote(floors) : "";
+    if (note) notes.push(note);
     if (estimated) notes.push(t.estimated);
     drawRoute(r);
   } else if (fb.id === tb.id) {
+    notes.push(confidenceBadge({ level: "low", reasons: ["noIndoorEnd"] })); // no indoor map: we only point at the building
     notes.push(t.sameBuilding(buildingName(tb)));
     L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
     map.setView([tb.lat, tb.lon], 18);
@@ -573,6 +585,13 @@ function guidance(from, to) {
   }
   steps.push(to.person ? t.stepArrivePerson(to.room.id, esc(to.person.name)) : t.stepArrive);
   return { steps, notes, summary, indoorLegs, route: r };
+}
+
+/** "Confidence: ●●○ medium" and the reason, one line, at the top of the directions. */
+function confidenceBadge({ level, reasons }) {
+  const dots = { high: "●●●", medium: "●●○", low: "●○○" }[level];
+  const why = reasons.slice(0, 2).map((k) => t.confReason[k]).join(" ");
+  return `<span class="conf-level conf-${level}"><b>${t.confTitle}:</b> <span aria-hidden="true">${dots}</span> ${t.confLevel[level]}</span> ${why}`;
 }
 
 /** The note on how far the indoor part can be trusted: approximate, checked on site, or a mix (per floor). */

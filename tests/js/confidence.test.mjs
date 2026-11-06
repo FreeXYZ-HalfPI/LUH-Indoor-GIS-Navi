@@ -43,3 +43,24 @@ test("confidence: approximate, verified, mixed or nothing indoors", () => {
   assert.equal(confidence([f("2026-11-20"), f("2026-11-21")]), "verified");
   assert.equal(confidence([f("2026-11-20"), f(null)]), "mixed");
 });
+
+import { routeConfidence } from "../../web/js/confidence.js";
+
+const f = (verified) => ({ building: "3101", level: 1, verified });
+const ok = { startIndoor: true, endIndoor: true, estimatedEntrance: false, unconfirmedRoom: false };
+
+test("routeConfidence: high only when every floor was checked on site", () => {
+  assert.deepEqual(routeConfidence({ ...ok, floors: [f("2026-11-20")] }), { level: "high", reasons: ["verified"] });
+});
+
+test("routeConfidence: medium when traced from plans, or only partly checked", () => {
+  assert.deepEqual(routeConfidence({ ...ok, floors: [f(null)] }), { level: "medium", reasons: ["plansOnly"] });
+  assert.deepEqual(routeConfidence({ ...ok, floors: [f("2026-11-20"), f(null)] }), { level: "medium", reasons: ["partlyVerified"] });
+});
+
+test("routeConfidence: low when an end has no indoor map, an entrance is guessed or the room is unknown", () => {
+  const floors = [f("2026-11-20")]; // even verified floors cannot make up for a missing end
+  assert.equal(routeConfidence({ ...ok, floors, endIndoor: false }).level, "low");
+  assert.deepEqual(routeConfidence({ ...ok, floors, startIndoor: false, estimatedEntrance: true }).reasons, ["noIndoorStart", "estimatedEntrance"]);
+  assert.deepEqual(routeConfidence({ ...ok, floors, unconfirmedRoom: true }), { level: "low", reasons: ["unconfirmedRoom"] });
+});

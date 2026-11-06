@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // How far the indoor part of a route can be trusted, floor by floor.
 //
@@ -30,3 +31,24 @@ export function confidence(floors) {
   const ok = floors.filter((f) => f.verified).length;
   return ok === floors.length ? "verified" : ok === 0 ? "approximate" : "mixed";
 }
+
+/**
+ * How far one whole route can be trusted: {level, reasons}.
+ *   "high"   every indoor floor was checked on site, both ends are indoors, the entrance is mapped
+ *   "medium" the whole way is traced, but from floor plans only (or only some floors were walked)
+ *   "low"    something is missing: no indoor map at an end, a guessed entrance, an unconfirmed room code
+ * reasons: keys for the text under the level, most important first.
+ * facts: {floors, startIndoor, endIndoor, estimatedEntrance, unconfirmedRoom}
+ */
+export function routeConfidence({ floors, startIndoor, endIndoor, estimatedEntrance, unconfirmedRoom }) {
+  const low = [];
+  if (!startIndoor) low.push("noIndoorStart");
+  if (!endIndoor) low.push("noIndoorEnd");
+  if (estimatedEntrance) low.push("estimatedEntrance");
+  if (unconfirmedRoom) low.push("unconfirmedRoom");
+  if (low.length) return { level: "low", reasons: low };
+  const c = confidence(floors);
+  if (c === "verified") return { level: "high", reasons: ["verified"] };
+  return { level: "medium", reasons: [c === "mixed" ? "partlyVerified" : "plansOnly"] };
+}
+// @license-end

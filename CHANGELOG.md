@@ -1,22 +1,14 @@
 # Changelog
 
 ## [Unreleased]
-### Changed
-- **Shorter indoor directions.** Indoor steps no longer list step counts, metres
-  or a turn-by-turn sublist. A step says where to turn (left/right only), which
-  known room you pass and where it ends: "On the 1st floor, turn left, follow the
-  corridor past B124 (GIH library) to room 3101.001.B147." Rooms people recognise
-  live in `web/data/landmarks.json` (hand-written; add more). A route to a person
-  ends with "Say hi to <name>! 👋". Outdoor steps are unchanged.
-### Fixed
-- **The map follows the floor of the route.** The start room and the indoor
-  route were drawn on whatever floor was shown, so a route from 3101.001.B154 to
-  3101.002.A255 looked as if both rooms were on the same floor. Now a room is outlined
-  only on its own floor, the route's parts on other floors are faint, the floor
-  buttons of the route's floors have a dot, and tapping a step ("On the 1st floor, walk
-  …", "Take the stairs up …") shows that floor and its part of the route.
-
 ### Added
+- **Route confidence level** at the top of the directions: ●●● high (every floor
+  checked on site), ●●○ medium (traced from floor plans, not yet walked) or
+  ●○○ low (an end without indoor map, a guessed entrance, or a room code that is
+  not in the room list), with the reason in one line. German and English. Rules in
+  `routeConfidence()` (`web/js/confidence.js`) with tests; today every route is
+  medium or low, because no floor has been walked yet.
+
 - **Field-test kit** (`docs/field-test/`): a protocol for testers and
   maintainers, checklists of 40 routes per building (entrance to every floor,
   same floor, across floors with and without steps, to the nearest buildings)
@@ -61,6 +53,21 @@
 - `ROADMAP.md`: future goals (International Office, Mensa and public
   services; exchange students, event visitors, people with disabilities,
   new students, everyone at the university).
+
+### Changed
+- **Shorter indoor directions.** Indoor steps no longer list step counts, metres
+  or a turn-by-turn sublist. A step says where to turn (left/right only), which
+  known room you pass and where it ends: "On the 1st floor, turn left, follow the
+  corridor past B124 (GIH library) to room 3101.001.B147." Rooms people recognise
+  live in `web/data/landmarks.json` (hand-written; add more). A route to a person
+  ends with "Say hi to <name>! 👋". Outdoor steps are unchanged.
+### Fixed
+- **The map follows the floor of the route.** The start room and the indoor
+  route were drawn on whatever floor was shown, so a route from 3101.001.B154 to
+  3101.002.A255 looked as if both rooms were on the same floor. Now a room is outlined
+  only on its own floor, the route's parts on other floors are faint, the floor
+  buttons of the route's floors have a dot, and tapping a step ("On the 1st floor, walk
+  …", "Take the stairs up …") shows that floor and its part of the route.
 
 ### Fixed
 - Updates arrive at once: the service worker revalidates every file with the

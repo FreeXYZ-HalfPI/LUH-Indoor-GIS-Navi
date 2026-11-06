@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // "Report a problem with this route": a link to a new GitHub issue, filled in
 // with what is needed to reproduce the route and nothing else.
@@ -37,3 +38,4 @@ export function reportUrl(from, to, { appUrl, avoidSteps = false, found = true, 
   ].join("\n");
   return `${ISSUES_URL}?${new URLSearchParams({ title: text.title(a, b), body })}`;
 }
+// @license-end
