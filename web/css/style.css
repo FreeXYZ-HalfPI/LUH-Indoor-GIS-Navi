@@ -176,6 +176,12 @@ main { max-width: 760px; margin: 0 auto; padding: 12px 16px; }
 .floor-ctl-title { font-size: 0.65rem; padding: 3px 4px 1px; color: #555; text-transform: uppercase; }
 .floor-ctl a { width: 34px; height: 30px; line-height: 30px; font-weight: 600; color: #003366; }
 .floor-ctl a.on { background: #003366; color: #fff; }
+/* a floor the route passes: a small dot */
+.floor-ctl a.route { position: relative; }
+.floor-ctl a.route::after { content: ""; position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: #b794f4; }
+/* a step that shows its floor on the map when tapped */
+.steps li[data-floor] { cursor: pointer; }
+.steps li[data-floor]:hover, .steps li[data-floor]:focus-visible { background: #f1ecfb; outline: none; }
 .room-label { background: rgb(255 255 255 / 0.85); border: 0; box-shadow: none; padding: 0 3px; font-size: 0.7rem; font-weight: 600; }
 .room-label::before { display: none; }
 

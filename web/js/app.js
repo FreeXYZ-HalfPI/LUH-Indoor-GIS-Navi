@@ -277,8 +277,12 @@ function placePopup(title, detail, key, latlng) {
 const EXPLORER_ZOOM = 18;
 // From zoom 20 rooms are big enough to print their numbers on them.
 const LABEL_ZOOM = 20;
-let explorerLayer, floorCtl;
+let explorerLayer, floorLayer, floorCtl;
 let explorerLevel = 0;
+// The route on screen and its start/destination rooms. The map shows one floor at a time,
+// so the parts of the route that belong to other floors are drawn faint (see drawFloorLayer).
+let currentRoute = null;
+let chosenRooms = [];
 
 /** "Hörsaal · 192 m²" for public rooms, else "". */
 function roomMeta(id) {
@@ -301,6 +305,7 @@ function roomRing(id) {
 
 function initExplorer() {
   explorerLayer = L.layerGroup().addTo(map);
+  floorLayer = L.layerGroup().addTo(map);
   // a dashed frame shows which buildings have rooms to explore
   for (const d of Object.values(indoorData)) {
     const ids = Object.keys(d.outlines || {});
@@ -328,9 +333,13 @@ function visibleIndoor() {
 
 /** The floor buttons for the given levels (highest first, like a lift panel). */
 function drawFloorControl(div, levels) {
+  // floors the route passes get a dot, so nobody has to guess where to look
+  const onRoute = new Set((currentRoute?.legs ?? []).filter((l) => l.kind === "indoor").map((l) => l.level));
   div.innerHTML =
     `<span class="floor-ctl-title">${t.floorCtl}</span>` +
-    levels.map((l) => `<a href="#" role="button" data-l="${l}" class="${l === explorerLevel ? "on" : ""}" title="${esc(t.floor(l))}">${t.floorShort(l)}</a>`).join("");
+    levels
+      .map((l) => `<a href="#" role="button" data-l="${l}" class="${l === explorerLevel ? "on" : ""}${onRoute.has(l) ? " route" : ""}" title="${esc(t.floor(l))}">${t.floorShort(l)}</a>`)
+      .join("");
   div.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", (e) => {
       e.preventDefault();
@@ -340,9 +349,28 @@ function drawFloorControl(div, levels) {
   );
 }
 
+/**
+ * Start and destination room, and the indoor parts of the route, for the shown floor:
+ * this floor's part is solid, the other floors' parts are faint. Runs with every floor change.
+ */
+function drawFloorLayer() {
+  floorLayer.clearLayers();
+  for (const [p, color] of chosenRooms) {
+    if (p.room.floor !== explorerLevel) continue; // a room is only outlined on its own floor
+    const ring = roomRing(p.room.id);
+    if (ring) L.polygon(ring, { color, weight: 2, fillOpacity: 0.45, interactive: false }).addTo(floorLayer);
+  }
+  for (const leg of currentRoute?.legs ?? []) {
+    if (leg.kind !== "indoor" || !leg.coords) continue;
+    const style = leg.level === explorerLevel ? { weight: 5, opacity: 0.85, dashArray: "8 6" } : { weight: 3, opacity: 0.25 };
+    L.polyline(leg.coords, { color: COLOR_INDOOR, interactive: false, ...style }).addTo(floorLayer);
+  }
+}
+
 /** Redraw the room shapes of the chosen floor; runs after every pan and zoom. */
 function drawExplorer() {
   explorerLayer.clearLayers();
+  drawFloorLayer();
   const shown = visibleIndoor();
   const div = floorCtl.getContainer();
   const levels = [...new Set(shown.flatMap((d) => Object.keys(d.levels).map(Number)))].sort((a, b) => b - a);
@@ -399,6 +427,7 @@ const endSentence = (s) => s.replace(/\.(<\/b>)?\.(?=<ol|$)/, ".$1");
 function update(push = true) {
   if (push) writeHash();
   routeLayer.clearLayers();
+  currentRoute = null;
   const out = $("#result");
   const from = places.resolve(state.from);
   const to = places.resolve(state.to);
@@ -411,15 +440,28 @@ function update(push = true) {
   }
 
   const g = guidance(from, to);
+  drawExplorer(); // the route is known now: draw its parts on the shown floor
   const plans = g.indoorLegs.length ? routePlans(g.indoorLegs, from, to) : [];
   // the destination's own plan, when the route ends at the door (no indoor data for it)
   if (to.type === "room" && !g.route?.end.indoor) plans.push({ room: to.room.id, title: plans.length ? `${t.floor(to.room.floor)} · ${t.building} ${to.building.id}` : "" });
   out.innerHTML = `
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
-    <ol class="steps">${g.steps.map((s) => `<li>${endSentence(s)}</li>`).join("")}</ol>
+    <ol class="steps">${g.steps.map(stepItem).join("")}</ol>
     ${plans.length ? floorplanBlock(plans, to) : ""}
     ${reportBlock(from, to, !!g.route)}`;
+  out.querySelectorAll("li[data-floor]").forEach((li) => {
+    const go = () => showStepFloor(Number(li.dataset.floor));
+    li.addEventListener("click", (e) => {
+      if (!e.target.closest("a")) go();
+    });
+    li.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        go();
+      }
+    });
+  });
   const btn = out.querySelector("#show-plan");
   if (btn)
     // plans are images from the university server: load them only on request (mobile data, privacy)
@@ -439,14 +481,28 @@ function reportBlock(from, to, found) {
   return `<p class="report"><a href="${esc(href)}" target="_blank" rel="noopener">${t.report}</a><br><small>${t.reportNote}</small></p>`;
 }
 
+// A step on a known floor starts with <i data-floor="N" hidden></i>; tapping it shows that floor.
+const FLOOR_TAG = /^<i data-floor="(-?\d+)" hidden><\/i>/;
+const floorTag = (level) => `<i data-floor="${level}" hidden></i>`;
+function stepItem(s) {
+  const m = s.match(FLOOR_TAG);
+  const body = endSentence(s.replace(FLOOR_TAG, ""));
+  return m ? `<li data-floor="${m[1]}" tabindex="0" role="button">${body}</li>` : `<li>${body}</li>`;
+}
+
+/** Show the floor of a tapped step and bring its part of the route into view. */
+function showStepFloor(level) {
+  explorerLevel = level;
+  const coords = (currentRoute?.legs ?? []).filter((l) => l.kind === "indoor" && l.level === level && l.coords).flatMap((l) => l.coords);
+  if (coords.length) map.fitBounds(L.latLngBounds(coords), { padding: [30, 30], maxZoom: 19 });
+  drawExplorer();
+}
+
 /** Draw the start and destination rooms and switch the explorer to their floor. */
 function outlineChosenRooms(from, to) {
   const focus = to?.type === "room" ? to : from?.type === "room" ? from : null; // the destination matters more
   if (focus) explorerLevel = focus.room.floor;
-  for (const [p, color] of [[from, COLOR_FROM], [to, COLOR_TO]]) {
-    const ring = p?.type === "room" && roomRing(p.room.id);
-    if (ring) L.polygon(ring, { color, weight: 2, fillOpacity: 0.45, interactive: false }).addTo(routeLayer);
-  }
+  chosenRooms = [[from, COLOR_FROM], [to, COLOR_TO]].filter(([p]) => p?.type === "room");
   drawExplorer();
 }
 
@@ -470,7 +526,7 @@ function guidance(from, to) {
   const fb = from.building;
   const tb = to.building;
 
-  if (from.type === "room") steps.push(t.stepStartRoom(roomText(from), buildingName(fb), t.floor(from.room.floor)));
+  if (from.type === "room") steps.push(floorTag(from.room.floor) + t.stepStartRoom(roomText(from), buildingName(fb), t.floor(from.room.floor)));
   else steps.push(t.stepStartBuilding(buildingName(fb)));
 
   // each campus has its own walk graph; across campuses there is no route to find
@@ -579,11 +635,12 @@ function routeSteps(r, from, to) {
       const fl = t.floor(leg.level);
       const d = formatWalk(leg.distance);
       const tag = tags ? confidenceTag(leg) : "";
-      if (!next) steps.push(t.stepIndoorTo(fl, d, roomText(to)) + tag + turnList(leg));
-      else if (next.kind === "vertical") steps.push(t.stepIndoorToVertical(fl, d, next.type) + tag + turnList(leg));
-      else if (next.kind === "door") steps.push(t.stepIndoorToExit(fl, d) + tag + turnList(leg));
+      const at = floorTag(leg.level);
+      if (!next) steps.push(at + t.stepIndoorTo(fl, d, roomText(to)) + tag + turnList(leg));
+      else if (next.kind === "vertical") steps.push(at + t.stepIndoorToVertical(fl, d, next.type) + tag + turnList(leg));
+      else if (next.kind === "door") steps.push(at + t.stepIndoorToExit(fl, d) + tag + turnList(leg));
     } else if (leg.kind === "vertical") {
-      steps.push(t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
+      steps.push(floorTag(leg.toLevel) + t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
     } else if (leg.kind === "door") {
       const b = places.building(leg.building);
       steps.push(leg.enter ? t.stepEnter(buildingName(b), buildingAddress(b), sideOf(b, leg.at), "") : t.stepExit(sideOf(b, leg.at), ""));
@@ -603,8 +660,9 @@ function routeSteps(r, from, to) {
   return steps;
 }
 
-/** Draw a route: blue outdoors, dashed purple indoors, A and B markers. */
+/** Draw a route: blue outdoors, A and B markers. Dashed purple indoor parts: see drawFloorLayer. */
 function drawRoute(r) {
+  currentRoute = r; // its indoor parts are drawn per floor by drawFloorLayer
   const all = [];
   for (const leg of r.legs) {
     if (!leg.coords) continue; // vertical and door legs have no line
@@ -612,10 +670,6 @@ function drawRoute(r) {
     if (leg.kind === "outdoor") {
       L.polyline(leg.coords, { color: "#0066cc", weight: 6, opacity: 0.85 }).addTo(routeLayer);
       L.polyline(leg.coords, { color: "#fff", weight: 2, opacity: 0.9, dashArray: "1 10" }).addTo(routeLayer); // dots show the direction
-    } else {
-      L.polyline(leg.coords, { color: COLOR_INDOOR, weight: 5, opacity: 0.85, dashArray: "8 6" })
-        .bindTooltip(t.floor(leg.level))
-        .addTo(routeLayer);
     }
   }
   L.marker(r.coords[0], { icon: pin("from", "A") }).addTo(routeLayer);

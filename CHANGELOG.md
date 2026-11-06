@@ -1,6 +1,14 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- **The map follows the floor of the route.** The start room and the indoor
+  route were drawn on whatever floor was shown, so a route from 3101.001.B154 to
+  3101.002.A255 looked as if both rooms were on the same floor. Now a room is outlined
+  only on its own floor, the route's parts on other floors are faint, the floor
+  buttons of the route's floors have a dot, and tapping a step ("On the 1st floor, walk
+  …", "Take the stairs up …") shows that floor and its part of the route.
+
 ### Added
 - **Field-test kit** (`docs/field-test/`): a protocol for testers and
   maintainers, checklists of 40 routes per building (entrance to every floor,
