@@ -136,5 +136,14 @@ Then open <http://localhost:8000>.
 Copyright © 2026 Mohammad B. Saryazdi and contributors.
 Licensed under the **GNU General Public License v3.0 or later**. See [LICENSE](LICENSE).
 
-Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL).
-Building and room data and floor plans © Leibniz Universität Hannover.
+The GPL covers the **program code**. The data is separate and has its own terms,
+listed in [web/data/LICENSE-DATA.md](web/data/LICENSE-DATA.md):
+
+- Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL).
+- Building and room data, floor plans and the graphs derived from them
+  © Leibniz Universität Hannover. Not free-licensed until LUH grants permission.
+- The people file is personal data from public LUH pages, not free-licensed.
+
+Documentation and screenshots in `docs/` are offered under GPL-3.0-or-later too,
+unless a file says otherwise. The map server can be changed in
+[web/js/config.js](web/js/config.js).

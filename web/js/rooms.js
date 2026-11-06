@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // LUH room codes, people and place search.
 //
@@ -185,3 +186,4 @@ export class Places {
     return out.slice(0, limit).map((x) => x.place);
   }
 }
+// @license-end

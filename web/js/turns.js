@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Turn-by-turn instructions from a route line: "walk 12 steps, turn left, walk 30 steps, …".
 //
@@ -101,3 +102,4 @@ export function turnSteps(coords, minRun) {
   });
   return steps;
 }
+// @license-end

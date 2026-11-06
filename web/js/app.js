@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // LUH Campus Navigator: UI, map and route guidance.
 //
@@ -9,6 +10,7 @@ import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
 import { reportUrl } from "./report.js";
 import { routeFloors, confidence } from "./confidence.js";
+import { TILE_URL, TILE_ATTRIBUTION, TILE_MAX_NATIVE_ZOOM } from "./config.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
 const WALK_M_PER_MIN = 80; // ~4.8 km/h, a usual walking speed for route planners
@@ -232,12 +234,12 @@ function toast(msg) {
 
 function initMap(buildings) {
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView([52.3826, 9.7175], 15); // Welfengarten
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  L.tileLayer(TILE_URL, {
     maxZoom: 21, // room explorer: zoom past the tiles (scaled up from 19)
-    maxNativeZoom: 19,
+    maxNativeZoom: TILE_MAX_NATIVE_ZOOM,
     // the OSM tile policy requires a Referer; send only our origin (the page default is no-referrer)
     referrerPolicy: "strict-origin-when-cross-origin",
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: TILE_ATTRIBUTION,
   }).addTo(map);
 
   for (const b of buildings) {
@@ -709,3 +711,4 @@ boot().catch((e) => {
   $("#result").innerHTML = `<p class="note">Error loading data: ${esc(e.message)}</p>`;
   console.error(e);
 });
+// @license-end

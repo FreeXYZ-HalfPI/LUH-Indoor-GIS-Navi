@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // German / English UI strings. Functions take parameters, strings don't.
 //
@@ -213,3 +214,4 @@ export function formatWalk(m) {
 export function formatDistance(m) {
   return m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1).replace(".", lang === "de" ? "," : ".")} km`;
 }
+// @license-end

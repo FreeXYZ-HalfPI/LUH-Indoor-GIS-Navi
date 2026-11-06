@@ -26,6 +26,10 @@
   **routability check** on the generated data: every indoor entrance joins an
   OSM entrance, every routable room reaches an entrance of its building, and
   routes between buildings never cut through a third one. Runs in CI.
+- **Free-software compliance** (after reviewing the GNU/FSF guidelines): `web/data/LICENSE-DATA.md`
+  states that data files have their own terms (OSM ODbL, LUH, people file) and are not
+  GPL; LibreJS `@license` headers on all scripts and Leaflet; the map tile server is
+  now set in `web/js/config.js` (the service worker caches tiles from any host).
 - **Roadmap to a real-world solution** (`ROADMAP.md` phases A–F), risk list
   (`docs/RISKS.md`) and a draft request to LUH (`docs/LUH_REQUEST.md`).
 - **Turn-by-turn directions:** every walk is split into straight runs, and

@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // On-device routing on the outdoor walk graph (tools/build_walk_graph.py) merged
 // with indoor graphs (tools/build_indoor.py). One Dijkstra, door to door.
@@ -283,3 +284,4 @@ export function compass(c, p) {
   const ang = (Math.atan2((p[1] - c[1]) * k, p[0] - c[0]) * 180) / Math.PI; // 0° = north, clockwise
   return ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(((ang + 360) % 360) / 45) % 8];
 }
+// @license-end

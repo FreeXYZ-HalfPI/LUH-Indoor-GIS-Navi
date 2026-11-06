@@ -1,3 +1,4 @@
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&dn=gpl-3.0.txt GPL-v3-or-later
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Offline support: app shell + data are cached; map tiles are cached as they are viewed.
 //
@@ -5,7 +6,7 @@
 // still route there once it has been opened once.
 // Bump on every change to the app or its data: a new name makes the browser install
 // the new files and "activate" delete the old cache.
-const VERSION = "v17";
+const VERSION = "v18";
 const SHELL = `shell-${VERSION}`;
 const TILES = "tiles-v1"; // tiles do not change with the app, so they keep their cache
 const MAX_TILES = 600; // ~10 MB: enough for the campus around you, small enough for any phone
@@ -22,6 +23,7 @@ const ASSETS = [
   "js/report.js",
   "js/confidence.js",
   "js/i18n.js",
+  "js/config.js",
   "data/buildings.json",
   "data/rooms.json",
   "data/walkgraph.json",
@@ -64,7 +66,8 @@ self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
 
   // cache first for tiles: they rarely change, and it spares the OSM servers
-  if (url.hostname === "tile.openstreetmap.org") {
+  // (any host: the tile server is set in js/config.js, tile URLs end in /z/x/y.png)
+  if (url.origin !== location.origin && /\/\d+\/\d+\/\d+\.(png|jpg|jpeg|webp)$/.test(url.pathname)) {
     e.respondWith(
       caches.open(TILES).then(async (c) => {
         const hit = await c.match(e.request);
@@ -93,3 +96,4 @@ self.addEventListener("fetch", (e) => {
     );
   }
 });
+// @license-end
