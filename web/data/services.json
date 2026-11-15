@@ -1,0 +1,16 @@
+{
+ "about": "Public services people look for by name (not by room code). Each points to a building on the map; add a 'room' once the building has an indoor map. Opening hours change, so they are not stored: the 'url' page has them.",
+ "services": [
+  {
+   "id": "international-office",
+   "building": "1106",
+   "name": {"en": "International Office", "de": "Hochschulbüro für Internationales (International Office)"},
+   "aliases": ["international office", "hochschulbüro für internationales", "internationales"],
+   "detail": {
+    "en": "The International Office is in the Wilhelm-Grunwald-Haus (building 1106). The way inside the building is not mapped yet. Check the opening hours before you go.",
+    "de": "Das International Office ist im Wilhelm-Grunwald-Haus (Gebäude 1106). Der Weg im Gebäude ist noch nicht kartiert. Prüfe vor dem Besuch die Öffnungszeiten."
+   },
+   "url": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales"
+  }
+ ]
+}

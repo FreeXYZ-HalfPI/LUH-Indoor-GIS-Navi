@@ -72,7 +72,7 @@ function nameScore(query, words) {
 
 /** All buildings, rooms and people the app knows, and the search over them. */
 export class Places {
-  constructor(buildings, rooms, people = []) {
+  constructor(buildings, rooms, people = [], services = []) {
     this.buildings = new Map(buildings.map((b) => [b.id, b]));
     this.rooms = [];
     for (const [bid, list] of Object.entries(rooms)) {
@@ -82,6 +82,15 @@ export class Places {
       }
     }
     this.roomIndex = new Map(this.rooms.map((r) => [r.id, r])); // id → room, for exact lookups
+
+    // Services (web/data/services.json): a place people look for by name, shown as its building.
+    // Keys for links: #to=international-office
+    this.services = new Map();
+    for (const sv of services) {
+      if (!this.buildings.has(sv.building)) continue; // a service needs a building on the map
+      const names = [...Object.values(sv.name), ...(sv.aliases || [])].map(fold);
+      this.services.set(sv.id, { ...sv, names });
+    }
 
     // People (web/data/people.json, from tools/crawl_people.py). Each one gets a
     // short readable key for links: #to=christian-heipke
@@ -106,6 +115,11 @@ export class Places {
     return { type: "room", key: `p:${person.slug}`, room, building: this.buildings.get(room.building), person };
   }
 
+  /** A service as a place: its building (the way inside is not mapped), with the service attached for labels. */
+  servicePlace(sv) {
+    return { type: "building", key: `s:${sv.id}`, building: this.buildings.get(sv.building), service: sv };
+  }
+
   building(id) {
     return this.buildings.get(id);
   }
@@ -116,6 +130,10 @@ export class Places {
     if (key.startsWith("p:")) {
       const person = this.people.get(key.slice(2));
       return person ? this.personPlace(person) : null;
+    }
+    if (key.startsWith("s:")) {
+      const sv = this.services.get(key.slice(2));
+      return sv ? this.servicePlace(sv) : null;
     }
     if (key.startsWith("b:")) {
       const b = this.buildings.get(key.slice(2));
@@ -171,6 +189,14 @@ export class Places {
       else if (n.length >= 3 && (r.room === n || r.room.startsWith(n))) s = 50;
       else if (n.length >= 4 && r.id.includes(n)) s = 35;
       if (s) push(s, { type: "room", key: `r:${r.id}`, room: r, building: this.buildings.get(r.building) });
+    }
+
+    // services: "international" finds the International Office; ranked above buildings and rooms by name
+    if (f.length >= 3) {
+      for (const sv of this.services.values()) {
+        const s = sv.names.some((x) => x.startsWith(f)) ? 80 : sv.names.some((x) => x.includes(f)) ? 45 : 0;
+        if (s) push(s, this.servicePlace(sv));
+      }
     }
 
     // people: by name (with typo tolerance), or by role and institute ("Präsident", "Photogrammetrie")

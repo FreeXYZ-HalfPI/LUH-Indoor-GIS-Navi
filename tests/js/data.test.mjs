@@ -124,3 +124,15 @@ test("frames.json has a frame for every indoor building", () => {
   assert.deepEqual(Object.keys(frames).sort(), [...indoorList].sort());
   for (const [s, w, n, e] of Object.values(frames)) assert.ok(s < n && w < e);
 });
+
+test("every service in services.json points to a building that can be walked to", () => {
+  const { services } = load("services.json");
+  assert.ok(services.length);
+  for (const sv of services) {
+    assert.ok(graph.buildings[sv.building], `${sv.id}: building ${sv.building} is not on the walk graph`);
+    assert.ok(graph.entrances(sv.building).length, `${sv.id}: building ${sv.building} has no entrance`);
+    assert.ok(sv.name.en && sv.name.de && sv.detail.en && sv.detail.de && /^https:\/\//.test(sv.url), `${sv.id}: incomplete entry`);
+    const r = graph.route(outside("1101"), outside(sv.building));
+    assert.ok(r && r.distance > 0, `${sv.id}: no route from 1101`);
+  }
+});

@@ -95,9 +95,12 @@ than for others.
    Orientierungswoche programme and the exchange-student guide. The link
    `…/#to=<room>` opens the exact destination, for example the International Office
    itself once it is mapped.
-3. **The International Office as a destination.** We would like to map the route to
-   the International Office and to the counters every exchange student must visit, with
-   the help of your team (room, opening hours, entrance).
+3. **The International Office as a destination.** The app already leads to the door of the
+   International Office (Wilhelm-Grunwald-Haus, building 1106): type *International Office*, or
+   open `…/#to=international-office`. The way **inside** the building is not mapped yet. We would
+   like to map it, and the counters every exchange student must visit, with the help of your
+   team (room, entrance, who to ask). Opening hours are not stored in the app (they change);
+   it links to your page.
 4. **A named contact** at the university for questions about room data, legal pages
    and hosting. Draft of the request: [LUH_REQUEST.md](LUH_REQUEST.md).
 

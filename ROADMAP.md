@@ -170,7 +170,9 @@ permission come before scale. Phase B starts now and runs in parallel.
 These guide the next phases. Each needs its own concrete plan before work starts.
 
 **Next places to cover**
-- [ ] International Office (first stop for every exchange student)
+- [ ] International Office (first stop for every exchange student): the way to its door works
+      (service place, building 1106); the way inside the building needs its floor plan,
+      `source.json` and a visit
 - [ ] Mensa and the university's public services: ServiceCenter,
       Immatrikulationsamt, library, Studentenwerk counters, IT help desk
 

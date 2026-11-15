@@ -96,3 +96,25 @@ test("search: empty query, limit and stable order", () => {
   assert.equal(places.search("1", 2).length, 2);
   assert.deepEqual(keys("1101"), keys("1101"));
 });
+
+const services = [
+  { id: "international-office", building: "3101", name: { en: "International Office", de: "Hochschulbüro für Internationales (International Office)" }, aliases: ["internationales"], detail: { en: "x", de: "y" }, url: "https://example.org/" },
+  { id: "ghost", building: "0000", name: { en: "Ghost", de: "Ghost" } }, // no building on the map: dropped
+];
+const withServices = new Places(buildings, rooms, people, services);
+
+test("a service resolves to its building and keeps the service for labels", () => {
+  const p = withServices.resolve("s:international-office");
+  assert.equal(p.type, "building");
+  assert.equal(p.building.id, "3101");
+  assert.equal(p.service.id, "international-office");
+  assert.equal(withServices.resolve("s:ghost"), null);
+  assert.equal(withServices.resolve("s:nope"), null);
+});
+
+test("services are found by name in both languages and by alias, from three letters on", () => {
+  for (const q of ["international", "Hochschulbüro", "hochschulbuero", "internationales"]) {
+    assert.equal(withServices.search(q)[0]?.key, "s:international-office", q);
+  }
+  assert.equal(withServices.search("in").some((p) => p.service), false); // too short
+});

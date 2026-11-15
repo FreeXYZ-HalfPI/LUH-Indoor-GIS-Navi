@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- **Service places** (`web/data/services.json`): a named place that people look for by name and that
+  points to a building. First one: the **International Office** (Wilhelm-Grunwald-Haus, building 1106).
+  Type "International" and route door to door to it (or `#to=international-office`); the directions
+  add where it is and link its page for opening hours, which are not stored. The way inside the
+  building is not mapped yet. A fourth one-tap example ("New here? Hauptgebäude → International
+  Office"). Tests for the lookup and for a route to every service.
+
 - **Guide for first-time users:** the start page now says what to do (three steps, a hint
   for the next field once one is chosen, a note on "Avoid steps", and three one-tap example
   routes). A **?** button opens a help dialog with the same steps, a legend of the map

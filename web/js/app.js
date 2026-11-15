@@ -39,7 +39,7 @@ async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
   // The outdoor data and the people list load at start. A building's indoor map (50–200 kB)
   // loads when a route or the map needs it, and the rest in the background when the phone is idle.
-  const [buildings, rooms, walk, list, frames, people, lm] = await Promise.all([
+  const [buildings, rooms, walk, list, frames, people, lm, svc] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
@@ -47,9 +47,10 @@ async function boot() {
     load("indoor/frames.json").catch(() => ({})), // map frames of the indoor buildings
     load("people.json").catch(() => ({ people: [] })), // and without the people search
     load("landmarks.json").catch(() => ({ rooms: {} })), // and without landmarks in the directions
+    load("services.json").catch(() => ({ services: [] })), // and without named services
   ]);
   landmarks = lm.rooms;
-  places = new Places(buildings, rooms, people.people);
+  places = new Places(buildings, rooms, people.people, svc.services);
   graph = new WalkGraph(walk);
   indoorList = list;
   for (const [b, [s, w, n, e]] of Object.entries(frames)) frameBounds[b] = L.latLngBounds([[s, w], [n, e]]);
@@ -138,6 +139,7 @@ function applyTexts() {
 function placeLabel(p) {
   if (!p) return "";
   if (p.person) return `${p.person.name} · ${p.room.id}`;
+  if (p.service) return `${p.service.name[getLang()] || p.service.name.en} · ${p.building.id}`;
   if (p.type === "building") return `${p.building.id} ${p.building.name}`;
   return `${p.room.id} · ${p.building.name}`;
 }
@@ -192,7 +194,7 @@ function initPicker(which) {
       li.role = "option";
       li.id = `${which}-opt-${i}`;
       li.className = i === active ? "active" : "";
-      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
+      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.service ? "ℹ️" : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
       li.querySelector("b").textContent = placeLabel(p); // textContent: data is never parsed as HTML
       li.querySelector("small").textContent = placeDetail(p);
       // pointerdown, not click: it fires before the input's blur closes the list
@@ -249,7 +251,8 @@ function syncInputs() {
 function readHash() {
   const h = new URLSearchParams(location.hash.slice(1));
   // 4 digits = a building, a room code = a room, anything else = a person (#to=christian-heipke)
-  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : `p:${v}`);
+  // a name from data/services.json = a service (#to=international-office)
+  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : places.services.has(v) ? `s:${v}` : `p:${v}`);
   const from = places.resolve(key(h.get("from")));
   const to = places.resolve(key(h.get("to")));
   state.from = from?.key ?? null;
@@ -486,6 +489,7 @@ const EXAMPLES = [
   ["r:3101.001.A104", "r:3110.002.205A"],
   ["r:1101.000.E028", "r:1101.004.F407"],
   ["p:christian-heipke", "p:monika-sester"],
+  ["b:1101", "s:international-office"],
 ];
 
 /** What to do next, instead of an empty space: three steps, a hint for the next field, one-tap examples. */
@@ -729,6 +733,10 @@ function guidance(from, to) {
     L.marker([fb.lat, fb.lon], { icon: pin("from", "A") }).addTo(routeLayer);
     L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
     map.fitBounds(line.getBounds(), { padding: [30, 30] });
+  }
+  // a service: say where it is and link its page (opening hours change, so they live there)
+  for (const p of [from, to]) {
+    if (p.service) notes.push(`${esc(p.service.detail[getLang()] || p.service.detail.en)} <a href="${esc(p.service.url)}" target="_blank" rel="noopener">${t.serviceInfo}</a>`);
   }
   const arrive = to.person ? t.stepArrivePerson(to.room.id, esc(to.person.name)) : t.stepArrive;
   steps.push(r && !trivial ? placeStep(arrive, r.coords.at(-1), r.end.indoor ? to.room.floor : null) : arrive); // the end: B
