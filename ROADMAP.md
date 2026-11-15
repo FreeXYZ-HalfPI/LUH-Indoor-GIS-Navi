@@ -111,6 +111,9 @@ permission come before scale. Phase B starts now and runs in parallel.
       availability, staff-only lifts, accessible toilets; "avoid steps" as a hard
       constraint on request
 - [ ] Audit the UI: screen reader, contrast, font scaling, high-contrast mode
+  - [x] First pass: visible focus, skip link, 44 px touch targets, dark-mode contrast,
+        combobox ARIA state, reduced motion, forced-colors
+  - [ ] Test with a real screen reader (TalkBack, VoiceOver) and at 200 % font size
 
 ### Phase E: Launch (about month 6–9)
 - [ ] Official launch before a winter semester: Orientierungswoche, university

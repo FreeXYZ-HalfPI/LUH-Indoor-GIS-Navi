@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 ### Added
+- **Accessibility first pass:** visible keyboard focus everywhere, a "skip to route
+  planner" link, 44 px touch targets (floor buttons, swap, chips), readable
+  confidence colours in dark mode, `aria-selected` / `aria-activedescendant`
+  kept in sync in the search lists, named and `aria-pressed` floor buttons,
+  `prefers-reduced-motion` and `forced-colors` support.
+
 - **Route confidence level** at the top of the directions: ●●● high (every floor
   checked on site), ●●○ medium (traced from floor plans, not yet walked) or
   ●○○ low (an end without indoor map, a guessed entrance, or a room code that is

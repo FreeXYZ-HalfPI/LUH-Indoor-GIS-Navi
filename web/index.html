@@ -17,6 +17,7 @@
 <body class="loading">
   <header>
     <div>
+      <a class="skip" href="#planner" data-t="skip">Skip to route planner</a>
       <h1 data-t="title">LUH Campus Navigator</h1>
       <p data-t="subtitle"></p>
     </div>
@@ -31,7 +32,7 @@
                role="combobox" aria-controls="from-list" aria-expanded="false" aria-autocomplete="list">
         <ul id="from-list" class="suggest" role="listbox" hidden></ul>
       </div>
-      <button id="swap" type="button" class="swap">⇅</button>
+      <button id="swap" type="button" class="swap" aria-label="Swap start and destination">⇅</button>
       <div class="field">
         <label for="to-input"><span class="dot to">B</span> <span data-t="to">To</span></label>
         <input id="to-input" type="search" autocomplete="off" spellcheck="false" enterkeyhint="go"

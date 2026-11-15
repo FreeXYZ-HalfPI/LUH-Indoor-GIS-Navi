@@ -85,6 +85,7 @@ function applyTexts() {
   $("#from-input").placeholder = t.fromPh;
   $("#to-input").placeholder = t.toPh;
   $("#swap").title = $("#swap").ariaLabel = t.swap;
+  $("#lang").lang = getLang() === "de" ? "en" : "de"; // the label is in the other language
   $("#lang").textContent = getLang() === "de" ? "EN" : "DE"; // the button names the language you switch to
 }
 
@@ -123,6 +124,7 @@ function initPicker(which) {
   const close = () => {
     list.hidden = true;
     input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant"); // never point at an option that is gone
     active = -1;
   };
   const choose = (place) => {
@@ -137,7 +139,7 @@ function initPicker(which) {
     items = places.search(input.value);
     list.innerHTML = "";
     if (!items.length) {
-      list.innerHTML = input.value.trim() ? `<li class="empty">${t.noResults}</li>` : "";
+      list.innerHTML = input.value.trim() ? `<li class="empty" role="presentation">${t.noResults}</li>` : "";
     }
     items.forEach((p, i) => {
       const li = document.createElement("li");
@@ -156,7 +158,14 @@ function initPicker(which) {
     });
     list.hidden = !list.children.length;
     input.setAttribute("aria-expanded", String(!list.hidden));
+    li_selected();
   };
+  // tell assistive technology which option is highlighted (aria-selected on it, activedescendant on the input)
+  function li_selected() {
+    [...list.children].forEach((li, i) => li.role === "option" && li.setAttribute("aria-selected", String(i === active)));
+    if (active >= 0 && !list.hidden) input.setAttribute("aria-activedescendant", `${which}-opt-${active}`);
+    else input.removeAttribute("aria-activedescendant");
+  }
 
   input.addEventListener("input", () => {
     active = -1;
@@ -174,7 +183,7 @@ function initPicker(which) {
       if (list.hidden) render();
       active = Math.max(0, Math.min(items.length - 1, active + (e.key === "ArrowDown" ? 1 : -1)));
       render();
-      input.setAttribute("aria-activedescendant", `${which}-opt-${active}`);
+      list.children[active]?.scrollIntoView({ block: "nearest" }); // keep the highlighted option visible
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (!items.length) render();
@@ -229,7 +238,7 @@ async function share() {
 function toast(msg) {
   const el = $("#toast");
   el.textContent = msg;
-  el.hidden = false;
+  el.hidden = false; // #toast is role="status": screen readers announce it
   setTimeout(() => (el.hidden = true), 1800);
 }
 
@@ -341,7 +350,7 @@ function drawFloorControl(div, levels) {
   div.innerHTML =
     `<span class="floor-ctl-title">${t.floorCtl}</span>` +
     levels
-      .map((l) => `<a href="#" role="button" data-l="${l}" class="${l === explorerLevel ? "on" : ""}${onRoute.has(l) ? " route" : ""}" title="${esc(t.floor(l))}">${t.floorShort(l)}</a>`)
+      .map((l) => `<a href="#" role="button" data-l="${l}" class="${l === explorerLevel ? "on" : ""}${onRoute.has(l) ? " route" : ""}" title="${esc(t.floor(l))}" aria-label="${esc(t.floor(l))}" aria-pressed="${l === explorerLevel}">${t.floorShort(l)}</a>`)
       .join("");
   div.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", (e) => {
