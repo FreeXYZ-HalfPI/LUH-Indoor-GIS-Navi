@@ -98,3 +98,29 @@ test("every field-test route (docs/field-test/routes.csv) is routable door to do
   assert.ok(csv.length > 1);
   assert.equal(failed.length, 0, `field-test routes without a door-to-door route ${show(failed)} (rerun tools/field_test.py)`);
 });
+
+test("loading only the two buildings of a route gives the same route as loading all (lazy loading)", () => {
+  const pairs = [["3101", "3110"], ["1101", "3408"], ["3109", "3101"]];
+  for (const [a, b] of pairs) {
+    const lazy = new WalkGraph(load("walkgraph.json"));
+    for (const id of [a, b]) lazy.addIndoor(load(`indoor/${id}.json`));
+    const ra = indoor.find((d) => d.building === a);
+    const rb = indoor.find((d) => d.building === b);
+    const from = room(a, Object.keys(ra.rooms)[0]);
+    const to = room(b, Object.keys(rb.rooms).at(-1));
+    const full = graph.route(from, to);
+    const part = lazy.route(from, to);
+    assert.ok(full && part, `${a} → ${b}: no route`);
+    // the same route, unless the full graph walks through a third building (then the lazy one is the intended result)
+    if (full.legs.every((l) => l.building == null || l.building === a || l.building === b)) {
+      assert.equal(Math.round(part.distance), Math.round(full.distance), `${a} → ${b}: different distance`);
+    }
+    assert.ok(part.start.indoor && part.end.indoor, `${a} → ${b}: an end fell back to the entrance`);
+  }
+});
+
+test("frames.json has a frame for every indoor building", () => {
+  const frames = load("indoor/frames.json");
+  assert.deepEqual(Object.keys(frames).sort(), [...indoorList].sort());
+  for (const [s, w, n, e] of Object.values(frames)) assert.ok(s < n && w < e);
+});

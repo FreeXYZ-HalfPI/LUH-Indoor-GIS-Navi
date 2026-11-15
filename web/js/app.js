@@ -26,28 +26,32 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 const state = { from: null, to: null, avoidSteps: false };
 let places, graph, map, routeLayer;
 let landmarks = {}; // room code → {en, de}: rooms people recognise (data/landmarks.json)
-const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef)
+const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef); filled as buildings are loaded
+let indoorList = []; // buildings that have an indoor map
+const frameBounds = {}; // building → map frame (data/indoor/frames.json), known before the building is loaded
+const indoorLoading = {}; // building → promise of its indoor file (a building is fetched once, and only when needed)
+let updateToken = 0; // a newer update() makes an older one that waited for a building stop
 
 // ---------- boot ----------
 
 async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
-  // all data is loaded at start: routing then works offline and without waiting
-  const [buildings, rooms, walk, indoorList, people, lm] = await Promise.all([
+  // The outdoor data and the people list load at start. A building's indoor map (50–200 kB)
+  // loads when a route or the map needs it, and the rest in the background when the phone is idle.
+  const [buildings, rooms, walk, list, frames, people, lm] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
     load("indoor/index.json").catch(() => []), // the app still works outdoors without indoor data
+    load("indoor/frames.json").catch(() => ({})), // map frames of the indoor buildings
     load("people.json").catch(() => ({ people: [] })), // and without the people search
     load("landmarks.json").catch(() => ({ rooms: {} })), // and without landmarks in the directions
   ]);
   landmarks = lm.rooms;
   places = new Places(buildings, rooms, people.people);
   graph = new WalkGraph(walk);
-  for (const indoor of await Promise.all(indoorList.map((b) => load(`indoor/${b}.json`)))) {
-    graph.addIndoor(indoor);
-    indoorData[indoor.building] = indoor;
-  }
+  indoorList = list;
+  for (const [b, [s, w, n, e]] of Object.entries(frames)) frameBounds[b] = L.latLngBounds([[s, w], [n, e]]);
 
   initMap(buildings);
   initPicker("from");
@@ -73,6 +77,44 @@ async function boot() {
   applyTexts();
   readHash();
   document.body.classList.remove("loading");
+  prefetchIndoor();
+}
+
+/**
+ * Load the indoor map of the given buildings once, and merge it into the router.
+ * Resolves when done; a building that cannot be loaded (offline, never cached) is skipped,
+ * so the route falls back to the building's entrance, and is tried again after 30 s.
+ */
+function ensureIndoor(ids) {
+  return Promise.all(
+    ids
+      .filter((b) => indoorList.includes(b))
+      .map(
+        (b) =>
+          (indoorLoading[b] ??= fetch(`data/indoor/${b}.json`)
+            .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status))))
+            .then((d) => {
+              graph.addIndoor(d);
+              indoorData[b] = d;
+            })
+            .catch(() => {
+              setTimeout(() => delete indoorLoading[b], 30000); // no retry loop, but a later try
+            })),
+      ),
+  );
+}
+
+/** When the phone is idle, fetch the remaining buildings (unless the user saves data), so that offline use keeps working. */
+function prefetchIndoor() {
+  if (navigator.connection?.saveData) return;
+  const idle = window.requestIdleCallback || ((f) => setTimeout(f, 3000));
+  idle(async () => {
+    for (const b of indoorList) {
+      if (indoorData[b]) continue;
+      await ensureIndoor([b]);
+      drawExplorer(); // rooms of this building may be in view now
+    }
+  });
 }
 
 // ---------- texts ----------
@@ -318,12 +360,9 @@ function roomRing(id) {
 function initExplorer() {
   explorerLayer = L.layerGroup().addTo(map);
   floorLayer = L.layerGroup().addTo(map);
-  // a dashed frame shows which buildings have rooms to explore
-  for (const d of Object.values(indoorData)) {
-    const ids = Object.keys(d.outlines || {});
-    if (!ids.length) continue;
-    d.bounds = L.latLngBounds(ids.flatMap((id) => roomRing(id)));
-    L.rectangle(d.bounds, { color: COLOR_INDOOR, weight: 1, dashArray: "4 4", fill: false, interactive: false }).addTo(map);
+  // a dashed frame shows which buildings have rooms to explore (from frames.json: no building is loaded for it)
+  for (const bounds of Object.values(frameBounds)) {
+    L.rectangle(bounds, { color: COLOR_INDOOR, weight: 1, dashArray: "4 4", fill: false, interactive: false }).addTo(map);
   }
   floorCtl = L.control({ position: "topright" });
   floorCtl.onAdd = () => {
@@ -340,7 +379,10 @@ function initExplorer() {
 function visibleIndoor() {
   if (map.getZoom() < EXPLORER_ZOOM) return [];
   const view = map.getBounds();
-  return Object.values(indoorData).filter((d) => d.bounds?.intersects(view));
+  const inView = Object.keys(frameBounds).filter((b) => frameBounds[b].intersects(view));
+  const missing = inView.filter((b) => !indoorData[b]);
+  if (missing.length) ensureIndoor(missing).then(drawExplorer); // draws the rooms as soon as they are there
+  return inView.map((b) => indoorData[b]).filter(Boolean);
 }
 
 /** The floor buttons for the given levels (highest first, like a lift panel). */
@@ -438,6 +480,17 @@ const endSentence = (s) => s.replace(/\.(<\/b>)?\.(?=<ol|$)/, ".$1");
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
   if (push) writeHash();
+  const token = ++updateToken;
+  // the indoor maps of both ends must be in the router before it runs
+  const need = [state.from, state.to].map((k) => places.resolve(k)?.building?.id).filter((b) => b && indoorList.includes(b) && !indoorData[b]);
+  if (!need.length) return render();
+  routeLayer.clearLayers();
+  currentRoute = null;
+  $("#result").innerHTML = `<p class="note">${t.loadingBuilding}</p>`;
+  ensureIndoor(need).then(() => token === updateToken && render()); // a newer choice has already replaced this one
+}
+
+function render() {
   routeLayer.clearLayers();
   currentRoute = null;
   const out = $("#result");

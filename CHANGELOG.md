@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 ### Added
+- **Lazy loading per building:** the app starts with the outdoor data only; a
+  building's indoor map (45–195 kB) is fetched when a route starts or ends in it
+  or when it comes into view on the map, and the others load in the background
+  when the phone is idle (not with "data saver" on). The purple map frames come
+  from the new `data/indoor/frames.json` (written by `build_indoor.py` with
+  `index.json`), so adding buildings no longer slows the first start. The
+  service worker caches each building file on first use. Tests: a route over
+  two lazily loaded buildings equals the full-graph route.
+  Known gap: public-room type and size in the search list appear once a
+  building has loaded.
+
 - **Accessibility first pass:** visible keyboard focus everywhere, a "skip to route
   planner" link, 44 px touch targets (floor buttons, swap, chips), readable
   confidence colours in dark mode, `aria-selected` / `aria-activedescendant`

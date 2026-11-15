@@ -6,7 +6,7 @@
 // still route there once it has been opened once.
 // Bump on every change to the app or its data: a new name makes the browser install
 // the new files and "activate" delete the old cache.
-const VERSION = "v22";
+const VERSION = "v23";
 const SHELL = `shell-${VERSION}`;
 const TILES = "tiles-v1"; // tiles do not change with the app, so they keep their cache
 const MAX_TILES = 600; // ~10 MB: enough for the campus around you, small enough for any phone
@@ -30,11 +30,9 @@ const ASSETS = [
   "data/people.json",
   "data/landmarks.json",
   "data/indoor/index.json",
-  "data/indoor/1101.json",
-  "data/indoor/3101.json",
-  "data/indoor/3109.json",
-  "data/indoor/3110.json",
-  "data/indoor/3408.json",
+  "data/indoor/frames.json",
+  // the buildings' own files (data/indoor/<id>.json) are cached when first used: the app
+  // loads them per building, and fetches the rest when the phone is idle
   "vendor/leaflet/leaflet.js",
   "vendor/leaflet/leaflet.css",
   "icons/icon.svg",

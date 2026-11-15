@@ -98,7 +98,8 @@ permission come before scale. Phase B starts now and runs in parallel.
 - [ ] Importer for official CAD/IFC data into the existing indoor format, if LUH provides it
 - [ ] Otherwise semi-automatic tracing: medial axis of the free space, detected
       door openings, a small review editor for contributors
-- [ ] Lazy loading per building (index file + service worker caches opened buildings)
+- [x] Lazy loading per building (index + frames file; a building loads when a route or the
+      map needs it, the rest when the phone is idle; the service worker caches each on first use)
 - [ ] Scheduled GitHub Action: refresh room lists and flag changes
 - [ ] 15–20 buildings that cover the daily traffic (library, main lecture halls,
       Nordstadt and Welfengarten buildings)

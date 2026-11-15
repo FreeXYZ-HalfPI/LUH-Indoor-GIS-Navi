@@ -117,6 +117,28 @@ def app_data_path(bid):
     return ROOT / "web" / "data" / "indoor" / f"{bid}.json"
 
 
+def write_index(folder):
+    """index.json (the mapped buildings) and frames.json (their map frames) next to the building files.
+
+    The app has no directory listing, and it loads a building's file only when a route
+    or the map needs it; frames.json lets it draw the purple frame of every building
+    without loading them: {building: [south, west, north, east]} of all room outlines.
+    """
+    available = sorted(p.stem for p in folder.glob("*.json") if p.stem not in ("index", "frames"))
+    (folder / "index.json").write_text(json.dumps(available), encoding="utf-8")
+    frames = {}
+    for bid in available:
+        d = json.loads((folder / f"{bid}.json").read_text(encoding="utf-8"))
+        lat, lon = d["georef"]["lat"], d["georef"]["lon"]
+        pts = [(flat[i], flat[i + 1]) for flat in d["outlines"].values() for i in range(0, len(flat), 2)]
+        if not pts:
+            continue
+        lats = [lat[0] + lat[1] * x + lat[2] * y for x, y in pts]
+        lons = [lon[0] + lon[1] * x + lon[2] * y for x, y in pts]
+        frames[bid] = [round(min(lats), 6), round(min(lons), 6), round(max(lats), 6), round(max(lons), 6)]
+    (folder / "frames.json").write_text(json.dumps(frames), encoding="utf-8")
+
+
 def write_app_data(bid, out):
     dest = app_data_path(bid)
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -771,8 +793,7 @@ def build(bid, debug=False):
     apply_status(out, src)
     write_app_data(bid, out)
     dest = app_data_path(bid)
-    available = sorted(p.stem for p in dest.parent.glob("*.json") if p.stem != "index")
-    (dest.parent / "index.json").write_text(json.dumps(available), encoding="utf-8")   # the app has no directory listing
+    write_index(dest.parent)
 
     write_geojson(bid, geo, graph, index, nodes, edges)
     if debug:
