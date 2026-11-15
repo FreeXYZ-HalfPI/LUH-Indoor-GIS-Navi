@@ -79,6 +79,9 @@
   claim, and what we ask of the International Office. With a German summary.
 
 ### Changed
+- `docs/IDEA.md`: "What exists today" brought up to date (stations, dorms, International Office, About page,
+  offline, map styles). The presentation for the International Office has a new slide "From the station,
+  from your dorm, to the office".
 - Text size follows the browser or phone setting (body font in `rem`, not `px`); the A/B dots and
   the swap button scale with it. Checked at 200 % on a 375 px screen.
 - 1101 re-crawled after the weekly room check flagged `1101.004.B419`: it is now a public

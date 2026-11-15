@@ -82,9 +82,19 @@ than for others.
   3109 Verfügungsgebäude, 3408 Hochhaus Appelstraße, 3110 Hauptmensa.
 - **2,961 rooms** found, **2,713 (92 %)** routable, **343 people** findable by name
   (office rooms of the Präsidium, Dezernate and institutes, from public pages;
-  no phone numbers, no e-mail).
-- German and English; installable on the phone home screen; offline after the first
-  visit; "Avoid steps"; share link; room explorer with all floors.
+  no phone numbers, no e-mail). Umlauts can be typed as ae/oe/ue.
+- **Start where you are:** the Hauptbahnhof, the ZOB, 60+ tram and bus stops near the campus, and the
+  **19 open dorms of the Studentenwerk**. Near places are routed on foot; for a long walk the app names a
+  stop near the start, a stop near the goal and the Stadtbahn or bus line they share; far places are
+  "ride to a stop near the goal, then walk".
+- **The International Office** as a destination (to the door of building 1106; inside is not mapped yet).
+- **Easy to learn:** a start page with three steps and one-tap examples, an About page, German and
+  English, numbered markers on the map that match the numbered steps.
+- **Careful with accessibility:** "Avoid steps" with a loud warning when stairs remain, large text,
+  keyboard use, a layout for phone, tablet and desktop.
+- **Works offline** after the first visit (install it like an app), prints the directions, and the
+  background map can be chosen (OpenStreetMap, OpenStreetMap Deutschland, the official BKG TopPlus Open
+  maps, OpenTopoMap, CyclOSM, MapLibre vector maps).
 - Everything is **approximate until walked**: no floor is verified on site yet. That is
   why the app says so on every route.
 
