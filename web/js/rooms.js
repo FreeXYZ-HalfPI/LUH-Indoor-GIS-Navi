@@ -28,8 +28,16 @@ function normalise(q) {
   return q.trim().toUpperCase().replace(/[\s,/_]+/g, ".").replace(/\.{2,}/g, ".");
 }
 
-// lower case without accents, ß → ss: "Hauptgebaude" and "hauptgebäude" both find Hauptgebäude
-const fold = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss");
+// lower case without accents, ß → ss, ae/oe/ue → a/o/u: "Hauptgebaude" and "hauptgebäude" both find
+// Hauptgebäude, and "Mueller" finds Müller (people without a German keyboard type umlauts as ae/oe/ue).
+// Data and query are folded the same way, so a name like "Michael" still finds itself.
+const fold = (s) =>
+  (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/ß/g, "ss")
+    .replace(/ae|oe|ue/g, (m) => m[0]);
 
 // Academic titles are not part of a name: "Prof. Dr.-Ing. habil. Christian Heipke" → christian, heipke.
 // A token with a dot (Prof., Dr.-Ing., apl.) or in parentheses ((FH)) is a title.

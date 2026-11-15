@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 ### Added
+- **Umlauts without a German keyboard:** the search treats `ae`, `oe`, `ue` like `ä`, `ö`, `ü`
+  (and `ss` like `ß`, as before): "Mueller" finds Müller, "Verfuegungsgebaeude" finds the
+  Verfügungsgebäude, "Hochschulbuero" finds the International Office. Useful for international
+  students. Data and query are folded the same way, so names like "Michael" still match.
+
 - **Service places** (`web/data/services.json`): a named place that people look for by name and that
   points to a building. First one: the **International Office** (Wilhelm-Grunwald-Haus, building 1106).
   Type "International" and route door to door to it (or `#to=international-office`); the directions

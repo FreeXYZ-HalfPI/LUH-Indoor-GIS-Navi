@@ -113,8 +113,20 @@ test("a service resolves to its building and keeps the service for labels", () =
 });
 
 test("services are found by name in both languages and by alias, from three letters on", () => {
-  for (const q of ["international", "Hochschulbüro", "hochschulburo", "internationales"]) {
+  for (const q of ["international", "Hochschulbüro", "hochschulburo", "Hochschulbuero", "internationales"]) {
     assert.equal(withServices.search(q)[0]?.key, "s:international-office", q);
   }
   assert.equal(withServices.search("in").some((p) => p.service), false); // too short
+});
+
+test("umlauts can be typed as ae/oe/ue, in names and in building names", () => {
+  const p = new Places(
+    [{ id: "1101", name: "Hauptgebäude", street: "Welfengarten", house_number: "1" }, { id: "3109", name: "Verfügungsgebäude", street: "Appelstraße", house_number: "9" }],
+    { 1101: ["1101.001.A120"] },
+    [{ name: "Prof. Dr. Jörg Müller", role: "Professor", org: "Institut", room: "1101.001.A120" }],
+  );
+  for (const q of ["Müller", "Mueller", "muller", "Jörg Mueller", "Joerg Müller"]) assert.equal(p.search(q)[0]?.key, "p:jorg-muller", q);
+  assert.equal(p.search("Verfuegungsgebaeude")[0]?.key, "b:3109");
+  assert.equal(p.search("Appelstrasse")[0]?.key, "b:3109"); // ß → ss was already there
+  assert.equal(p.search("Hauptgebaeude")[0]?.key, "b:1101");
 });
