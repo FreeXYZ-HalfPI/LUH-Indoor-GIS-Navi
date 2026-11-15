@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 ### Changed
+- Text size follows the browser or phone setting (body font in `rem`, not `px`); the A/B dots and
+  the swap button scale with it. Checked at 200 % on a 375 px screen.
 - 1101 re-crawled after the weekly room check flagged `1101.004.B419`: it is now a public
   room on Rauminfo (Besprechungsraum, 37 m²) and shows its type and size. The map was
   already routing to it; coverage is unchanged (1106 of 1227 rooms).

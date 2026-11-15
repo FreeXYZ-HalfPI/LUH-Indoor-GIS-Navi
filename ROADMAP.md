@@ -58,6 +58,24 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
 - Scope for now: these **3 example buildings**. More buildings come later.
 
+## Next steps (updated 2026-11-15)
+
+Done in the last session: accessibility first pass, lazy loading per building, weekly
+room-list check, numbered step markers on the map, 1101 re-crawl (B419), font scaling.
+What comes next, in this order:
+
+1. **Phase A, people needed:** run the field-test rounds ([docs/field-test/](docs/field-test/README.md))
+   in the 5 buildings with 5–10 students, then mark floors `verified` in `source.json`.
+2. **Phase B, people needed:** send the request to LUH ([docs/LUH_REQUEST.md](docs/LUH_REQUEST.md)),
+   find a sponsor, decide on people search, fill in and publish imprint and privacy statement.
+3. **Cheap pilot gaps (code and plans):** H-wing `room_points`, 3408 floors 017/018,
+   1101 floor 005, 1101 C201–C209 strip.
+4. **Phase D, needs a decision:** printable "you are here" signs with QR codes (decide whether a
+   small QR library is acceptable, since the tools are standard-library only otherwise).
+5. **Phase D, needs requirements:** step-free routing with the Behindertenbeauftragte.
+6. **Accessibility:** a screen-reader test on a real phone.
+7. **Phase C:** a review editor / semi-automatic tracing for buildings beyond the 5 pilots.
+
 ## Path to a real-world solution
 
 Plan from the project evaluation of 2026-11-05 (see [docs/RISKS.md](docs/RISKS.md)).
@@ -117,7 +135,9 @@ permission come before scale. Phase B starts now and runs in parallel.
 - [ ] Audit the UI: screen reader, contrast, font scaling, high-contrast mode
   - [x] First pass: visible focus, skip link, 44 px touch targets, dark-mode contrast,
         combobox ARIA state, reduced motion, forced-colors
-  - [ ] Test with a real screen reader (TalkBack, VoiceOver) and at 200 % font size
+  - [x] Font scaling: body text follows the browser/phone font size (`rem`), the A/B dots and
+        the swap button scale with it; checked at 200 % on a 375 px screen, no sideways scrolling
+  - [ ] Test with a real screen reader (TalkBack, VoiceOver)
 
 ### Phase E: Launch (about month 6–9)
 - [ ] Official launch before a winter semester: Orientierungswoche, university
