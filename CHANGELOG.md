@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- The step-tag logic (place and floor of a direction step) moved from `app.js` into
+  `web/js/steptags.js` and has unit tests (`tests/js/steptags.test.mjs`).
+
 ### Added
 - **Numbered step markers on the map:** every step of the directions that happens at a
   place (leave a door, walk, stairs or lift, enter a building) gets a purple numbered

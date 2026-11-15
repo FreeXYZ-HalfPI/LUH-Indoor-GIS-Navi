@@ -9,6 +9,7 @@ import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
 import { reportUrl } from "./report.js";
+import { stepTag, floorTag, parseStep, placeStep } from "./steptags.js";
 import { routeFloors, confidence, routeConfidence } from "./confidence.js";
 import { TILE_URL, TILE_ATTRIBUTION, TILE_MAX_NATIVE_ZOOM } from "./config.js";
 
@@ -476,9 +477,6 @@ const minutes = (m) => Math.max(1, Math.round(m / WALK_M_PER_MIN));
 const roomText = (p) => (p.person ? `${p.room.id} – ${esc(p.person.name)}` : p.room.id);
 const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.room.wing) : "");
 
-// A name that ends with a degree ("M. Sc.") already ends the sentence: avoid "M. Sc.."
-const endSentence = (s) => s.replace(/\.(<\/b>)?\.(?=<ol|$)/, ".$1");
-
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
   if (push) writeHash();
@@ -552,23 +550,6 @@ function reportBlock(from, to, found) {
   const href = reportUrl(from, to, { appUrl: location.origin + location.pathname, avoidSteps: state.avoidSteps, found, text: t.reportText });
   return `<p class="report"><a href="${esc(href)}" target="_blank" rel="noopener">${t.report}</a><br><small>${t.reportNote}</small></p>`;
 }
-
-// A step starts with a hidden tag that says where it happens, so the map can show a numbered
-// marker for it: floor N (tapping the step shows that floor), the place [lat, lon] and the
-// floor the marker belongs to (no floor: outdoors, the marker is always shown).
-const STEP_TAG = /^<i( data-floor="-?\d+")?( data-at="[^"]*")?( data-ml="-?\d+")? hidden><\/i>/;
-const stepTag = ({ floor, at, level }) =>
-  `<i${floor != null ? ` data-floor="${floor}"` : ""}${at ? ` data-at="${at[0]},${at[1]}"` : ""}${at && level != null ? ` data-ml="${level}"` : ""} hidden></i>`;
-const floorTag = (level) => stepTag({ floor: level });
-/** {body, floor, at: [lat, lon] | null, level} of a step sentence (see stepTag). */
-function parseStep(s) {
-  const m = s.match(STEP_TAG);
-  const attr = (k) => m?.[0].match(new RegExp(`data-${k}="([^"]*)"`))?.[1];
-  const at = attr("at")?.split(",").map(Number) ?? null;
-  return { body: endSentence(s.replace(STEP_TAG, "")), floor: attr("floor") != null ? Number(attr("floor")) : null, at, level: attr("ml") != null ? Number(attr("ml")) : null };
-}
-/** The same step, now placed at a point (keeps its floor). */
-const placeStep = (s, at, level) => stepTag({ floor: parseStep(s).floor, at, level }) + s.replace(STEP_TAG, "");
 
 const STEP_PIN_SKIP_M = 4; // a marker this close to A or B would hide it: that step is placed, but gets no marker
 let stepLocs = []; // per step of the shown route: {at, level, floor} (null when the step has no place)
