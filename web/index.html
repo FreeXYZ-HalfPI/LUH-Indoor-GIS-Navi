@@ -21,7 +21,10 @@
       <h1 data-t="title">LUH Campus Navigator</h1>
       <p data-t="subtitle"></p>
     </div>
-    <button id="lang" type="button" class="chip">DE</button>
+    <div class="head-btns">
+      <button id="help-btn" type="button" class="chip" aria-haspopup="dialog">?</button>
+      <button id="lang" type="button" class="chip">DE</button>
+    </div>
   </header>
 
   <main>
@@ -54,6 +57,7 @@
     <p data-t="privacy"></p>
     <p data-t-html="aboutText"></p>
   </footer>
+  <dialog id="help" aria-labelledby="help-title"></dialog>
   <div id="toast" role="status" hidden></div>
 
   <script src="vendor/leaflet/leaflet.js"></script>

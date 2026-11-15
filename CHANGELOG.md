@@ -1,6 +1,16 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- **Guide for first-time users:** the start page now says what to do (three steps, a hint
+  for the next field once one is chosen, a note on "Avoid steps", and three one-tap example
+  routes). A **?** button opens a help dialog with the same steps, a legend of the map
+  symbols (A, B, numbered steps, floor buttons, purple frames) and tips. German and English.
+- **Idea and motivation** ([docs/IDEA.md](docs/IDEA.md)): the problem, the target groups
+  (new arrivals, international and short-term exchange students, people with disabilities
+  as Chancenvielfalt, visitors, everyday users), principles, what exists, what we do not
+  claim, and what we ask of the International Office. With a German summary.
+
 ### Changed
 - Text size follows the browser or phone setting (body font in `rem`, not `px`); the A/B dots and
   the swap button scale with it. Checked at 200 % on a 375 px screen.

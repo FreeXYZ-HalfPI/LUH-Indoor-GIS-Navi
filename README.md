@@ -9,6 +9,9 @@ floor plans.
 **From room XX in building YY → to room ZZ in building WW.** It runs in the
 phone browser, with nothing to install, no GPS and no personal data.
 
+> **Why this exists, and who it is for** (new arrivals, international and exchange students,
+> people with disabilities, visitors, everyday users): [docs/IDEA.md](docs/IDEA.md).
+
 ## Project overview
 Finding rooms inside university buildings is often hard for new students and
 visitors. LUH's [Standortfinder](https://standortfinder.uni-hannover.de/de/)

@@ -60,10 +60,15 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 
 ## Next steps (updated 2026-11-15)
 
+Also done: first-time-user guide in the app (welcome card, examples, help dialog), the idea and
+motivation document ([docs/IDEA.md](docs/IDEA.md)) and a presentation for the International Office.
+
 Done in the last session: accessibility first pass, lazy loading per building, weekly
 room-list check, numbered step markers on the map, 1101 re-crawl (B419), font scaling.
 What comes next, in this order:
 
+0. **Present to the International Office** (deck ready); ask for a test group, a place in the
+   welcome material, the International Office as a destination, a named contact.
 1. **Phase A, people needed:** run the field-test rounds ([docs/field-test/](docs/field-test/README.md))
    in the 5 buildings with 5–10 students, then mark floors `verified` in `source.json`.
 2. **Phase B, people needed:** send the request to LUH ([docs/LUH_REQUEST.md](docs/LUH_REQUEST.md)),

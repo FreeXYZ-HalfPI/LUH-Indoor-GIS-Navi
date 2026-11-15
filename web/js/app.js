@@ -73,6 +73,8 @@ async function boot() {
     update();
   });
   $("#share").addEventListener("click", share);
+  $("#help-btn").addEventListener("click", openHelp);
+  $("#help").addEventListener("click", (e) => e.target.id === "help" && e.target.close()); // a tap outside the box closes it
   window.addEventListener("hashchange", readHash);
 
   applyTexts();
@@ -128,6 +130,7 @@ function applyTexts() {
   $("#from-input").placeholder = t.fromPh;
   $("#to-input").placeholder = t.toPh;
   $("#swap").title = $("#swap").ariaLabel = t.swap;
+  $("#help-btn").title = $("#help-btn").ariaLabel = t.helpBtn;
   $("#lang").lang = getLang() === "de" ? "en" : "de"; // the label is in the other language
   $("#lang").textContent = getLang() === "de" ? "EN" : "DE"; // the button names the language you switch to
 }
@@ -477,6 +480,55 @@ const minutes = (m) => Math.max(1, Math.round(m / WALK_M_PER_MIN));
 const roomText = (p) => (p.person ? `${p.room.id} – ${esc(p.person.name)}` : p.room.id);
 const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.room.wing) : "");
 
+// ---------- guide for first-time users ----------
+
+const EXAMPLES = [
+  ["r:3101.001.A104", "r:3110.002.205A"],
+  ["r:1101.000.E028", "r:1101.004.F407"],
+  ["p:christian-heipke", "p:monika-sester"],
+];
+
+/** What to do next, instead of an empty space: three steps, a hint for the next field, one-tap examples. */
+function welcomeCard(from, to) {
+  const hint = from || to ? `<p class="guide-hint" role="status">${from ? t.hintNeedTo : t.hintNeedFrom}</p>` : "";
+  const examples = EXAMPLES.map(([a, b], i) => `<button type="button" class="example" data-from="${a}" data-to="${b}">${esc(t.examples[i])}</button>`).join("");
+  return `<div class="welcome">
+    <h2>${t.welcomeTitle}</h2>
+    ${hint}
+    <ol class="guide-steps">${t.steps3.map((x) => `<li><span>${x}</span></li>`).join("")}</ol>
+    <p class="guide-access">♿ ${t.accessHint}</p>
+    <h3>${t.tryExample}</h3>
+    <div class="examples">${examples}</div>
+  </div>`;
+}
+
+function wireWelcome(out) {
+  out.querySelectorAll("button.example").forEach((b) =>
+    b.addEventListener("click", () => {
+      state.from = places.resolve(b.dataset.from)?.key ?? null;
+      state.to = places.resolve(b.dataset.to)?.key ?? null;
+      syncInputs();
+      update();
+      $("#map").scrollIntoView({ block: "nearest" });
+    }),
+  );
+}
+
+/** The help dialog: how to use the page, what the map symbols mean, and a link to the idea. */
+function openHelp() {
+  const d = $("#help");
+  d.innerHTML = `<h2 id="help-title">${t.helpTitle}</h2>
+    <ol class="guide-steps">${t.steps3.map((x) => `<li><span>${x}</span></li>`).join("")}</ol>
+    <h3>${t.helpLegend}</h3>
+    <ul class="legend">${t.legend.map(([k, v]) => `<li><span class="legend-key">${esc(k)}</span> ${esc(v)}</li>`).join("")}</ul>
+    <h3>${t.helpOptions}</h3>
+    <ul class="tips">${t.helpTips.map((x) => `<li>${x}</li>`).join("")}</ul>
+    <p><a href="https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi/blob/main/docs/IDEA.md" target="_blank" rel="noopener">${t.aboutProject}</a></p>
+    <p><button type="button" class="close-help">${t.close}</button></p>`;
+  d.querySelector(".close-help").addEventListener("click", () => d.close());
+  d.showModal();
+}
+
 /** Recompute everything after a change of start, destination or options. */
 function update(push = true) {
   if (push) writeHash();
@@ -501,7 +553,8 @@ function render() {
   $("#share").hidden = !(from && to);
   outlineChosenRooms(from, to);
   if (!from || !to) {
-    out.innerHTML = "";
+    out.innerHTML = welcomeCard(from, to);
+    wireWelcome(out);
     focusPlace(from || to);
     return;
   }
