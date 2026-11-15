@@ -218,3 +218,17 @@ footer { max-width: 760px; margin: 0 auto; padding: 8px 16px 24px; font-size: 0.
 /* skip link: hidden until a keyboard user tabs to it */
 .skip { position: absolute; left: -999px; top: 0; background: #fff; color: #003366; padding: 8px 12px; z-index: 3000; }
 .skip:focus { left: 8px; top: 8px; }
+
+/* numbered step markers on the map: the number is the number in the directions list */
+.step-pin { background: none; border: 0; }
+.step-pin span {
+  display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; color: #4a1a82; border: 3px solid #7b2cbf;
+  font-weight: 700; font-size: 0.8rem; box-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+}
+.step-pin.off { opacity: 0.35; }                       /* on another floor */
+.step-pin.active span { transform: scale(1.45); background: #7b2cbf; color: #fff; border-color: #fff; box-shadow: 0 0 0 3px #7b2cbf, 0 2px 8px rgb(0 0 0 / 0.5); }
+/* the selected step in the list: a bar and a background, not colour alone */
+.steps li.active { background: #f1ecfb; color: #1b1f24; border-left: 5px solid #7b2cbf; padding-left: 8px; border-radius: 4px; }
+.steps li[data-i] { cursor: pointer; }
+.steps li[data-i]:hover { background: #f1ecfb; color: #1b1f24; }

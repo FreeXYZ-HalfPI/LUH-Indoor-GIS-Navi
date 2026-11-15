@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- **Numbered step markers on the map:** every step of the directions that happens at a
+  place (leave a door, walk, stairs or lift, enter a building) gets a purple numbered
+  marker, and the number is the number in the list. Tap a step and the map moves to its
+  place, switches to its floor and enlarges the marker; tap a marker and its sentence is
+  highlighted in the list (a bar and a background, not colour alone). Markers on other
+  floors are faint; the first and last step stand at A and B and get no marker of their own.
+
 - **Weekly room-list check** (`tools/check_rooms.py`, `.github/workflows/room-check.yml`):
   compares the public Rauminfo room list of each mapped building with the rooms our
   maps were built from, and opens or updates one GitHub issue when rooms are new or

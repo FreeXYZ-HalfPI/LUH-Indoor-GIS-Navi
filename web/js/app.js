@@ -360,6 +360,7 @@ function roomRing(id) {
 function initExplorer() {
   explorerLayer = L.layerGroup().addTo(map);
   floorLayer = L.layerGroup().addTo(map);
+  stepLayer = L.layerGroup().addTo(map);
   // a dashed frame shows which buildings have rooms to explore (from frames.json: no building is loaded for it)
   for (const bounds of Object.values(frameBounds)) {
     L.rectangle(bounds, { color: COLOR_INDOOR, weight: 1, dashArray: "4 4", fill: false, interactive: false }).addTo(map);
@@ -409,6 +410,7 @@ function drawFloorControl(div, levels) {
  */
 function drawFloorLayer() {
   floorLayer.clearLayers();
+  drawStepMarkers();
   for (const [p, color] of chosenRooms) {
     if (p.room.floor !== explorerLevel) continue; // a room is only outlined on its own floor
     const ring = roomRing(p.room.id);
@@ -493,6 +495,8 @@ function update(push = true) {
 function render() {
   routeLayer.clearLayers();
   currentRoute = null;
+  stepLocs = [];
+  activeStep = -1;
   const out = $("#result");
   const from = places.resolve(state.from);
   const to = places.resolve(state.to);
@@ -505,18 +509,21 @@ function render() {
   }
 
   const g = guidance(from, to);
-  drawExplorer(); // the route is known now: draw its parts on the shown floor
+  const parsed = g.steps.map(parseStep);
+  stepLocs = parsed.map((p) => (p.at || p.floor != null ? { at: p.at, level: p.level, floor: p.floor } : null));
+  activeStep = -1;
+  drawExplorer(); // the route is known now: draw its parts and the step markers on the shown floor
   const plans = g.indoorLegs.length ? routePlans(g.indoorLegs, from, to) : [];
   // the destination's own plan, when the route ends at the door (no indoor data for it)
   if (to.type === "room" && !g.route?.end.indoor) plans.push({ room: to.room.id, title: plans.length ? `${t.floor(to.room.floor)} · ${t.building} ${to.building.id}` : "" });
   out.innerHTML = `
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
-    <ol class="steps">${g.steps.map(stepItem).join("")}</ol>
+    <ol class="steps">${parsed.map(stepItem).join("")}</ol>
     ${plans.length ? floorplanBlock(plans, to) : ""}
     ${reportBlock(from, to, !!g.route)}`;
-  out.querySelectorAll("li[data-floor]").forEach((li) => {
-    const go = () => showStepFloor(Number(li.dataset.floor));
+  out.querySelectorAll(".steps > li[data-i]").forEach((li) => {
+    const go = () => selectStep(Number(li.dataset.i));
     li.addEventListener("click", (e) => {
       if (!e.target.closest("a")) go();
     });
@@ -546,20 +553,63 @@ function reportBlock(from, to, found) {
   return `<p class="report"><a href="${esc(href)}" target="_blank" rel="noopener">${t.report}</a><br><small>${t.reportNote}</small></p>`;
 }
 
-// A step on a known floor starts with <i data-floor="N" hidden></i>; tapping it shows that floor.
-const FLOOR_TAG = /^<i data-floor="(-?\d+)" hidden><\/i>/;
-const floorTag = (level) => `<i data-floor="${level}" hidden></i>`;
-function stepItem(s) {
-  const m = s.match(FLOOR_TAG);
-  const body = endSentence(s.replace(FLOOR_TAG, ""));
-  return m ? `<li data-floor="${m[1]}" tabindex="0" role="button">${body}</li>` : `<li>${body}</li>`;
+// A step starts with a hidden tag that says where it happens, so the map can show a numbered
+// marker for it: floor N (tapping the step shows that floor), the place [lat, lon] and the
+// floor the marker belongs to (no floor: outdoors, the marker is always shown).
+const STEP_TAG = /^<i( data-floor="-?\d+")?( data-at="[^"]*")?( data-ml="-?\d+")? hidden><\/i>/;
+const stepTag = ({ floor, at, level }) =>
+  `<i${floor != null ? ` data-floor="${floor}"` : ""}${at ? ` data-at="${at[0]},${at[1]}"` : ""}${at && level != null ? ` data-ml="${level}"` : ""} hidden></i>`;
+const floorTag = (level) => stepTag({ floor: level });
+/** {body, floor, at: [lat, lon] | null, level} of a step sentence (see stepTag). */
+function parseStep(s) {
+  const m = s.match(STEP_TAG);
+  const attr = (k) => m?.[0].match(new RegExp(`data-${k}="([^"]*)"`))?.[1];
+  const at = attr("at")?.split(",").map(Number) ?? null;
+  return { body: endSentence(s.replace(STEP_TAG, "")), floor: attr("floor") != null ? Number(attr("floor")) : null, at, level: attr("ml") != null ? Number(attr("ml")) : null };
+}
+/** The same step, now placed at a point (keeps its floor). */
+const placeStep = (s, at, level) => stepTag({ floor: parseStep(s).floor, at, level }) + s.replace(STEP_TAG, "");
+
+const STEP_PIN_SKIP_M = 4; // a marker this close to A or B would hide it: that step is placed, but gets no marker
+let stepLocs = []; // per step of the shown route: {at, level, floor} (null when the step has no place)
+let activeStep = -1; // the step that is selected (list and map show it)
+let stepLayer;
+
+function stepItem(p, i) {
+  const attrs = p.at || p.floor != null ? ` data-i="${i}" tabindex="0" role="button"` : "";
+  return `<li${attrs}>${p.body}</li>`;
 }
 
-/** Show the floor of a tapped step and bring its part of the route into view. */
-function showStepFloor(level) {
-  explorerLevel = level;
-  const coords = (currentRoute?.legs ?? []).filter((l) => l.kind === "indoor" && l.level === level && l.coords).flatMap((l) => l.coords);
-  if (coords.length) map.fitBounds(L.latLngBounds(coords), { padding: [30, 30], maxZoom: 19 });
+/** Numbered markers for the steps on the shown floor; the others are faint, the selected one is big. */
+function drawStepMarkers() {
+  stepLayer.clearLayers();
+  const ends = [currentRoute?.coords?.[0], currentRoute?.coords?.at(-1)].filter(Boolean);
+  stepLocs.forEach((st, i) => {
+    if (!st?.at) return;
+    if (ends.some((e) => haversine(e, st.at) < STEP_PIN_SKIP_M)) return; // A and B stand for the first and the last step
+    const here = st.level == null || st.level === explorerLevel; // indoors only on its own floor
+    const cls = `${here ? "" : "off "}${i === activeStep ? "active" : ""}`;
+    const m = L.marker(st.at, {
+      icon: L.divIcon({ className: `step-pin ${cls}`, html: `<span>${i + 1}</span>`, iconSize: [26, 26], iconAnchor: [13, 13] }),
+      zIndexOffset: i === activeStep ? 900 : here ? 100 : 0,
+      keyboard: false,
+      title: `${t.stepWord} ${i + 1}`,
+    }).addTo(stepLayer);
+    m.on("click", () => selectStep(i, true));
+  });
+}
+
+/** Select step i: highlight it in the list and on the map, and show its floor and place. */
+function selectStep(i, fromMap = false) {
+  const st = stepLocs[i];
+  if (!st) return;
+  activeStep = i;
+  if (st.level != null) explorerLevel = st.level;
+  else if (st.floor != null) explorerLevel = st.floor;
+  const items = [...document.querySelectorAll("#result .steps > li")];
+  items.forEach((li, k) => li.classList.toggle("active", k === i));
+  if (fromMap) items[i]?.scrollIntoView({ block: "nearest" }); // a tap on a marker: bring its sentence into view
+  else if (st.at) map.setView(st.at, Math.max(map.getZoom(), st.level == null ? 17 : 19), { animate: false });
   drawExplorer();
 }
 
@@ -601,6 +651,7 @@ function guidance(from, to) {
 
   if (r && !trivial) {
     summary = t.total(formatWalk(r.distance), minutes(r.time));
+    steps[0] = placeStep(steps[0], r.coords[0], r.start.indoor ? from.room.floor : null); // the start: A
     steps.push(...routeSteps(r, from, to));
     indoorLegs = r.legs.filter((l) => l.kind === "indoor");
     const floors = routeFloors(r.legs, graph.indoor);
@@ -645,7 +696,8 @@ function guidance(from, to) {
     L.marker([tb.lat, tb.lon], { icon: pin("to", "B") }).addTo(routeLayer);
     map.fitBounds(line.getBounds(), { padding: [30, 30] });
   }
-  steps.push(to.person ? t.stepArrivePerson(to.room.id, esc(to.person.name)) : t.stepArrive);
+  const arrive = to.person ? t.stepArrivePerson(to.room.id, esc(to.person.name)) : t.stepArrive;
+  steps.push(r && !trivial ? placeStep(arrive, r.coords.at(-1), r.end.indoor ? to.room.floor : null) : arrive); // the end: B
   return { steps, notes, summary, indoorLegs, route: r };
 }
 
@@ -748,7 +800,7 @@ function routeSteps(r, from, to) {
   // starting at a building without indoor data: first get out of it
   if (!r.start.indoor && r.start.entrance && fb.id !== tb.id) {
     if (from.type === "room" && from.room.floor !== 0) steps.push(t.stepGoDown(t.floor(from.room.floor)));
-    steps.push(t.stepExit(sideOf(fb, [r.start.entrance.lat, r.start.entrance.lon]), entranceKind(r.start.entrance)));
+    steps.push(stepTag({ at: [r.start.entrance.lat, r.start.entrance.lon] }) + t.stepExit(sideOf(fb, [r.start.entrance.lat, r.start.entrance.lon]), entranceKind(r.start.entrance)));
   }
   // tags per indoor step only once some floor of the route was checked: with none, the one note says it all
   const tags = confidence(routeFloors(r.legs, graph.indoor)) !== "approximate";
@@ -759,23 +811,23 @@ function routeSteps(r, from, to) {
       const fl = t.floor(leg.level);
       const how = indoorHow(leg, from, to);
       const tag = tags ? confidenceTag(leg) : "";
-      const at = floorTag(leg.level);
+      const at = stepTag({ floor: leg.level, at: leg.coords[0], level: leg.level });
       if (!next) steps.push(at + t.stepIndoorTo(fl, how, to.room.id) + tag);
       else if (next.kind === "vertical") steps.push(at + t.stepIndoorToVertical(fl, how, next.type) + tag);
       else if (next.kind === "door") steps.push(at + t.stepIndoorToExit(fl, how) + tag);
     } else if (leg.kind === "vertical") {
-      steps.push(floorTag(leg.toLevel) + t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
+      steps.push(stepTag({ floor: leg.toLevel, at: leg.at, level: leg.fromLevel }) + t.stepVertical(leg.type, leg.toLevel > leg.fromLevel, t.floor(leg.toLevel)));
     } else if (leg.kind === "door") {
       const b = places.building(leg.building);
-      steps.push(leg.enter ? t.stepEnter(buildingName(b), buildingAddress(b), sideOf(b, leg.at), "") : t.stepExit(sideOf(b, leg.at), ""));
+      steps.push(stepTag({ at: leg.at }) + (leg.enter ? t.stepEnter(buildingName(b), buildingAddress(b), sideOf(b, leg.at), "") : t.stepExit(sideOf(b, leg.at), "")));
     } else {
-      steps.push(t.stepWalk(formatWalk(leg.distance), minutes(leg.distance), leg.steps) + turnList(leg));
+      steps.push(stepTag({ at: leg.coords[0] }) + t.stepWalk(formatWalk(leg.distance), minutes(leg.distance), leg.steps) + turnList(leg));
     }
   });
   // ending at a building without indoor data: enter it and find the room by its number
   if (!r.end.indoor) {
     if (r.end.entrance && r.legs.at(-1).kind === "outdoor")
-      steps.push(t.stepEnter(buildingName(tb), buildingAddress(tb), sideOf(tb, [r.end.entrance.lat, r.end.entrance.lon]), entranceKind(r.end.entrance)));
+      steps.push(stepTag({ at: [r.end.entrance.lat, r.end.entrance.lon] }) + t.stepEnter(buildingName(tb), buildingAddress(tb), sideOf(tb, [r.end.entrance.lat, r.end.entrance.lon]), entranceKind(r.end.entrance)));
     if (to.type === "room") {
       steps.push(to.room.floor === 0 ? t.stepStayFloor(t.floor(0)) : t.stepFloor(t.floor(to.room.floor)));
       steps.push(findRoomStep(to));
