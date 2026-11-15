@@ -135,6 +135,7 @@ export class WalkGraph {
 
   /** Graph nodes a place starts/ends at: the room node if mapped indoors, else the building's entrances. */
   endpoints(place) {
+    if (place.type === "stop") return { nodes: [place.stop.node], indoor: false }; // a stop sits on the path network
     if (place.type === "room") {
       const n = this.indoor[place.building.id]?.rooms[place.room.id];
       if (n != null) return { nodes: [n], indoor: true };

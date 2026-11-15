@@ -58,6 +58,12 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] Walk the routes in the 3 example buildings on site and correct their `source.json`
 - Scope for now: these **3 example buildings**. More buildings come later.
 
+- [x] Start from a station or stop (Hauptbahnhof, ZOB, campus stops): ride to the stop nearest to
+      the goal, then the door-to-door walk; lines from OSM, times via the GVH planner
+- [ ] Real timetables and a direct "ride" leg from a GVH/HAFAS-style feed, if one can be used
+      freely (today only a link to the GVH planner); a walkable path to the main station for the
+      last 150 m (the walk graph ends at the campus area)
+
 ## Next steps (updated 2026-11-15)
 
 Also done: first-time-user guide in the app (welcome card, examples, help dialog), the idea and

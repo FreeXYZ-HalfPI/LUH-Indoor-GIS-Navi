@@ -14,6 +14,23 @@ const dict = {
     fromPh: "Room, building or person, e.g. Volker Epping",
     toPh: "Room, building or person, e.g. Christian Heipke",
     skip: "Skip to route planner",
+    lineMode: { tram: "Stadtbahn", bus: "bus" },
+    stopKinds: { rail: "Train station", tram: "Stadtbahn", bus: "Bus" },
+    stepStartStop: (n) => `Start at the stop <b>${n}</b>.`,
+    stepStartHub: (n) => `Start at <b>${n}</b>.`,
+    stepRide: (hub, stop, lines, direct) =>
+      direct
+        ? `Ride ${lines} from <b>${hub}</b> to the stop <b>${stop}</b>.`
+        : `Ride to the stop <b>${stop}</b> by public transport${lines ? ` (served by ${lines})` : ""}. Look up the connection in the GVH planner.`,
+    stepRideTo: (stop, hub, lines, direct) =>
+      direct
+        ? `Ride ${lines} from <b>${stop}</b> to <b>${hub}</b>.`
+        : `Ride from the stop <b>${stop}</b> to <b>${hub}</b> by public transport. Look up the connection in the GVH planner.`,
+    hubNote: 'The walking time and distance below are for the walk from or to the stop. Times and tickets: <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH planner</a>. Lines come from OpenStreetMap and can be incomplete or out of date.',
+    hubAlt: (list) => `Other stops near the goal: ${list}.`,
+    hubPlannerOnly: 'Between two stations you ride, not walk: use the <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH planner</a>.',
+    hubPlannerOnly: 'Zwischen zwei Haltestellen fährst du, statt zu gehen: nutze den <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH-Fahrplan</a>.',
+    hubNoStop: 'No stop near the goal was found. Use the <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH planner</a>.',
     serviceInfo: "Opening hours and contact",
     stepWord: "Step",
     loadingBuilding: "Loading the building map …",
@@ -117,7 +134,7 @@ const dict = {
       "<b>Follow the steps.</b> The route appears on the map and as a list. The numbers on the map are the numbers in the list; tap one to see the other.",
     ],
     tryExample: "Try an example (one tap)",
-    examples: ["Lecture hall A104 → Hauptmensa", "Hauptgebäude: ground floor → 4th floor", "Find a person: Prof. Heipke → Prof. Sester", "New here? Hauptgebäude → International Office"],
+    examples: ["Lecture hall A104 → Hauptmensa", "Hauptgebäude: ground floor → 4th floor", "Find a person: Prof. Heipke → Prof. Sester", "New here? Hauptgebäude → International Office", "At the station? Hauptbahnhof → room A260 (3101)"],
     hintNeedTo: "Good. Now choose <b>where you want to go</b> in the field B.",
     hintNeedFrom: "Good. Now choose <b>where you are</b> in the field A.",
     accessHint: "Need a way without stairs? Tick <b>Avoid steps</b> before you start.",
@@ -147,6 +164,21 @@ const dict = {
     fromPh: "Raum, Gebäude oder Person, z. B. Volker Epping",
     toPh: "Raum, Gebäude oder Person, z. B. Christian Heipke",
     skip: "Zur Routenplanung springen",
+    lineMode: { tram: "Stadtbahn", bus: "Bus" },
+    stopKinds: { rail: "Bahnhof", tram: "Stadtbahn", bus: "Bus" },
+    stepStartStop: (n) => `Starte an der Haltestelle <b>${n}</b>.`,
+    stepStartHub: (n) => `Starte an <b>${n}</b>.`,
+    stepRide: (hub, stop, lines, direct) =>
+      direct
+        ? `Fahre mit ${lines} von <b>${hub}</b> bis zur Haltestelle <b>${stop}</b>.`
+        : `Fahre mit dem ÖPNV bis zur Haltestelle <b>${stop}</b>${lines ? ` (bedient von ${lines})` : ""}. Suche die Verbindung im GVH-Fahrplan.`,
+    stepRideTo: (stop, hub, lines, direct) =>
+      direct
+        ? `Fahre mit ${lines} von <b>${stop}</b> nach <b>${hub}</b>.`
+        : `Fahre von der Haltestelle <b>${stop}</b> mit dem ÖPNV nach <b>${hub}</b>. Suche die Verbindung im GVH-Fahrplan.`,
+    hubNote: 'Zeit und Strecke unten gelten für den Fußweg von oder zur Haltestelle. Fahrzeiten und Tickets: <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH-Fahrplan</a>. Die Linien stammen aus OpenStreetMap und können unvollständig oder veraltet sein.',
+    hubAlt: (list) => `Weitere Haltestellen in der Nähe des Ziels: ${list}.`,
+    hubNoStop: 'Keine Haltestelle in der Nähe des Ziels gefunden. Nutze den <a href="https://www.gvh.de/" target="_blank" rel="noopener">GVH-Fahrplan</a>.',
     serviceInfo: "Öffnungszeiten und Kontakt",
     stepWord: "Schritt",
     loadingBuilding: "Gebäudeplan wird geladen …",
@@ -248,7 +280,7 @@ const dict = {
       "<b>Folge den Schritten.</b> Der Weg erscheint auf der Karte und als Liste. Die Zahlen auf der Karte sind die Zahlen der Liste; tippe auf eine, um die andere zu sehen.",
     ],
     tryExample: "Probiere ein Beispiel (ein Tipp)",
-    examples: ["Hörsaal A104 → Hauptmensa", "Hauptgebäude: Erdgeschoss → 4. Etage", "Person finden: Prof. Heipke → Prof. Sester", "Neu hier? Hauptgebäude → International Office"],
+    examples: ["Hörsaal A104 → Hauptmensa", "Hauptgebäude: Erdgeschoss → 4. Etage", "Person finden: Prof. Heipke → Prof. Sester", "Neu hier? Hauptgebäude → International Office", "Am Bahnhof? Hauptbahnhof → Raum A260 (3101)"],
     hintNeedTo: "Gut. Wähle jetzt im Feld B, <b>wohin du willst</b>.",
     hintNeedFrom: "Gut. Wähle jetzt im Feld A, <b>wo du bist</b>.",
     accessHint: "Du brauchst einen Weg ohne Treppen? Hake vorher <b>Treppen meiden</b> an.",

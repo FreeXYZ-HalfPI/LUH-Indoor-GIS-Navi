@@ -130,3 +130,25 @@ test("umlauts can be typed as ae/oe/ue, in names and in building names", () => {
   assert.equal(p.search("Appelstrasse")[0]?.key, "b:3109"); // ß → ss was already there
   assert.equal(p.search("Hauptgebaeude")[0]?.key, "b:1101");
 });
+
+const stops = [
+  { id: "hannover-hauptbahnhof", name: "Hannover Hauptbahnhof", hub: true, kinds: ["rail", "tram"], lines: [], aliases: ["hbf", "hannover hbf", "bahnhof"], lat: 52.3765, lon: 9.741 },
+  { id: "welfenplatz", name: "Welfenplatz", kinds: ["bus"], lines: [{ mode: "bus", ref: "134" }], aliases: [], lat: 52.3832, lon: 9.7403, node: 17 },
+  { id: "off-graph", name: "Far Away Stop", kinds: ["bus"], lines: [], aliases: [], lat: 52.4, lon: 9.8 }, // no node, no hub: dropped
+];
+const withStops = new Places(buildings, rooms, people, [], stops);
+
+test("a stop is a place with a pseudo building; stops off the walk graph are dropped, hubs stay", () => {
+  const p = withStops.resolve("t:welfenplatz");
+  assert.equal(p.type, "stop");
+  assert.equal(p.building.id, "stop:welfenplatz");
+  assert.equal(p.building.lat, 52.3832);
+  assert.equal(withStops.resolve("t:hannover-hauptbahnhof").stop.hub, true);
+  assert.equal(withStops.resolve("t:off-graph"), null);
+});
+
+test("stations are found by name and by what people type: Hbf, Bahnhof, Hauptbahnhof", () => {
+  for (const q of ["Hbf", "bahnhof", "hauptbahn", "Hannover Hbf"]) assert.equal(withStops.search(q)[0]?.key, "t:hannover-hauptbahnhof", q);
+  assert.equal(withStops.search("welfenpl")[0]?.key, "t:welfenplatz");
+  assert.equal(withStops.search("far away").some((p) => p.stop), false);
+});

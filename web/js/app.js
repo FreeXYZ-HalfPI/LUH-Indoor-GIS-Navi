@@ -39,7 +39,7 @@ async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
   // The outdoor data and the people list load at start. A building's indoor map (50–200 kB)
   // loads when a route or the map needs it, and the rest in the background when the phone is idle.
-  const [buildings, rooms, walk, list, frames, people, lm, svc] = await Promise.all([
+  const [buildings, rooms, walk, list, frames, people, lm, svc, stp] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
@@ -48,9 +48,10 @@ async function boot() {
     load("people.json").catch(() => ({ people: [] })), // and without the people search
     load("landmarks.json").catch(() => ({ rooms: {} })), // and without landmarks in the directions
     load("services.json").catch(() => ({ services: [] })), // and without named services
+    load("stops.json").catch(() => ({ stops: [] })), // and without stations and stops
   ]);
   landmarks = lm.rooms;
-  places = new Places(buildings, rooms, people.people, svc.services);
+  places = new Places(buildings, rooms, people.people, svc.services, stp.stops);
   graph = new WalkGraph(walk);
   indoorList = list;
   for (const [b, [s, w, n, e]] of Object.entries(frames)) frameBounds[b] = L.latLngBounds([[s, w], [n, e]]);
@@ -139,6 +140,7 @@ function applyTexts() {
 function placeLabel(p) {
   if (!p) return "";
   if (p.person) return `${p.person.name} · ${p.room.id}`;
+  if (p.stop) return p.stop.name;
   if (p.service) return `${p.service.name[getLang()] || p.service.name.en} · ${p.building.id}`;
   if (p.type === "building") return `${p.building.id} ${p.building.name}`;
   return `${p.room.id} · ${p.building.name}`;
@@ -148,6 +150,7 @@ const address = (b) => [b.street, b.house_number].filter(Boolean).join(" ");
 
 /** Second line of a search result: address; role · institute · floor; or floor · wing · type · people. */
 function placeDetail(p) {
+  if (p.stop) return [p.stop.kinds.map((k) => t.stopKinds[k]).join(" · "), linesText(p.stop.lines, 4)].filter(Boolean).join(" · ");
   if (p.type === "building") return `${t.building} · ${address(p.building)}`;
   if (p.person) return [p.person.role, p.person.org, t.floor(p.room.floor)].filter(Boolean).join(" · ");
   const bits = [t.floor(p.room.floor)];
@@ -194,7 +197,7 @@ function initPicker(which) {
       li.role = "option";
       li.id = `${which}-opt-${i}`;
       li.className = i === active ? "active" : "";
-      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.service ? "ℹ️" : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
+      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.service ? "ℹ️" : p.stop ? (p.stop.kinds.includes("rail") ? "🚉" : "🚏") : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
       li.querySelector("b").textContent = placeLabel(p); // textContent: data is never parsed as HTML
       li.querySelector("small").textContent = placeDetail(p);
       // pointerdown, not click: it fires before the input's blur closes the list
@@ -252,7 +255,7 @@ function readHash() {
   const h = new URLSearchParams(location.hash.slice(1));
   // 4 digits = a building, a room code = a room, anything else = a person (#to=christian-heipke)
   // a name from data/services.json = a service (#to=international-office)
-  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : places.services.has(v) ? `s:${v}` : `p:${v}`);
+  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : places.services.has(v) ? `s:${v}` : places.stops.has(v) ? `t:${v}` : `p:${v}`);
   const from = places.resolve(key(h.get("from")));
   const to = places.resolve(key(h.get("to")));
   state.from = from?.key ?? null;
@@ -490,6 +493,7 @@ const EXAMPLES = [
   ["r:1101.000.E028", "r:1101.004.F407"],
   ["p:christian-heipke", "p:monika-sester"],
   ["b:1101", "s:international-office"],
+  ["t:hannover-hauptbahnhof", "r:3101.002.A260"],
 ];
 
 /** What to do next, instead of an empty space: three steps, a hint for the next field, one-tap examples. */
@@ -666,12 +670,75 @@ function focusPlace(one) {
   else if (one) map.setView([one.building.lat, one.building.lon], 17);
 }
 
+// ---------- stations and stops ----------
+
+/** "Stadtbahn 4, 5 · bus 120": the lines of a stop (at most `max` per kind, then …). */
+function linesText(lines, max = 6) {
+  const by = {};
+  for (const l of lines || []) (by[l.mode] ??= []).push(l.ref);
+  return Object.entries(by)
+    .map(([m, refs]) => `${t.lineMode[m]} ${refs.slice(0, max).join(", ")}${refs.length > max ? " …" : ""}`)
+    .join(" · ");
+}
+
+/**
+ * Stops near `other` (a room or building on the campus) to get off at or board at, best first:
+ * by walking distance, with a bonus for stops that share a line with the hub (probably a direct ride).
+ */
+function campusStops(other, hub, hubIsFrom) {
+  const o = other.building;
+  const hubLines = new Set(hub.stop.lines.map((l) => l.mode + l.ref));
+  return [...places.stops.values()]
+    .filter((s) => !s.hub)
+    .map((s) => ({ s, d: haversine([s.lat, s.lon], [o.lat, o.lon]) }))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 8) // the nearest few by air line; the walk decides
+    .map(({ s }) => {
+      const place = places.stopPlace(s);
+      const r = hubIsFrom ? graph.route(place, other, { avoidSteps: state.avoidSteps }) : graph.route(other, place, { avoidSteps: state.avoidSteps });
+      const direct = s.lines.filter((l) => hubLines.has(l.mode + l.ref));
+      return r ? { place, walk: r.distance, direct } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.walk - (a.direct.length ? 300 : 0) - (b.walk - (b.direct.length ? 300 : 0)));
+}
+
+/**
+ * A big station (the hub: main station, central bus station) is far from the campus walk graph.
+ * Route from or to the stop nearest to the goal and say how to get between the hub and that stop.
+ */
+function viaHub(from, to) {
+  const hubIsFrom = !!from.stop?.hub;
+  const hub = hubIsFrom ? from : to;
+  const other = hubIsFrom ? to : from;
+  const hubName = esc(hub.stop.name);
+  const none = (steps, note = t.hubNoStop) => ({ steps, notes: [note], summary: "", indoorLegs: [], route: null });
+  if (other.stop) return none([t.stepStartHub(esc(from.stop.name)), t.stepArrive], t.hubPlannerOnly); // station to stop: only the planner can help
+  const cands = campusStops(other, hub, hubIsFrom);
+  if (!cands.length) return none(hubIsFrom ? [t.stepStartHub(hubName), t.stepArrive] : [t.stepStartBuilding(buildingName(other.building)), t.stepArrive]);
+  const best = cands[0];
+  const stopName = esc(best.place.stop.name);
+  const lines = linesText(best.direct.length ? best.direct : best.place.stop.lines);
+  const g = hubIsFrom ? walkGuidance(best.place, to) : walkGuidance(from, best.place);
+  const steps = hubIsFrom
+    ? [t.stepStartHub(hubName), t.stepRide(hubName, stopName, lines, best.direct.length > 0), ...g.steps.slice(1)] // the walk's own start step is the stop
+    : [...g.steps.slice(0, -1), t.stepRideTo(stopName, hubName, lines, best.direct.length > 0), t.stepArrive];
+  const alt = cands.slice(1, 3).map((c) => `${esc(c.place.stop.name)} (${Math.round(c.walk / 10) * 10} m)`);
+  const notes = [...g.notes, t.hubNote];
+  if (alt.length) notes.push(t.hubAlt(alt.join(", ")));
+  return { ...g, steps, notes };
+}
+
+function guidance(from, to) {
+  return from.stop?.hub || to.stop?.hub ? viaHub(from, to) : walkGuidance(from, to);
+}
+
 /**
  * Route, directions and notes for a start and a destination.
  * Three cases: a real route; both in one building without indoor data;
  * buildings on different campuses (no walk graph between them).
  */
-function guidance(from, to) {
+function walkGuidance(from, to) {
   const steps = [];
   const notes = [];
   let summary = "";
@@ -680,10 +747,12 @@ function guidance(from, to) {
   const tb = to.building;
 
   if (from.type === "room") steps.push(floorTag(from.room.floor) + t.stepStartRoom(roomText(from), buildingName(fb), t.floor(from.room.floor)));
+  else if (from.stop) steps.push(t.stepStartStop(esc(from.stop.name)));
   else steps.push(t.stepStartBuilding(buildingName(fb)));
 
   // each campus has its own walk graph; across campuses there is no route to find
-  const sameCluster = graph.buildings[fb.id]?.cluster === graph.buildings[tb.id]?.cluster;
+  const clusterOf = (p) => (p.stop ? 0 : graph.buildings[p.building.id]?.cluster); // the stops lie in the main campus area
+  const sameCluster = clusterOf(from) === clusterOf(to);
   const r = sameCluster ? graph.route(from, to, { avoidSteps: state.avoidSteps }) : null;
   const trivial = r && !r.legs.length; // same building, no indoor data: start entrance = goal entrance
 
@@ -698,8 +767,8 @@ function guidance(from, to) {
       (!r.start.indoor && !!graph.buildings[fb.id]?.estimated) || (!r.end.indoor && !!graph.buildings[tb.id]?.estimated);
     const conf = routeConfidence({
       floors,
-      startIndoor: r.start.indoor || from.type === "building", // "from the building" has no room to map
-      endIndoor: r.end.indoor || to.type === "building",
+      startIndoor: r.start.indoor || from.type === "building" || !!from.stop, // "from the building" or a stop has no room to map
+      endIndoor: r.end.indoor || to.type === "building" || !!to.stop,
       estimatedEntrance: estimated,
       unconfirmedRoom: [from, to].some((p) => p.type === "room" && !places.roomIndex.has(p.room.id)),
     });

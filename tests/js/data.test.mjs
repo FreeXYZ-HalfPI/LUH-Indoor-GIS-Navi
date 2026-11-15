@@ -136,3 +136,17 @@ test("every service in services.json points to a building that can be walked to"
     assert.ok(r && r.distance > 0, `${sv.id}: no route from 1101`);
   }
 });
+
+test("every stop in stops.json can be walked from to a room (the app routes from stops)", () => {
+  const { stops } = load("stops.json");
+  const hubs = stops.filter((s) => s.hub);
+  assert.ok(hubs.length >= 1, "no hub (main station) in stops.json");
+  const target = room("3101", Object.keys(indoor.find((d) => d.building === "3101").rooms)[0]);
+  const lost = [];
+  for (const s of stops.filter((x) => !x.hub)) {
+    assert.ok(s.node != null && graph.nodes[s.node], `${s.id}: no valid node`);
+    const r = graph.route({ type: "stop", building: { id: `stop:${s.id}` }, stop: s }, target);
+    if (!r) lost.push(s.id);
+  }
+  assert.equal(lost.length, 0, `stops that cannot reach 3101: ${show(lost)}`);
+});

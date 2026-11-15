@@ -80,7 +80,7 @@ function nameScore(query, words) {
 
 /** All buildings, rooms and people the app knows, and the search over them. */
 export class Places {
-  constructor(buildings, rooms, people = [], services = []) {
+  constructor(buildings, rooms, people = [], services = [], stops = []) {
     this.buildings = new Map(buildings.map((b) => [b.id, b]));
     this.rooms = [];
     for (const [bid, list] of Object.entries(rooms)) {
@@ -98,6 +98,16 @@ export class Places {
       if (!this.buildings.has(sv.building)) continue; // a service needs a building on the map
       const names = [...Object.values(sv.name), ...(sv.aliases || [])].map(fold);
       this.services.set(sv.id, { ...sv, names });
+    }
+
+    // Stops and stations (web/data/stops.json, from tools/build_stops.py): "I am at the station".
+    // A stop is a place with a pseudo building of its own (id "stop:<id>"), so the router and the
+    // guidance treat it like any start. Keys for links: #from=hannover-hauptbahnhof
+    this.stops = new Map();
+    for (const st of stops) {
+      if (!st.hub && st.node == null) continue; // a stop off the walk graph cannot be routed from
+      const names = [st.name, ...(st.aliases || [])].map(fold);
+      this.stops.set(st.id, { ...st, names });
     }
 
     // People (web/data/people.json, from tools/crawl_people.py). Each one gets a
@@ -128,6 +138,12 @@ export class Places {
     return { type: "building", key: `s:${sv.id}`, building: this.buildings.get(sv.building), service: sv };
   }
 
+  /** A stop as a place. Its pseudo building has the stop's position, so maps and distances work as for a building. */
+  stopPlace(st) {
+    const building = { id: `stop:${st.id}`, name: st.name, lat: st.lat, lon: st.lon };
+    return { type: "stop", key: `t:${st.id}`, building, stop: st };
+  }
+
   building(id) {
     return this.buildings.get(id);
   }
@@ -138,6 +154,10 @@ export class Places {
     if (key.startsWith("p:")) {
       const person = this.people.get(key.slice(2));
       return person ? this.personPlace(person) : null;
+    }
+    if (key.startsWith("t:")) {
+      const st = this.stops.get(key.slice(2));
+      return st ? this.stopPlace(st) : null;
     }
     if (key.startsWith("s:")) {
       const sv = this.services.get(key.slice(2));
@@ -204,6 +224,14 @@ export class Places {
       for (const sv of this.services.values()) {
         const s = sv.names.some((x) => x.startsWith(f)) ? 80 : sv.names.some((x) => x.includes(f)) ? 45 : 0;
         if (s) push(s, this.servicePlace(sv));
+      }
+    }
+
+    // stops and stations: "Hbf", "Hauptbahnhof", "Königsworther" ...
+    if (f.length >= 3) {
+      for (const st of this.stops.values()) {
+        const s = st.names.some((x) => x.startsWith(f)) ? (st.hub ? 78 : 58) : st.names.some((x) => x.includes(f)) ? 38 : 0;
+        if (s) push(s, this.stopPlace(st));
       }
     }
 

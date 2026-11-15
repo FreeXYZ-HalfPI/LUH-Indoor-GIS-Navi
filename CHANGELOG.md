@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 ### Added
+- **Start (or end) at a station or stop:** type *Hbf*, *Hauptbahnhof*, *ZOB* or the name of a
+  tram/bus stop near the campus (64 stops, from OpenStreetMap, `web/data/stops.json`, built by
+  `tools/build_stops.py`). From a **campus stop** the walk is routed door to door. The two **big
+  stations** lie outside the walk graph, so the directions say: ride to the stop nearest to the goal
+  (with the Stadtbahn/bus lines OpenStreetMap lists for it, and "other stops near the goal"), link the
+  GVH planner for times, then walk from that stop to the room. Works the other way round (room →
+  station). Example: *Hauptbahnhof → 3101.002.A260*. A fifth one-tap example on the start page.
+  Lines can be incomplete; the app says so and never promises a direct ride it cannot know.
+
 - **Umlauts without a German keyboard:** the search treats `ae`, `oe`, `ue` like `ä`, `ö`, `ü`
   (and `ss` like `ß`, as before): "Mueller" finds Müller, "Verfuegungsgebaeude" finds the
   Verfügungsgebäude, "Hochschulbuero" finds the International Office. Useful for international

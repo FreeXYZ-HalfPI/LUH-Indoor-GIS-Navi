@@ -45,6 +45,15 @@ another across the campus:
 [inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407),
 [lecture hall A104 → Hauptmensa 205A](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=3101.001.A104&to=3110.002.205A))
 
+### Coming from the station or the bus stop
+
+Choose **Hannover Hauptbahnhof**, the **ZOB** or any tram/bus stop near the campus as your start
+(type *Hbf*, *Bahnhof*, a stop name), then the room you want, for example
+[Hauptbahnhof → room A260 in the Schneiderberg-Gebäude](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=hannover-hauptbahnhof&to=3101.002.A260).
+The big stations are far from the campus paths, so the app names the stop nearest to your goal
+(with the lines OpenStreetMap lists for it), links the GVH planner for times, and routes the walk from
+that stop to the room, door to door. It works the other way round too (room → station).
+
 ## What works today
 
 | Person to person | Room to room, door to door | Every room on the map, per floor |
