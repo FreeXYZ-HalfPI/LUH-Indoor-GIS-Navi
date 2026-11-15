@@ -64,6 +64,10 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
       freely (today only a link to the GVH planner); a walkable path to the main station for the
       last 150 m (the walk graph ends at the campus area)
 
+- [x] About page in the app, comment form, avoid-steps warning, responsive two-column layout
+- [ ] Anonymous comments without a GitHub account: needs a small server or an e-mail address
+      (a decision: where do comments go, who reads them, privacy statement)
+
 ## Next steps (updated 2026-11-15)
 
 Also done: first-time-user guide in the app (welcome card, examples, help dialog), the idea and

@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 ### Added
+- **About page** inside the app (the **About** / **Über** button replaces the **?**): why the Navigator
+  exists, who it is for (new and international students, exchange students, people with disabilities,
+  visitors, everyone on campus), the idea, how to use it, what the map symbols mean, privacy and
+  honesty, where the project stands. Full screen, German and English, with an "Try an example" button.
+- **Comment on this route** replaces the "Report a problem" link: a form with a category (wrong
+  entrance, door locked, stairs or lift wrong, wrong floor, other), an optional step number and the
+  person's own words. Sending opens GitHub with the comment filled in (still a GitHub account; a
+  real anonymous comment box would need a server). Only room codes and the text go in. Fixed:
+  a route that started at a stop was reported as `stop:kropcke` with a broken app link.
+- **"Pass auf! Achtung!"** with "Avoid steps" on: a loud red warning when no step-free way exists
+  and the route still has stairs or steps (counts them), else a calm green note that there are none.
+- **Responsive layout**: two columns on a desktop (planner, guide and directions left, a tall map on
+  the right), one column on tablet and phone; before a route is chosen the guide comes first on a
+  phone. New header with a logo, **Popular places** chips (I am at the Hauptbahnhof, International
+  Office, Hauptmensa, Hauptgebäude), softer cards.
+
 - **Start (or end) at a station or stop:** type *Hbf*, *Hauptbahnhof*, *ZOB* or the name of a
   tram/bus stop near the campus (64 stops, from OpenStreetMap, `web/data/stops.json`, built by
   `tools/build_stops.py`). From a **campus stop** the walk is routed door to door. The two **big

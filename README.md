@@ -45,6 +45,10 @@ another across the campus:
 [inside the Hauptgebäude, ground floor → 4th floor](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=1101.000.E028&to=1101.004.F407),
 [lecture hall A104 → Hauptmensa 205A](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=3101.001.A104&to=3110.002.205A))
 
+**In the app:** the **About** button explains the idea and how to use it; every route has a
+**Comment on this route** form; with *Avoid steps* on you get a clear warning when a route still
+needs stairs. The layout adapts to phone, tablet and desktop.
+
 ### Coming from the station or the bus stop
 
 Choose **Hannover Hauptbahnhof**, the **ZOB** or any tram/bus stop near the campus as your start

@@ -61,3 +61,28 @@ test("German texts; the facts stay in English for whoever fixes the data", () =>
   assert.match(body, /Avoid steps: no/);
   setLang("en");
 });
+
+test("a stop or a service is reported by its slug, and the app link opens it", () => {
+  setLang("en");
+  const stop = { type: "stop", key: "t:kropcke", building: { id: "stop:kropcke" }, stop: { id: "kropcke", name: "Kröpcke" } };
+  const service = { type: "building", key: "s:international-office", building: { id: "1106" }, service: { id: "international-office" } };
+  assert.equal(placeId(stop), "kropcke");
+  assert.equal(placeId(service), "international-office");
+  const { title, body } = issue(reportUrl(stop, room, { appUrl: APP, text: t.reportText }));
+  assert.equal(title, "Route problem: kropcke → 1101.000.E028");
+  assert.ok(body.includes(`${APP}#from=kropcke&to=1101.000.E028`), body);
+});
+
+test("a comment adds the category, the step number and the person's own words", () => {
+  setLang("en");
+  const comment = { category: "Door locked or closed", step: "3", message: "  The side door was locked.  " };
+  const { body } = issue(reportUrl(room, building, { appUrl: APP, text: t.reportText, comment }));
+  assert.match(body, /- About: Door locked or closed/);
+  assert.match(body, /- Step: 3/);
+  assert.match(body, /### What went wrong\?\n\nThe side door was locked\.\n/);
+  assert.ok(!body.includes("<!--"), "the placeholder comment is replaced by the message");
+  // an empty comment keeps the template
+  const empty = issue(reportUrl(room, building, { appUrl: APP, text: t.reportText, comment: { category: "", step: "", message: "  " } })).body;
+  assert.ok(empty.includes("<!--"));
+  assert.ok(!/- About:|- Step:/.test(empty));
+});

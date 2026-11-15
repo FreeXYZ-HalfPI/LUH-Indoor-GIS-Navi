@@ -12,15 +12,18 @@ export const ISSUES_URL = "https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi
 
 /** The public ID of a place: a room code ("1101.000.E028") or a building number ("1101"). */
 export function placeId(place) {
+  if (place.stop) return place.stop.id; // a station or stop: its slug, as in #from=hannover-hauptbahnhof
+  if (place.service) return place.service.id; // a service: #to=international-office
   return place.type === "room" ? place.room.id : place.building.id;
 }
 
 /**
  * URL of a pre-filled GitHub issue for the route from → to.
  * opts: appUrl (the app without hash), avoidSteps, found (a route was shown),
- * text: {title(from, to), body: [lines…], whatWrong} in the user's language.
+ * text: {title(from, to), body: [lines…], whatWrong} in the user's language,
+ * comment: {category, step, message} from the comment form (all optional): the person's own words.
  */
-export function reportUrl(from, to, { appUrl, avoidSteps = false, found = true, text }) {
+export function reportUrl(from, to, { appUrl, avoidSteps = false, found = true, text, comment = null }) {
   const a = placeId(from);
   const b = placeId(to);
   const h = new URLSearchParams({ from: a, to: b });
@@ -30,11 +33,13 @@ export function reportUrl(from, to, { appUrl, avoidSteps = false, found = true, 
     `- To: \`${b}\``,
     `- Avoid steps: ${avoidSteps ? "yes" : "no"}`,
     `- Route found: ${found ? "yes" : "no"}`,
+    ...(comment?.category ? [`- About: ${comment.category}`] : []),
+    ...(comment?.step ? [`- Step: ${comment.step}`] : []), // the number only: the sentence may name a person
     `- Open in the app: ${appUrl}#${h}`,
     "",
     `### ${text.whatWrong}`,
     "",
-    ...text.body,
+    ...(comment?.message?.trim() ? [comment.message.trim(), ""] : text.body),
   ].join("\n");
   return `${ISSUES_URL}?${new URLSearchParams({ title: text.title(a, b), body })}`;
 }

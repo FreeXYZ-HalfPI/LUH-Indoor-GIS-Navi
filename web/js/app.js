@@ -9,6 +9,7 @@ import { WalkGraph, haversine, compass } from "./router.js";
 import { t, getLang, setLang, formatWalk } from "./i18n.js";
 import { turnSteps } from "./turns.js";
 import { reportUrl } from "./report.js";
+import { aboutHtml } from "./about.js";
 import { stepTag, floorTag, parseStep, placeStep } from "./steptags.js";
 import { routeFloors, confidence, routeConfidence } from "./confidence.js";
 import { TILE_URL, TILE_ATTRIBUTION, TILE_MAX_NATIVE_ZOOM } from "./config.js";
@@ -75,8 +76,7 @@ async function boot() {
     update();
   });
   $("#share").addEventListener("click", share);
-  $("#help-btn").addEventListener("click", openHelp);
-  $("#help").addEventListener("click", (e) => e.target.id === "help" && e.target.close()); // a tap outside the box closes it
+  $("#about-btn").addEventListener("click", openAbout);
   window.addEventListener("hashchange", readHash);
 
   applyTexts();
@@ -132,7 +132,6 @@ function applyTexts() {
   $("#from-input").placeholder = t.fromPh;
   $("#to-input").placeholder = t.toPh;
   $("#swap").title = $("#swap").ariaLabel = t.swap;
-  $("#help-btn").title = $("#help-btn").ariaLabel = t.helpBtn;
   $("#lang").lang = getLang() === "de" ? "en" : "de"; // the label is in the other language
   $("#lang").textContent = getLang() === "de" ? "EN" : "DE"; // the button names the language you switch to
 }
@@ -488,7 +487,7 @@ const findRoomStep = (p) => t.stepFindRoom(roomText(p), p.room.wing ? t.wing(p.r
 
 // ---------- guide for first-time users ----------
 
-const EXAMPLES = [
+const EXAMPLES = [  // pairs of place keys; the texts are t.examples (same order)
   ["r:3101.001.A104", "r:3110.002.205A"],
   ["r:1101.000.E028", "r:1101.004.F407"],
   ["p:christian-heipke", "p:monika-sester"],
@@ -505,35 +504,91 @@ function welcomeCard(from, to) {
     ${hint}
     <ol class="guide-steps">${t.steps3.map((x) => `<li><span>${x}</span></li>`).join("")}</ol>
     <p class="guide-access">♿ ${t.accessHint}</p>
+    <h3>${t.quickTitle}</h3>
+    <div class="quick">${t.quick.map(([f, k, ico, label]) => `<button type="button" class="quick-chip" data-field="${f}" data-key="${k}"><span aria-hidden="true">${ico}</span> ${esc(label)}</button>`).join("")}</div>
     <h3>${t.tryExample}</h3>
     <div class="examples">${examples}</div>
   </div>`;
 }
 
+/** Set start and destination from an example pair of place keys, and show the route. */
+function applyExample([a, b]) {
+  state.from = places.resolve(a)?.key ?? null;
+  state.to = places.resolve(b)?.key ?? null;
+  syncInputs();
+  update();
+  $("#map").scrollIntoView({ block: "nearest" });
+}
+
 function wireWelcome(out) {
-  out.querySelectorAll("button.example").forEach((b) =>
+  out.querySelectorAll("button.example").forEach((b) => b.addEventListener("click", () => applyExample([b.dataset.from, b.dataset.to])));
+  // a quick place sets one field; with the other one already chosen, the route appears
+  out.querySelectorAll("button.quick-chip").forEach((b) =>
     b.addEventListener("click", () => {
-      state.from = places.resolve(b.dataset.from)?.key ?? null;
-      state.to = places.resolve(b.dataset.to)?.key ?? null;
+      const place = places.resolve(b.dataset.key);
+      if (!place) return;
+      state[b.dataset.field] = place.key;
       syncInputs();
       update();
-      $("#map").scrollIntoView({ block: "nearest" });
+      if (!state.from || !state.to) $(state.from ? "#to-input" : "#from-input").focus(); // guide to the other field
     }),
   );
 }
 
-/** The help dialog: how to use the page, what the map symbols mean, and a link to the idea. */
-function openHelp() {
-  const d = $("#help");
-  d.innerHTML = `<h2 id="help-title">${t.helpTitle}</h2>
-    <ol class="guide-steps">${t.steps3.map((x) => `<li><span>${x}</span></li>`).join("")}</ol>
-    <h3>${t.helpLegend}</h3>
-    <ul class="legend">${t.legend.map(([k, v]) => `<li><span class="legend-key">${esc(k)}</span> ${esc(v)}</li>`).join("")}</ul>
-    <h3>${t.helpOptions}</h3>
-    <ul class="tips">${t.helpTips.map((x) => `<li>${x}</li>`).join("")}</ul>
-    <p><a href="https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi/blob/main/docs/IDEA.md" target="_blank" rel="noopener">${t.aboutProject}</a></p>
-    <p><button type="button" class="close-help">${t.close}</button></p>`;
-  d.querySelector(".close-help").addEventListener("click", () => d.close());
+/** The About page: a full-screen page inside the app (idea, who it is for, how to use it, what the map shows). */
+function openAbout() {
+  const d = $("#about");
+  const draw = () => {
+    d.innerHTML = aboutHtml(t, getLang(), indoorList.length);
+    d.querySelector(".about-close").addEventListener("click", () => d.close());
+    d.querySelector(".about-lang").addEventListener("click", () => {
+      setLang(getLang() === "de" ? "en" : "de");
+      applyTexts();
+      syncInputs();
+      update();
+      draw();
+    });
+    d.querySelector(".about-try").addEventListener("click", () => {
+      d.close();
+      applyExample(EXAMPLES[0]);
+    });
+  };
+  draw();
+  d.showModal();
+  d.scrollTop = 0;
+}
+
+/** The comment form for a route: a category, an optional step and the person's own words. */
+function openComment() {
+  const ctx = currentComment;
+  if (!ctx) return;
+  const d = $("#comment");
+  const cats = Object.entries(t.commentCat).map(([k, v], i) => `<label class="radio"><input type="radio" name="cat" value="${k}"${i === 0 ? " checked" : ""}> ${esc(v)}</label>`).join("");
+  const stepOpts = Array.from({ length: ctx.stepCount }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
+  d.innerHTML = `<form method="dialog" class="comment-form">
+    <h2 id="comment-title">${t.commentTitle}</h2>
+    <p class="muted">${esc(ctx.label)}</p>
+    <fieldset><legend>${t.commentCatLabel}</legend>${cats}</fieldset>
+    <label class="block">${t.commentStep}
+      <select name="step"><option value="">${t.commentStepNone}</option>${stepOpts}</select></label>
+    <label class="block">${t.commentText}
+      <textarea name="message" rows="5" maxlength="1500" placeholder="${esc(t.commentPh)}"></textarea></label>
+    <p class="muted">${t.commentNote}</p>
+    <div class="comment-btns"><button type="button" class="comment-cancel">${t.commentCancel}</button><button type="submit" class="comment-send">${t.commentSend}</button></div>
+  </form>`;
+  const form = d.querySelector("form");
+  d.querySelector(".comment-cancel").addEventListener("click", () => d.close());
+  form.addEventListener("submit", () => {
+    const f = new FormData(form);
+    const url = reportUrl(ctx.from, ctx.to, {
+      appUrl: location.origin + location.pathname,
+      avoidSteps: state.avoidSteps,
+      found: ctx.found,
+      text: t.reportText,
+      comment: { category: t.commentCat[f.get("cat")] ?? "", step: f.get("step"), message: String(f.get("message") || "") },
+    });
+    window.open(url, "_blank", "noopener");
+  });
   d.showModal();
 }
 
@@ -541,6 +596,8 @@ function openHelp() {
 function update(push = true) {
   if (push) writeHash();
   const token = ++updateToken;
+  // before both ends are chosen the guide comes first on a phone, the map below it
+  document.body.classList.toggle("idle", !(places.resolve(state.from) && places.resolve(state.to)));
   // the indoor maps of both ends must be in the router before it runs
   const need = [state.from, state.to].map((k) => places.resolve(k)?.building?.id).filter((b) => b && indoorList.includes(b) && !indoorData[b]);
   if (!need.length) return render();
@@ -575,12 +632,15 @@ function render() {
   const plans = g.indoorLegs.length ? routePlans(g.indoorLegs, from, to) : [];
   // the destination's own plan, when the route ends at the door (no indoor data for it)
   if (to.type === "room" && !g.route?.end.indoor) plans.push({ room: to.room.id, title: plans.length ? `${t.floor(to.room.floor)} · ${t.building} ${to.building.id}` : "" });
+  currentComment = { from, to, found: !!g.route, stepCount: g.steps.length, label: `${placeLabel(from)} → ${placeLabel(to)}` };
   out.innerHTML = `
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
+    ${avoidStepsNote(g.route)}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
     <ol class="steps">${parsed.map(stepItem).join("")}</ol>
     ${plans.length ? floorplanBlock(plans, to) : ""}
-    ${reportBlock(from, to, !!g.route)}`;
+    ${reportBlock()}`;
+  out.querySelector("#comment-btn")?.addEventListener("click", openComment);
   out.querySelectorAll(".steps > li[data-i]").forEach((li) => {
     const go = () => selectStep(Number(li.dataset.i));
     li.addEventListener("click", (e) => {
@@ -606,10 +666,23 @@ function render() {
     });
 }
 
-/** The "Report a problem with this route" link under the directions (room codes only, see report.js). */
-function reportBlock(from, to, found) {
-  const href = reportUrl(from, to, { appUrl: location.origin + location.pathname, avoidSteps: state.avoidSteps, found, text: t.reportText });
-  return `<p class="report"><a href="${esc(href)}" target="_blank" rel="noopener">${t.report}</a><br><small>${t.reportNote}</small></p>`;
+/** The comment button under the directions: it opens the comment form (what is sent: see report.js and the form's note). */
+function reportBlock() {
+  return `<div class="report"><button type="button" id="comment-btn" class="comment-open">💬 ${t.commentBtn}</button><br><small>${t.reportNote}</small></div>`;
+}
+
+let currentComment = null; // {from, to, found, stepCount, label} of the shown route, for the comment form
+
+/**
+ * With "Avoid steps" on: a loud warning when the route still has stairs or steps (the router only
+ * prefers step-free ways, so a route can still need steps), else a calm note that it has none.
+ */
+function avoidStepsNote(r) {
+  if (!state.avoidSteps || !r) return "";
+  const stairs = r.legs.filter((l) => l.kind === "vertical" && l.type === "stairs").length;
+  const steps = r.legs.reduce((n, l) => n + (l.steps || 0), 0);
+  if (stairs || steps) return `<p class="warn" role="alert"><b>⚠ ${t.avoidWarn}</b> ${t.avoidWarnText(stairs, steps)}</p>`;
+  return `<p class="ok-note">♿ ${t.avoidOk}</p>`;
 }
 
 const STEP_PIN_SKIP_M = 4; // a marker this close to A or B would hide it: that step is placed, but gets no marker
