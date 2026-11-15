@@ -275,5 +275,30 @@ class AppDataTest(unittest.TestCase):
                 self.assertEqual(crawl["counts"]["total"], len(crawl["rooms"]))
 
 
+class CheckRoomsTest(unittest.TestCase):
+    """tools/check_rooms.py compares the public room list with the built maps (no network here)."""
+
+    def test_parse_and_compare(self):
+        import check_rooms
+        html = '<a href="/de/room/3101.000.A020">A020</a><a href="/de/room/3101.000.A025">x</a><a href="/de/room/3101.000.A020">dup</a>'
+        live = check_rooms.parse_listed(html)
+        self.assertEqual(live, ["3101.000.A020", "3101.000.A025"])
+        self.assertEqual(check_rooms.compare(["3101.000.A020", "3101.000.B043"], live), (["3101.000.A025"], ["3101.000.B043"]))
+        self.assertEqual(check_rooms.compare(live, live), ([], []))
+
+    def test_report_names_rooms_and_failures(self):
+        import check_rooms
+        text = check_rooms.report({"3101": (["3101.000.A025"], []), "3110": ([], [])}, {"3408": "timeout"})
+        self.assertIn("3101.000.A025", text)
+        self.assertNotIn("Building 3110", text)
+        self.assertIn("3408 (timeout)", text)
+
+    def test_every_mapped_building_has_a_listed_baseline(self):
+        data = ROOT / "web" / "data" / "indoor"
+        for bid in json.loads((data / "index.json").read_text(encoding="utf-8")):
+            with self.subTest(building=bid):
+                self.assertTrue(json.loads((data / f"{bid}.json").read_text(encoding="utf-8")).get("listed"))
+
+
 if __name__ == "__main__":
     unittest.main()

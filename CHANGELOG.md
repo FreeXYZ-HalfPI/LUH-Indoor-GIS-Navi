@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 ### Added
+- **Weekly room-list check** (`tools/check_rooms.py`, `.github/workflows/room-check.yml`):
+  compares the public Rauminfo room list of each mapped building with the rooms our
+  maps were built from, and opens or updates one GitHub issue when rooms are new or
+  gone, or a page could not be read. Standard library only, one request per building.
+  The first run already found a new room: `1101.004.B419`.
+
 - **Lazy loading per building:** the app starts with the outdoor data only; a
   building's indoor map (45–195 kB) is fetched when a route starts or ends in it
   or when it comes into view on the map, and the others load in the background

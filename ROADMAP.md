@@ -100,7 +100,10 @@ permission come before scale. Phase B starts now and runs in parallel.
       door openings, a small review editor for contributors
 - [x] Lazy loading per building (index + frames file; a building loads when a route or the
       map needs it, the rest when the phone is idle; the service worker caches each on first use)
-- [ ] Scheduled GitHub Action: refresh room lists and flag changes
+- [x] Scheduled GitHub Action that flags room-list changes weekly (`tools/check_rooms.py`,
+      `.github/workflows/room-check.yml`: one issue with new / removed rooms per building)
+- [ ] Scheduled refresh of the maps themselves (a full crawl is too heavy for CI: a maintainer
+      runs `crawl_rooms.py` and `build_indoor.py` when the check raises an issue)
 - [ ] 15–20 buildings that cover the daily traffic (library, main lecture halls,
       Nordstadt and Welfengarten buildings)
 
