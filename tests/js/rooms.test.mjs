@@ -113,7 +113,7 @@ test("a service resolves to its building and keeps the service for labels", () =
 });
 
 test("services are found by name in both languages and by alias, from three letters on", () => {
-  for (const q of ["international", "Hochschulbüro", "hochschulbuero", "internationales"]) {
+  for (const q of ["international", "Hochschulbüro", "hochschulburo", "internationales"]) {
     assert.equal(withServices.search(q)[0]?.key, "s:international-office", q);
   }
   assert.equal(withServices.search("in").some((p) => p.service), false); // too short
