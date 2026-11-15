@@ -9,7 +9,8 @@
 | Indoor graph (corridors, room positions) | Derived from the CAFM floor plan images by `tools/build_indoor.py` | Only the derived graph is committed; the images stay on LUH servers and are cached locally in `data/raw/` | © LUH (derived), see Permission |
 | Footpaths, building outlines, entrances | OpenStreetMap via the Overpass API | `tools/build_walk_graph.py` builds `web/data/walkgraph.json` | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/) |
 | Stations, stops and their lines | OpenStreetMap via the Overpass API | `tools/build_stops.py` builds `web/data/stops.json` (needs `walkgraph.json`) | © OpenStreetMap contributors, [ODbL](https://opendatacommons.org/licenses/odbl/). Lines are only as good as OSM; the app links the GVH planner for times |
-| Map tiles | `tile.openstreetmap.org` | Background map in the app | © OpenStreetMap contributors. [Tile usage policy](https://operations.osmfoundation.org/policies/tiles/) |
+| Map tiles (default) | `tile.openstreetmap.org` | Background map in the app | © OpenStreetMap contributors. [Tile usage policy](https://operations.osmfoundation.org/policies/tiles/) |
+| Other background maps (the "Map style" picker, `BASEMAPS` in `web/js/config.js`) | OpenStreetMap Deutschland, BKG TopPlus Open (colour, grey, light; dl-de/by-2-0), OpenTopoMap (CC-BY-SA), CyclOSM (OpenStreetMap France), and the vector styles Liberty, Positron and Bright from OpenFreeMap drawn with MapLibre GL JS (BSD-3-Clause, `web/vendor/maplibre`, loaded only when chosen) | Chosen by the person; the choice is saved on the device only | Attribution is shown on the map for each. Each provider sees the viewed area and the IP address (see `docs/legal/`). Check each provider's usage policy before heavy use |
 
 ## Room ID format
 

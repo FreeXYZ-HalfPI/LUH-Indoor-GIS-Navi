@@ -47,7 +47,15 @@ Dabei werden deine IP-Adresse, die Browserkennung und die angefragten Kacheln
 übertragen, also der Kartenausschnitt, den du ansiehst. Rechtsgrundlage ist
 Art. 6 Abs. 1 lit. f DSGVO (Darstellung der Karte). Für das Vereinigte
 Königreich besteht ein Angemessenheitsbeschluss der EU-Kommission
-[[check: still in force]]. Datenschutzhinweise des Anbieters:
+[[check: still in force]]. Standardmäßig wird die genannte Karte benutzt. Wählst du
+über die Schaltfläche „Kartenstil“ eine andere Hintergrundkarte, werden dieselben
+Daten an den Anbieter dieser Karte übertragen, und zwar erst dann: OpenStreetMap
+Deutschland (`tile.openstreetmap.de`), Bundesamt für Kartographie und Geodäsie
+(`sgx.geodatenzentrum.de`, TopPlus Open), OpenTopoMap (`tile.opentopomap.org`),
+CyclOSM / OpenStreetMap France (`*.tile-cyclosm.openstreetmap.fr`) und OpenFreeMap
+(`tiles.openfreemap.org`, Vektorkarten) [[check: operators, addresses and privacy
+policies of each provider]]. Deine Wahl wird nur auf deinem Gerät gespeichert.
+Datenschutzhinweise des Anbieters:
 [[https://osmfoundation.org/wiki/Privacy_Policy]].
 
 ### 5. Grundrisse der Leibniz Universität Hannover
@@ -182,6 +190,14 @@ of the map you look at. The legal basis is Art. 6(1)(f) GDPR (showing the map).
 The European Commission has an adequacy decision for the United Kingdom
 [[check: still in force]]. The provider's privacy policy:
 [[https://osmfoundation.org/wiki/Privacy_Policy]].
+By default this map is used. If you choose another background map with the
+"Map style" button, the same data goes to that map's provider, and only then:
+OpenStreetMap Deutschland (`tile.openstreetmap.de`), the Federal Agency for
+Cartography and Geodesy (`sgx.geodatenzentrum.de`, TopPlus Open), OpenTopoMap
+(`tile.opentopomap.org`), CyclOSM / OpenStreetMap France
+(`*.tile-cyclosm.openstreetmap.fr`) and OpenFreeMap (`tiles.openfreemap.org`,
+vector maps) [[check: operators, addresses and privacy policies of each provider]].
+Your choice is saved on your device only.
 
 ### 5. Floor plans of Leibniz Universität Hannover
 

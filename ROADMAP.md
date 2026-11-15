@@ -162,7 +162,8 @@ permission come before scale. Phase B starts now and runs in parallel.
 - [ ] Official launch before a winter semester: Orientierungswoche, university
       website, StudIP, flyer with a QR code
 - [ ] Own map tiles (self-hosted or commercial); the public OSM tile server is
-      not for production traffic
+      not for production traffic (the Map style picker now offers other free providers, but each
+      has its own usage policy: check them before a launch)
 - [ ] Aggregate, privacy-preserving metrics only, with a written policy
 - [ ] Monitoring of broken data (routability regressions in CI) and a named
       person who answers issues

@@ -39,8 +39,10 @@ Every placeholder is written `[[like this]]`. Search for `[[`:
    with LUH first (risk 3 in [RISKS.md](../RISKS.md)). If the people search is
    switched off or limited to offices for the first version, shorten or
    remove that section.
-3. **Map tiles.** Section 4 names the OpenStreetMap Foundation's tile server,
-   which the app uses today. Update it when the provider changes.
+3. **Map tiles.** Section 4 names the OpenStreetMap Foundation's tile server (the
+   default) and the other providers a person can choose in the app (`BASEMAPS` in
+   `web/js/config.js`). Fill in each operator and privacy policy; keep the list equal to
+   `BASEMAPS`, and drop providers you do not want to name.
 4. **Hosting.** Section 3 describes GitHub Pages. Update it if the app moves.
 
 ## What the statements are based on

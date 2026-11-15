@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 ### Added
+- **Choose the background map** (button **Map style** / **Kartenstil** on the map, bottom left): 10 maps
+  in three groups. *Germany*: OpenStreetMap Deutschland (German names) and the official
+  **BKG TopPlus Open** in colour, grey and light. *World*: OpenStreetMap (default), OpenTopoMap,
+  CyclOSM. *Vector (MapLibre)*: OpenFreeMap Liberty, Positron and Bright, drawn with MapLibre GL JS
+  (BSD-3-Clause, vendored in `web/vendor/maplibre`, loaded only when a vector map is picked). Each card
+  has a colour swatch and a one-line note; nothing is fetched from a provider until it is chosen. The
+  choice is saved on the device. Attribution switches with the map. Without WebGL the vector maps are
+  greyed out with a note, and a vector map that fails to start leaves the previous map in place.
+  The list is `BASEMAPS` in `web/js/config.js`; the privacy drafts name the providers.
+
 - **Offline-ready message** in the footer once every building is saved ("✓ Ready offline: routes and
   directions work without internet; the map background only where you have looked"), or a
   hint when only some are (data saver, or a building not opened yet). Says nothing when the

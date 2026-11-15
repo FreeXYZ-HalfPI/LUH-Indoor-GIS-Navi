@@ -12,7 +12,7 @@ import { reportUrl } from "./report.js";
 import { aboutHtml } from "./about.js";
 import { stepTag, floorTag, parseStep, placeStep } from "./steptags.js";
 import { routeFloors, confidence, routeConfidence } from "./confidence.js";
-import { TILE_URL, TILE_ATTRIBUTION, TILE_MAX_NATIVE_ZOOM } from "./config.js";
+import { initBasemaps } from "./basemaps.js";
 
 const CAFM = "https://info.cafm.uni-hannover.de";
 const WALK_M_PER_MIN = 80; // ~4.8 km/h, a usual walking speed for route planners
@@ -26,7 +26,7 @@ const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 // Place keys: "b:1101" for a building, "r:1101.000.E028" for a room, "p:christian-heipke" for a person
 const state = { from: null, to: null, avoidSteps: false };
-let places, graph, map, routeLayer;
+let places, graph, map, routeLayer, basemaps;
 let landmarks = {}; // room code → {en, de}: rooms people recognise (data/landmarks.json)
 const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef); filled as buildings are loaded
 let indoorList = []; // buildings that have an indoor map
@@ -161,6 +161,7 @@ function applyTexts() {
   $("#to-input").placeholder = t.toPh;
   $("#swap").title = $("#swap").ariaLabel = t.swap;
   if (offlineKey) $("#offline-status").textContent = t[offlineKey];
+  basemaps?.refresh(); // the picker's texts
   $("#lang").lang = getLang() === "de" ? "en" : "de"; // the label is in the other language
   $("#lang").textContent = getLang() === "de" ? "EN" : "DE"; // the button names the language you switch to
 }
@@ -326,13 +327,7 @@ function toast(msg) {
 
 function initMap(buildings) {
   map = L.map("map", { zoomControl: true, attributionControl: true }).setView([52.3826, 9.7175], 15); // Welfengarten
-  L.tileLayer(TILE_URL, {
-    maxZoom: 21, // room explorer: zoom past the tiles (scaled up from 19)
-    maxNativeZoom: TILE_MAX_NATIVE_ZOOM,
-    // the OSM tile policy requires a Referer; send only our origin (the page default is no-referrer)
-    referrerPolicy: "strict-origin-when-cross-origin",
-    attribution: TILE_ATTRIBUTION,
-  }).addTo(map);
+  basemaps = initBasemaps(map, { getLang, toast }); // background map and its picker (raster, or vector via MapLibre)
 
   for (const b of buildings) {
     const m = L.circleMarker([b.lat, b.lon], { radius: 5, color: "#003366", weight: 1, fillColor: "#5b8fc7", fillOpacity: 0.8 }).addTo(map);
