@@ -9,12 +9,12 @@ other floors are approximate (traced from the floor plans), and the app says so.
 
 | building | public | found | routable | share | verified floors | crawled |
 |---|---:|---:|---:|---:|---:|---|
-| 1101 Hauptgebäude | 57 | 1227 | **1106** | 90% | 0/5 | 2026-10-26 |
+| 1101 Hauptgebäude | 58 | 1227 | **1106** | 90% | 0/5 | 2026-10-26 |
 | 3101 Schneiderberg-Gebäude | 9 | 261 | **244** | 93% | 0/4 | 2026-10-26 |
 | 3109 Verfügungsgebäude | 26 | 313 | **298** | 95% | 0/5 | 2026-10-29 |
 | 3110 Hauptmensa | 8 | 234 | **222** | 95% | 0/5 | 2026-10-26 |
 | 3408 Hochhaus Appelstraße | 43 | 926 | **843** | 91% | 0/18 | 2026-10-29 |
-| **total** | 143 | 2961 | **2713** | 92% | 0/37 | |
+| **total** | 144 | 2961 | **2713** | 92% | 0/37 | |
 
 Want to help? Pick a reason below, fix it in the building's `source.json`,
 run `python3 tools/build_indoor.py build <building>` and this script, and open a pull request.

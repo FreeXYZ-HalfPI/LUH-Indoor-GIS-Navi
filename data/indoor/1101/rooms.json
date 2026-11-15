@@ -22,9 +22,11 @@
   "H",
   "M"
  ],
- "extra": [],
+ "extra": [
+  "1101.004.B419"
+ ],
  "counts": {
-  "listed": 57,
+  "listed": 58,
   "total": 1227,
   "per_floor": {
    "000": 309,
@@ -88113,7 +88115,10 @@
    "level": 4,
    "number": "B419",
    "wing": "B",
-   "listed": false,
+   "listed": true,
+   "floor_name": "4. Stockwerk",
+   "area_m2": 37.31,
+   "type": "Besprechungsraum",
    "image": {
     "point": [
      815,

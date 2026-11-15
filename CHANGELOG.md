@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 ### Changed
+- 1101 re-crawled after the weekly room check flagged `1101.004.B419`: it is now a public
+  room on Rauminfo (Besprechungsraum, 37 m²) and shows its type and size. The map was
+  already routing to it; coverage is unchanged (1106 of 1227 rooms).
 - The step-tag logic (place and floor of a direction step) moved from `app.js` into
   `web/js/steptags.js` and has unit tests (`tests/js/steptags.test.mjs`).
 
