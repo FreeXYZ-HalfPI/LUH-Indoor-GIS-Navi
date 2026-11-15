@@ -77,6 +77,13 @@ async function boot() {
   });
   $("#share").addEventListener("click", share);
   $("#about-btn").addEventListener("click", openAbout);
+  $("#install-btn").addEventListener("click", async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice.catch(() => {});
+    installPrompt = null;
+    $("#install-btn").hidden = true;
+  });
   window.addEventListener("hashchange", readHash);
 
   applyTexts();
@@ -111,7 +118,8 @@ function ensureIndoor(ids) {
 
 /** When the phone is idle, fetch the remaining buildings (unless the user saves data), so that offline use keeps working. */
 function prefetchIndoor() {
-  if (navigator.connection?.saveData) return;
+  if (!("serviceWorker" in navigator)) return; // nothing is saved without it: say nothing about offline
+  if (navigator.connection?.saveData) return setOffline("offlinePartial");
   const idle = window.requestIdleCallback || ((f) => setTimeout(f, 3000));
   idle(async () => {
     for (const b of indoorList) {
@@ -119,8 +127,28 @@ function prefetchIndoor() {
       await ensureIndoor([b]);
       drawExplorer(); // rooms of this building may be in view now
     }
+    // Ready only when every building is loaded (the service worker saves each one it fetches) and the worker
+    // controls the page. If it never becomes ready (private window, blocked), say nothing instead of waiting.
+    const ready = await Promise.race([navigator.serviceWorker.ready.then(() => true, () => false), new Promise((r) => setTimeout(() => r(false), 8000))]);
+    const all = indoorList.every((b) => indoorData[b]);
+    setOffline(!ready ? "" : all && navigator.serviceWorker.controller ? "offlineReady" : "offlinePartial");
   });
 }
+
+let offlineKey = ""; // which offline message is shown (a key of the texts, so a language change redraws it)
+function setOffline(key) {
+  offlineKey = key;
+  $("#offline-status").textContent = key ? t[key] : "";
+}
+
+// "Install on your phone": the browser offers it (Chrome, Edge, Android); iOS has the tip in the About page
+let installPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  installPrompt = e;
+  $("#install-btn").hidden = false;
+});
+window.addEventListener("appinstalled", () => ($("#install-btn").hidden = true));
 
 // ---------- texts ----------
 
@@ -132,6 +160,7 @@ function applyTexts() {
   $("#from-input").placeholder = t.fromPh;
   $("#to-input").placeholder = t.toPh;
   $("#swap").title = $("#swap").ariaLabel = t.swap;
+  if (offlineKey) $("#offline-status").textContent = t[offlineKey];
   $("#lang").lang = getLang() === "de" ? "en" : "de"; // the label is in the other language
   $("#lang").textContent = getLang() === "de" ? "EN" : "DE"; // the button names the language you switch to
 }
@@ -634,6 +663,7 @@ function render() {
   if (to.type === "room" && !g.route?.end.indoor) plans.push({ room: to.room.id, title: plans.length ? `${t.floor(to.room.floor)} · ${t.building} ${to.building.id}` : "" });
   currentComment = { from, to, found: !!g.route, stepCount: g.steps.length, label: `${placeLabel(from)} → ${placeLabel(to)}` };
   out.innerHTML = `
+    <div class="print-head"><b>${t.title}</b>: ${esc(currentComment.label)}<br><small>${esc(location.origin + location.pathname + location.hash)}</small></div>
     ${g.summary ? `<p class="summary">${g.summary}</p>` : ""}
     ${avoidStepsNote(g.route)}
     ${g.notes.map((n) => `<p class="note">${n}</p>`).join("")}
@@ -641,6 +671,7 @@ function render() {
     ${plans.length ? floorplanBlock(plans, to) : ""}
     ${reportBlock()}`;
   out.querySelector("#comment-btn")?.addEventListener("click", openComment);
+  out.querySelector("#print-btn")?.addEventListener("click", () => window.print());
   out.querySelectorAll(".steps > li[data-i]").forEach((li) => {
     const go = () => selectStep(Number(li.dataset.i));
     li.addEventListener("click", (e) => {
@@ -668,7 +699,7 @@ function render() {
 
 /** The comment button under the directions: it opens the comment form (what is sent: see report.js and the form's note). */
 function reportBlock() {
-  return `<div class="report"><button type="button" id="comment-btn" class="comment-open">💬 ${t.commentBtn}</button><br><small>${t.reportNote}</small></div>`;
+  return `<div class="report"><button type="button" id="comment-btn" class="comment-open">💬 ${t.commentBtn}</button> <button type="button" id="print-btn" class="comment-open">🖨️ ${t.printBtn}</button><br><small>${t.reportNote}</small></div>`;
 }
 
 let currentComment = null; // {from, to, found, stepCount, label} of the shown route, for the comment form

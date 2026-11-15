@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 ### Added
+- **Offline-ready message** in the footer once every building is saved ("✓ Ready offline: routes and
+  directions work without internet; the map background only where you have looked"), or a
+  hint when only some are (data saver, or a building not opened yet). Says nothing when the
+  browser cannot save the app (private window): no false promise.
+- **Install on your phone** button (when the browser offers it) and an iPhone tip in the About page.
+- **Print directions** button under a route, and a print layout (title with the route and link, the
+  steps only, no map or buttons), for people who prefer paper.
+
 - **About page** inside the app (the **About** / **Über** button replaces the **?**): why the Navigator
   exists, who it is for (new and international students, exchange students, people with disabilities,
   visitors, everyone on campus), the idea, how to use it, what the map symbols mean, privacy and

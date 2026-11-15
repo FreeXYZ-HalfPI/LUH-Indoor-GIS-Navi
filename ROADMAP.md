@@ -68,6 +68,10 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] Anonymous comments without a GitHub account: needs a small server or an e-mail address
       (a decision: where do comments go, who reads them, privacy statement)
 
+- [x] Offline-ready status, install button, print view of the directions
+- [ ] QR code for a route and printable "you are here" signs: needs a QR encoder that can be
+      verified (a library such as `segno` for the tool, or a tested JS encoder; decide)
+
 ## Next steps (updated 2026-11-15)
 
 Also done: first-time-user guide in the app (welcome card, examples, help dialog), the idea and
