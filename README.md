@@ -49,6 +49,14 @@ another across the campus:
 **Comment on this route** form; with *Avoid steps* on you get a clear warning when a route still
 needs stairs. The layout adapts to phone, tablet and desktop.
 
+### Living in a dorm of the Studentenwerk
+
+Type the name or street of a dorm (*Dorotheenstraße*, *Schneiderberg*, *Wohnheim*) as your start, then
+your room: [Dorotheenstraße 5A/5B → A260 in the Schneiderberg-Gebäude](https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/#from=dorotheenstrasse-5a-und-5b&to=3101.002.A260).
+19 houses of the Studentenwerk Hannover are included. Dorms near the campus are routed on foot; for a
+long walk the directions also name the stop near your dorm, the stop near your goal and the Stadtbahn or bus line
+they share. Dorms far away are treated like stations: ride to a stop near the goal, then walk.
+
 ### Coming from the station or the bus stop
 
 Choose **Hannover Hauptbahnhof**, the **ZOB** or any tram/bus stop near the campus as your start

@@ -12,6 +12,7 @@ export const ISSUES_URL = "https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi
 
 /** The public ID of a place: a room code ("1101.000.E028") or a building number ("1101"). */
 export function placeId(place) {
+  if (place.dorm) return place.dorm.id; // a dorm: #from=dorotheenstrasse-5a-und-5b
   if (place.stop) return place.stop.id; // a station or stop: its slug, as in #from=hannover-hauptbahnhof
   if (place.service) return place.service.id; // a service: #to=international-office
   return place.type === "room" ? place.room.id : place.building.id;

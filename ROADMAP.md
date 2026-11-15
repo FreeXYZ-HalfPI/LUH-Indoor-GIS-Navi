@@ -72,6 +72,11 @@ See [docs/CONCEPT.md](docs/CONCEPT.md) for the full idea.
 - [ ] QR code for a route and printable "you are here" signs: needs a QR encoder that can be
       verified (a library such as `segno` for the tool, or a tested JS encoder; decide)
 
+- [x] Studentenwerk dorms as places (19 houses), long-walk ride tip
+- [ ] Dorms: positions are geocoded street addresses (the middle of the house): check on site, add
+      `lat`/`lon` overrides in `data/dorms_overrides.json`; add Menschingstraße when it opens; ask the
+      Studentenwerk for an official list with coordinates and entrances
+
 ## Next steps (updated 2026-11-15)
 
 Also done: first-time-user guide in the app (welcome card, examples, help dialog), the idea and

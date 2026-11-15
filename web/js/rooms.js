@@ -80,7 +80,7 @@ function nameScore(query, words) {
 
 /** All buildings, rooms and people the app knows, and the search over them. */
 export class Places {
-  constructor(buildings, rooms, people = [], services = [], stops = []) {
+  constructor(buildings, rooms, people = [], services = [], stops = [], dorms = []) {
     this.buildings = new Map(buildings.map((b) => [b.id, b]));
     this.rooms = [];
     for (const [bid, list] of Object.entries(rooms)) {
@@ -108,6 +108,14 @@ export class Places {
       if (!st.hub && st.node == null) continue; // a stop off the walk graph cannot be routed from
       const names = [st.name, ...(st.aliases || [])].map(fold);
       this.stops.set(st.id, { ...st, names });
+    }
+
+    // Student dorms of the Studentenwerk (web/data/dorms.json, from tools/build_dorms.py), a place like a
+    // stop: a pseudo building (id "dorm:<id>") at its address. Keys for links: #from=dorotheenstrasse-5a-und-5b
+    this.dorms = new Map();
+    for (const d of dorms) {
+      const names = [d.name, d.street, `wohnheim ${d.name}`, `${d.name} wohnheim`, "studentenwohnheim", "student residence", "dormitory", "studentenwerk"].map(fold);
+      this.dorms.set(d.id, { ...d, names });
     }
 
     // People (web/data/people.json, from tools/crawl_people.py). Each one gets a
@@ -144,6 +152,12 @@ export class Places {
     return { type: "stop", key: `t:${st.id}`, building, stop: st };
   }
 
+  /** A dorm as a place. It has a walk node when it lies on the walk graph, else the app treats it like a station. */
+  dormPlace(d) {
+    const building = { id: `dorm:${d.id}`, name: d.name, lat: d.lat, lon: d.lon };
+    return { type: "dorm", key: `d:${d.id}`, building, dorm: d };
+  }
+
   building(id) {
     return this.buildings.get(id);
   }
@@ -154,6 +168,10 @@ export class Places {
     if (key.startsWith("p:")) {
       const person = this.people.get(key.slice(2));
       return person ? this.personPlace(person) : null;
+    }
+    if (key.startsWith("d:")) {
+      const d = this.dorms.get(key.slice(2));
+      return d ? this.dormPlace(d) : null;
     }
     if (key.startsWith("t:")) {
       const st = this.stops.get(key.slice(2));
@@ -224,6 +242,14 @@ export class Places {
       for (const sv of this.services.values()) {
         const s = sv.names.some((x) => x.startsWith(f)) ? 80 : sv.names.some((x) => x.includes(f)) ? 45 : 0;
         if (s) push(s, this.servicePlace(sv));
+      }
+    }
+
+    // dorms: by house name or street ("Dorotheenstraße"), or "Wohnheim", "dorm", "Studentenwerk"
+    if (f.length >= 3) {
+      for (const d of this.dorms.values()) {
+        const s = d.names.slice(0, 2).some((x) => x.startsWith(f)) ? 62 : d.names.slice(0, 2).some((x) => x.includes(f)) ? 40 : d.names.slice(2).some((x) => x.includes(f)) ? 33 : 0;
+        if (s) push(s, this.dormPlace(d));
       }
     }
 

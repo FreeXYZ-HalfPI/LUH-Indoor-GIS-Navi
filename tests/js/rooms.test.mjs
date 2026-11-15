@@ -152,3 +152,21 @@ test("stations are found by name and by what people type: Hbf, Bahnhof, Hauptbah
   assert.equal(withStops.search("welfenpl")[0]?.key, "t:welfenplatz");
   assert.equal(withStops.search("far away").some((p) => p.stop), false);
 });
+
+const dorms = [
+  { id: "dorotheenstrasse-5a-und-5b", name: "Dorotheenstraße 5A und 5B", street: "Dorotheenstraße 5A und 5B", zip: "30419", city: "Hannover", lat: 52.392, lon: 9.685, node: 5, cluster: 0 },
+  { id: "garbsen", name: "Garbsen", street: "Marie-Curie-Straße 1 - 3", zip: "30823", city: "Garbsen", lat: 52.426, lon: 9.611, node: null, cluster: 1 },
+];
+const withDorms = new Places(buildings, rooms, people, [], [], dorms);
+
+test("a dorm is a place with a pseudo building, found by name, street and 'Wohnheim'", () => {
+  const p = withDorms.resolve("d:dorotheenstrasse-5a-und-5b");
+  assert.equal(p.type, "dorm");
+  assert.equal(p.building.id, "dorm:dorotheenstrasse-5a-und-5b");
+  assert.equal(p.dorm.node, 5);
+  assert.equal(withDorms.resolve("d:nope"), null);
+  for (const q of ["Dorotheenstr", "dorotheen", "Dorotheenstrasse"]) assert.equal(withDorms.search(q)[0]?.key, "d:dorotheenstrasse-5a-und-5b", q);
+  assert.equal(withDorms.search("garbs")[0]?.key, "d:garbsen");
+  assert.equal(withDorms.search("Wohnheim").filter((p) => p.dorm).length, 2);
+  assert.equal(withDorms.search("student residence").filter((p) => p.dorm).length, 2);
+});

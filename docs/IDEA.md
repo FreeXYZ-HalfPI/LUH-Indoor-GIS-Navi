@@ -31,6 +31,7 @@ than for others.
 
 | Group | What they run into | What the Navigator gives them |
 |---|---|---|
+| **Living in a dorm** (first weeks, every day) | A new city, a dorm at one end of town, a lecture hall at the other | Start from your dorm (the Studentenwerk's 19 houses): on foot where it is close, with the ride suggested where it is far |
 | **Arriving by train or bus** (everyone on the first day) | They step out at the Hauptbahnhof or the ZOB with a room code | Start from the station: the app names the stop nearest to the goal and routes the walk from there to the room |
 | **New students**, first weeks (Orientierungswoche) | Many buildings, unknown codes, lecture halls and offices to find within days | Type the room code from the timetable, get the way, floor by floor |
 | **International and degree-seeking students** | A foreign language, a new system of building numbers, no one to ask yet | The whole app in **English and German**, directions in short plain sentences, steps and metres instead of cardinal directions |

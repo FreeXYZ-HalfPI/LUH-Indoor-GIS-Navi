@@ -40,7 +40,7 @@ async function boot() {
   const load = (f) => fetch(`data/${f}`).then((r) => r.json());
   // The outdoor data and the people list load at start. A building's indoor map (50–200 kB)
   // loads when a route or the map needs it, and the rest in the background when the phone is idle.
-  const [buildings, rooms, walk, list, frames, people, lm, svc, stp] = await Promise.all([
+  const [buildings, rooms, walk, list, frames, people, lm, svc, stp, drm] = await Promise.all([
     load("buildings.json"),
     load("rooms.json"),
     load("walkgraph.json"),
@@ -50,9 +50,10 @@ async function boot() {
     load("landmarks.json").catch(() => ({ rooms: {} })), // and without landmarks in the directions
     load("services.json").catch(() => ({ services: [] })), // and without named services
     load("stops.json").catch(() => ({ stops: [] })), // and without stations and stops
+    load("dorms.json").catch(() => ({ dorms: [] })), // and without student dorms
   ]);
   landmarks = lm.rooms;
-  places = new Places(buildings, rooms, people.people, svc.services, stp.stops);
+  places = new Places(buildings, rooms, people.people, svc.services, stp.stops, drm.dorms);
   graph = new WalkGraph(walk);
   indoorList = list;
   for (const [b, [s, w, n, e]] of Object.entries(frames)) frameBounds[b] = L.latLngBounds([[s, w], [n, e]]);
@@ -170,6 +171,7 @@ function placeLabel(p) {
   if (!p) return "";
   if (p.person) return `${p.person.name} · ${p.room.id}`;
   if (p.stop) return p.stop.name;
+  if (p.dorm) return p.dorm.name;
   if (p.service) return `${p.service.name[getLang()] || p.service.name.en} · ${p.building.id}`;
   if (p.type === "building") return `${p.building.id} ${p.building.name}`;
   return `${p.room.id} · ${p.building.name}`;
@@ -179,6 +181,7 @@ const address = (b) => [b.street, b.house_number].filter(Boolean).join(" ");
 
 /** Second line of a search result: address; role · institute · floor; or floor · wing · type · people. */
 function placeDetail(p) {
+  if (p.dorm) return [t.dormKind, `${p.dorm.street}, ${p.dorm.zip} ${p.dorm.city}`].join(" · ");
   if (p.stop) return [p.stop.kinds.map((k) => t.stopKinds[k]).join(" · "), linesText(p.stop.lines, 4)].filter(Boolean).join(" · ");
   if (p.type === "building") return `${t.building} · ${address(p.building)}`;
   if (p.person) return [p.person.role, p.person.org, t.floor(p.room.floor)].filter(Boolean).join(" · ");
@@ -226,7 +229,7 @@ function initPicker(which) {
       li.role = "option";
       li.id = `${which}-opt-${i}`;
       li.className = i === active ? "active" : "";
-      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.service ? "ℹ️" : p.stop ? (p.stop.kinds.includes("rail") ? "🚉" : "🚏") : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
+      li.innerHTML = `<span class="ico">${p.person ? "👤" : p.service ? "ℹ️" : p.dorm ? "🏠" : p.stop ? (p.stop.kinds.includes("rail") ? "🚉" : "🚏") : p.type === "room" ? "🚪" : "🏛️"}</span><span><b></b><small></small></span>`;
       li.querySelector("b").textContent = placeLabel(p); // textContent: data is never parsed as HTML
       li.querySelector("small").textContent = placeDetail(p);
       // pointerdown, not click: it fires before the input's blur closes the list
@@ -284,7 +287,7 @@ function readHash() {
   const h = new URLSearchParams(location.hash.slice(1));
   // 4 digits = a building, a room code = a room, anything else = a person (#to=christian-heipke)
   // a name from data/services.json = a service (#to=international-office)
-  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : places.services.has(v) ? `s:${v}` : places.stops.has(v) ? `t:${v}` : `p:${v}`);
+  const key = (v) => (!v ? null : /^\d{4}$/.test(v) ? `b:${v}` : parseRoomId(v) ? `r:${v}` : places.services.has(v) ? `s:${v}` : places.stops.has(v) ? `t:${v}` : places.dorms.has(v) ? `d:${v}` : `p:${v}`);
   const from = places.resolve(key(h.get("from")));
   const to = places.resolve(key(h.get("to")));
   state.from = from?.key ?? null;
@@ -517,6 +520,7 @@ const EXAMPLES = [  // pairs of place keys; the texts are t.examples (same order
   ["p:christian-heipke", "p:monika-sester"],
   ["b:1101", "s:international-office"],
   ["t:hannover-hauptbahnhof", "r:3101.002.A260"],
+  ["d:dorotheenstrasse-5a-und-5b", "r:3101.002.A260"],
 ];
 
 /** What to do next, instead of an empty space: three steps, a hint for the next field, one-tap examples. */
@@ -786,7 +790,7 @@ function linesText(lines, max = 6) {
  */
 function campusStops(other, hub, hubIsFrom) {
   const o = other.building;
-  const hubLines = new Set(hub.stop.lines.map((l) => l.mode + l.ref));
+  const hubLines = new Set(hub.lines.map((l) => l.mode + l.ref));
   return [...places.stops.values()]
     .filter((s) => !s.hub)
     .map((s) => ({ s, d: haversine([s.lat, s.lon], [o.lat, o.lon]) }))
@@ -807,29 +811,76 @@ function campusStops(other, hub, hubIsFrom) {
  * Route from or to the stop nearest to the goal and say how to get between the hub and that stop.
  */
 function viaHub(from, to) {
-  const hubIsFrom = !!from.stop?.hub;
-  const hub = hubIsFrom ? from : to;
+  const rf = rideEnd(from, to);
+  const rt = rideEnd(to, from);
+  const hubIsFrom = !!rf;
+  const hub = rf || rt; // {name, lines}
+  const hubPlace = hubIsFrom ? from : to;
   const other = hubIsFrom ? to : from;
-  const hubName = esc(hub.stop.name);
+  const hubName = esc(hub.name);
+  const startOf = (p) => (p.dorm ? t.stepStartDorm(esc(p.dorm.name)) : p.stop?.hub ? t.stepStartHub(esc(p.stop.name)) : t.stepStartBuilding(buildingName(p.building)));
   const none = (steps, note = t.hubNoStop) => ({ steps, notes: [note], summary: "", indoorLegs: [], route: null });
-  if (other.stop) return none([t.stepStartHub(esc(from.stop.name)), t.stepArrive], t.hubPlannerOnly); // station to stop: only the planner can help
+  if ((rf && rt) || other.stop) return none([startOf(from), t.stepArrive], t.hubPlannerOnly); // two far places, or a stop: only the planner can help
   const cands = campusStops(other, hub, hubIsFrom);
-  if (!cands.length) return none(hubIsFrom ? [t.stepStartHub(hubName), t.stepArrive] : [t.stepStartBuilding(buildingName(other.building)), t.stepArrive]);
+  if (!cands.length) return none([startOf(from), t.stepArrive]);
   const best = cands[0];
   const stopName = esc(best.place.stop.name);
   const lines = linesText(best.direct.length ? best.direct : best.place.stop.lines);
   const g = hubIsFrom ? walkGuidance(best.place, to) : walkGuidance(from, best.place);
   const steps = hubIsFrom
-    ? [t.stepStartHub(hubName), t.stepRide(hubName, stopName, lines, best.direct.length > 0), ...g.steps.slice(1)] // the walk's own start step is the stop
+    ? [startOf(from), t.stepRide(hubName, stopName, lines, best.direct.length > 0), ...g.steps.slice(1)] // the walk's own start step is the stop
     : [...g.steps.slice(0, -1), t.stepRideTo(stopName, hubName, lines, best.direct.length > 0), t.stepArrive];
+  // the ride is shown as a dashed line from the station or dorm to the stop
+  const at = [hubPlace.building.lat, hubPlace.building.lon];
+  L.polyline([at, [best.place.stop.lat, best.place.stop.lon]], { color: "#888", weight: 3, dashArray: "6 8" }).addTo(routeLayer);
+  L.circleMarker(at, { radius: 7, color: "#555", weight: 2, fillColor: "#fff", fillOpacity: 1 }).bindTooltip(hub.name).addTo(routeLayer);
   const alt = cands.slice(1, 3).map((c) => `${esc(c.place.stop.name)} (${Math.round(c.walk / 10) * 10} m)`);
   const notes = [...g.notes, t.hubNote];
   if (alt.length) notes.push(t.hubAlt(alt.join(", ")));
   return { ...g, steps, notes };
 }
 
+/**
+ * For a long walk: a tip to ride instead. A stop near the start and a stop near the goal that share a line
+ * (Stadtbahn or bus, from OpenStreetMap), nearest first. Null when there is none, or the walk is short.
+ */
+const LONG_WALK_M = 1500; // beyond this a ride is worth a hint
+const NEAR_STOP_M = 900;
+function rideTip(from, to, r) {
+  if (!r || r.distance < LONG_WALK_M || !from.building?.lat || !to.building?.lat) return "";
+  const near = (p) =>
+    [...places.stops.values()]
+      .filter((s) => !s.hub && s.lines?.length)
+      .map((s) => ({ s, d: haversine([s.lat, s.lon], [p.building.lat, p.building.lon]) }))
+      .filter((x) => x.d <= NEAR_STOP_M)
+      .sort((x, y) => x.d - y.d)
+      .slice(0, 6);
+  let best = null;
+  for (const a of near(from)) {
+    const have = new Set(a.s.lines.map((l) => l.mode + l.ref));
+    for (const b of near(to)) {
+      const shared = b.s.lines.filter((l) => have.has(l.mode + l.ref));
+      if (a.s.id === b.s.id || !shared.length) continue;
+      if (!best || a.d + b.d < best.a.d + best.b.d) best = { a, b, shared };
+    }
+  }
+  if (!best) return "";
+  const round = (m) => Math.round(m / 10) * 10;
+  return t.rideTip(linesText(best.shared), esc(best.a.s.name), round(best.a.d), esc(best.b.s.name), round(best.b.d));
+}
+
+/**
+ * Does this end of the route need a ride? A station (hub), or a dorm that is off the walk graph or in another
+ * campus area than the other end. Returns {name, lines} of what to ride from or to, else null.
+ */
+function rideEnd(p, other) {
+  if (p.stop?.hub) return { name: p.stop.name, lines: p.stop.lines };
+  if (p.dorm && (p.dorm.node == null || p.dorm.cluster !== clusterOf(other))) return { name: p.dorm.name, lines: [] };
+  return null;
+}
+
 function guidance(from, to) {
-  return from.stop?.hub || to.stop?.hub ? viaHub(from, to) : walkGuidance(from, to);
+  return rideEnd(from, to) || rideEnd(to, from) ? viaHub(from, to) : walkGuidance(from, to);
 }
 
 /**
@@ -837,6 +888,9 @@ function guidance(from, to) {
  * Three cases: a real route; both in one building without indoor data;
  * buildings on different campuses (no walk graph between them).
  */
+/** The campus area of a place: stops lie in the main one (0), a dorm has its own, a building has it in the walk graph. */
+const clusterOf = (p) => (p.stop ? 0 : p.dorm ? p.dorm.cluster : graph.buildings[p.building.id]?.cluster);
+
 function walkGuidance(from, to) {
   const steps = [];
   const notes = [];
@@ -846,11 +900,11 @@ function walkGuidance(from, to) {
   const tb = to.building;
 
   if (from.type === "room") steps.push(floorTag(from.room.floor) + t.stepStartRoom(roomText(from), buildingName(fb), t.floor(from.room.floor)));
+  else if (from.dorm) steps.push(t.stepStartDorm(esc(from.dorm.name)));
   else if (from.stop) steps.push(t.stepStartStop(esc(from.stop.name)));
   else steps.push(t.stepStartBuilding(buildingName(fb)));
 
   // each campus has its own walk graph; across campuses there is no route to find
-  const clusterOf = (p) => (p.stop ? 0 : graph.buildings[p.building.id]?.cluster); // the stops lie in the main campus area
   const sameCluster = clusterOf(from) === clusterOf(to);
   const r = sameCluster ? graph.route(from, to, { avoidSteps: state.avoidSteps }) : null;
   const trivial = r && !r.legs.length; // same building, no indoor data: start entrance = goal entrance
@@ -866,12 +920,14 @@ function walkGuidance(from, to) {
       (!r.start.indoor && !!graph.buildings[fb.id]?.estimated) || (!r.end.indoor && !!graph.buildings[tb.id]?.estimated);
     const conf = routeConfidence({
       floors,
-      startIndoor: r.start.indoor || from.type === "building" || !!from.stop, // "from the building" or a stop has no room to map
-      endIndoor: r.end.indoor || to.type === "building" || !!to.stop,
+      startIndoor: r.start.indoor || from.type === "building" || !!from.stop || !!from.dorm, // "from the building" or a stop has no room to map
+      endIndoor: r.end.indoor || to.type === "building" || !!to.stop || !!to.dorm,
       estimatedEntrance: estimated,
       unconfirmedRoom: [from, to].some((p) => p.type === "room" && !places.roomIndex.has(p.room.id)),
     });
     notes.push(confidenceBadge(conf));
+    const tip = rideTip(from, to, r);
+    if (tip) notes.push(tip);
     // the badge says it all unless some floors were checked on site: then name them, with their dates
     const note = ["verified", "partlyVerified"].includes(conf.reasons[0]) ? confidenceNote(floors) : "";
     if (note) notes.push(note);

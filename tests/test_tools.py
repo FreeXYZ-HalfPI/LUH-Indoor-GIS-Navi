@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "tools"))     # the tools are scripts, not a packa
 
 import build_indoor  # noqa: E402
 import crawl_people  # noqa: E402
+import build_dorms  # noqa: E402
 import crawl_rooms  # noqa: E402
 import field_test  # noqa: E402
 
@@ -298,6 +299,34 @@ class CheckRoomsTest(unittest.TestCase):
         for bid in json.loads((data / "index.json").read_text(encoding="utf-8")):
             with self.subTest(building=bid):
                 self.assertTrue(json.loads((data / f"{bid}.json").read_text(encoding="utf-8")).get("listed"))
+
+
+class BuildDormsTest(unittest.TestCase):
+    """tools/build_dorms.py reads the Studentenwerk pages (no network here: sample lines)."""
+
+    def test_address_under_the_title_before_informationen(self):
+        lines = ["Wohnen", "Wohnheime", "Zurück zur Auswahl", "Jägerstraße", "Morwegsgasse 27 (Haus A+B)", "Lodyweg 2 (Haus C)",
+                 "30167 Hannover", "Informationen", "Wohnheimleitung", "Tanja X", "Jägerstraße 5", "30167 Hannover"]
+        self.assertEqual(build_dorms.parse_address(lines, "Jägerstraße"), (["Morwegsgasse 27 (Haus A+B)", "Lodyweg 2 (Haus C)"], "30167", "Hannover"))
+
+    def test_house_named_after_its_street_and_manager_block_in_between(self):
+        street_title = ["Zurück zur Auswahl", "Dorotheenstraße 5A und 5B", "Dorotheenstraße 5A und 5B", "30419 Hannover", "Informationen"]
+        self.assertEqual(build_dorms.parse_address(street_title, "x"), (["Dorotheenstraße 5A und 5B"], "30419", "Hannover"))
+        manager = ["Zurück zur Auswahl", "Emdenstraße", "Tanja Y", "Wohnheim Emdenstraße", "Wohnheimleitung", "Emdenstraße 14", "30167 Hannover", "Freitags 11 Uhr", "Informationen"]
+        self.assertEqual(build_dorms.parse_address(manager, "Emdenstraße"), (["Emdenstraße 14"], "30167", "Hannover"))
+        self.assertIsNone(build_dorms.parse_address(["Zurück zur Auswahl", "Menschingstraße", "Informationen"], "x"))
+
+    def test_one_house_number_for_the_geocoder(self):
+        for raw, want in [("Dorotheenstraße 5A und 5B", "Dorotheenstraße 5A"), ("Nobelring 10 + 12", "Nobelring 10"), ("Marie-Curie-Straße 1 - 3", "Marie-Curie-Straße 1"),
+                          ("Hufelandstraße 16/16 A", "Hufelandstraße 16"), ("Morwegsgasse 27 (Haus A+B)", "Morwegsgasse 27"), ("Heidjerhof 3", "Heidjerhof 3")]:
+            self.assertEqual(build_dorms.first_house_number(raw), want, raw)
+
+    def test_app_data_has_no_personal_data(self):
+        import json
+        d = json.loads((ROOT / "web" / "data" / "dorms.json").read_text(encoding="utf-8"))["dorms"]
+        self.assertGreaterEqual(len(d), 10)
+        for x in d:
+            self.assertEqual(set(x), {"id", "name", "street", "zip", "city", "lat", "lon", "node", "cluster", "url"}, x["id"])
 
 
 if __name__ == "__main__":

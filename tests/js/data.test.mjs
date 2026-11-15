@@ -150,3 +150,21 @@ test("every stop in stops.json can be walked from to a room (the app routes from
   }
   assert.equal(lost.length, 0, `stops that cannot reach 3101: ${show(lost)}`);
 });
+
+test("dorms.json: complete entries; a dorm on the walk graph can walk to a room of its campus area", () => {
+  const { dorms } = load("dorms.json");
+  assert.ok(dorms.length >= 10, "dorms missing");
+  const ids = new Set();
+  const lost = [];
+  for (const d of dorms) {
+    assert.ok(/^[a-z0-9-]+$/.test(d.id) && !ids.has(d.id), `${d.id}: id`);
+    ids.add(d.id);
+    assert.ok(d.name && d.street && /^\d{5}$/.test(d.zip) && d.city && d.url.startsWith("https://"), `${d.id}: incomplete`);
+    assert.ok(d.lat > 52.2 && d.lat < 52.5 && d.lon > 9.5 && d.lon < 9.95, `${d.id}: position outside Hannover (${d.lat}, ${d.lon})`);
+    if (d.node == null) continue; // off the walk graph: the app rides to a stop instead
+    assert.ok(graph.nodes[d.node], `${d.id}: no valid node`);
+    const target = room("3101", Object.keys(indoor.find((x) => x.building === "3101").rooms)[0]);
+    if (d.cluster === graph.buildings["3101"].cluster && !graph.route({ type: "dorm", building: { id: `dorm:${d.id}` }, dorm: d }, target)) lost.push(d.id);
+  }
+  assert.equal(lost.length, 0, `dorms that cannot walk to 3101: ${show(lost)}`);
+});

@@ -1,0 +1,12 @@
+{
+ "_about": "Manual corrections for tools/build_dorms.py, by dorm id: {lat, lon} to fix a position, {street, zip, city} to fix an address, {skip: true, why} to leave a house out.",
+ "menschingstrasse": {
+  "skip": true,
+  "why": "emptied on 31 Jan 2025 for demolition; the new building (about 130 places) is expected from autumn 2026, add it back with its address when it opens"
+ },
+ "studentenwohnheim-klaus-bahlsen": {
+  "lat": 52.38026,
+  "lon": 9.72175,
+  "why": "Nominatim finds another Wilhelm-Busch-Straße 8 (Misburg, 7.7 km away) for '8 - 10'; the lookup of 'Wilhelm-Busch-Straße 8 A, 30167' lands in the Nordstadt, next to the campus, where the house is"
+ }
+}

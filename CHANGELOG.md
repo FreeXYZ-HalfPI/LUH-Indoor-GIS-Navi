@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 ### Added
+- **Student dorms as start or destination:** the 19 open houses of the Studentenwerk Hannover
+  (`web/data/dorms.json`, built by `tools/build_dorms.py` from the Studentenwerk's public pages and
+  geocoded with Nominatim; only name, address and position are stored). Type *Dorotheenstraße*,
+  *Schneiderberg*, *Wohnheim* ... Houses on the walk graph are routed door to door, for example
+  Dorotheenstraße 5A/5B → 3101.002.A260 (2.1 km on foot). Houses far from the campus paths, or in another
+  campus area than the goal, are treated like stations (ride to a stop near the goal, then walk).
+  Menschingstraße is left out (emptied for demolition; the new building is expected from autumn 2026).
+- **"Long walk" ride tip:** when the walk is over 1.5 km, the directions also name a stop near the start and a
+  stop near the goal that share a Stadtbahn or bus line (from OpenStreetMap), with the distances, and link the GVH
+  planner. Example: Dorotheenstraße → A260: *ride Stadtbahn 4, 5 from Schaumburgstraße to Schneiderberg /
+  Wilhelm-Busch-Museum*. A sixth one-tap example on the start page.
+
 - **Choose the background map** (button **Map style** / **Kartenstil** on the map, bottom left): 10 maps
   in three groups. *Germany*: OpenStreetMap Deutschland (German names) and the official
   **BKG TopPlus Open** in colour, grey and light. *World*: OpenStreetMap (default), OpenTopoMap,
