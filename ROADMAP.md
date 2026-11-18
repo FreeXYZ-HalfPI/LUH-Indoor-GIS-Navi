@@ -194,8 +194,9 @@ These guide the next phases. Each needs its own concrete plan before work starts
       door (3 floors, 94 rooms), with the Welcome Centre and 28 staff findable by name; still to do: a
       visit on site
 - [x] ServiceCenter (1101), AStA (1112), ptb (1139) and ZQS (3428) as named destinations
-- [ ] Indoor maps for 1112 (AStA) and 3428 (ZQS): the OpenStreetMap outlines do not match the floor
-      plans (fit under 10 %); map the outlines in OSM first, then `build_indoor.py fit`
+- [x] Indoor maps for 1112 (AStA, 63 of 65 rooms) and 3428 (ZQS, 85 of 89 rooms); the plans were placed
+      on the OSM outlines by hand (the automatic fit failed), so their position is the least certain
+- [ ] Find the AStA office room (not published) and mark it
 - [ ] Mensa and the university's public services: ServiceCenter,
       Immatrikulationsamt, library, Studentenwerk counters, IT help desk
 

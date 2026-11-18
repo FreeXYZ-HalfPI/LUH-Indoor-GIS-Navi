@@ -1,3 +1,18 @@
 {
-  "1139": [{ "lat": 52.383436, "lon": 9.721079, "kind": "main", "name": "Haupteingang (Ecke Im Moore)" }]
+  "1139": [
+    {
+      "lat": 52.383436,
+      "lon": 9.721079,
+      "kind": "main",
+      "name": "Haupteingang (Ecke Im Moore)"
+    }
+  ],
+  "3428": [
+    {
+      "lat": 52.386745,
+      "lon": 9.715222,
+      "kind": "main",
+      "name": "Haupteingang"
+    }
+  ]
 }

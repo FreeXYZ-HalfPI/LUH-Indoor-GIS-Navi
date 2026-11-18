@@ -14,6 +14,11 @@
   `S-south-west` were cut off; two corridors added (`data/indoor/1101/source.json`). Check: all 1,106
   routable rooms and 15 entrances form one connected graph, no detour edges.
 
+- **AStA and ZQS buildings mapped:** 1112 Lessinghaus (2 floors) and 3428 Callinstraße 14 (5 floors) are
+  routable door to door (63/65 and 85/89 rooms). The automatic fit failed on their OSM outlines, so the
+  plans were placed by an overlap search (rotation, scale, shift) and checked on an overlay; 3428 uses two
+  OSM ways, 1112 forces its east wing in. Entrance of 3428 added by hand. 390 of 393 people are now door to door.
+
 ### Fixed
 - `tools/crawl_rooms.py` skipped floors that lie between two floors with public rooms (floor 001 of 1106 and
   floor 002 of 3428 were missing). It now looks at every floor between the lowest and the highest.

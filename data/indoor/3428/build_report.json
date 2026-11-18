@@ -1,0 +1,12 @@
+{
+ "building": "3428",
+ "generated": "2026-11-18",
+ "total": 89,
+ "routable": 85,
+ "unrouted": {
+  "3428.000.003A": "no corridor reachable",
+  "3428.001.103A": "no corridor reachable",
+  "3428.001.114A": "no corridor reachable",
+  "3428.002.203A": "no corridor reachable"
+ }
+}

@@ -1,0 +1,279 @@
+{
+ "building": "1112",
+ "name": "Lessinghaus (Theodor-Lessing-Haus)",
+ "note": "AStA building. Corridors traced roughly from the CAFM floor plans on 2026-11-18; not verified on site.",
+ "osm_outline": "relation/72281",
+ "plan_room": {
+  "000": "1112.000.B001",
+  "001": "1112.001.A106"
+ },
+ "georef": {
+  "lat0": 52.38362,
+  "lon0": 9.71909,
+  "theta": 1.645,
+  "scale": 19.995,
+  "tx": 581.0,
+  "ty": 779.0
+ },
+ "levels": {
+  "000": {
+   "s": 1.0,
+   "dx": 0,
+   "dy": 0
+  },
+  "001": {
+   "s": 0.985,
+   "dx": 23,
+   "dy": 9
+  }
+ },
+ "connectors": [
+  {
+   "id": "S-A",
+   "type": "stairs",
+   "at": [
+    1075,
+    872
+   ],
+   "levels": [
+    "000",
+    "001"
+   ]
+  },
+  {
+   "id": "S-B-spiral",
+   "type": "stairs",
+   "at": [
+    290,
+    720
+   ],
+   "levels": [
+    "000",
+    "001"
+   ]
+  },
+  {
+   "id": "S-B-south",
+   "type": "stairs",
+   "at": [
+    745,
+    960
+   ],
+   "levels": [
+    "000",
+    "001"
+   ]
+  }
+ ],
+ "corridors": {
+  "000": [
+   [
+    [
+     940,
+     900
+    ],
+    [
+     930,
+     740
+    ],
+    [
+     930,
+     700
+    ],
+    [
+     950,
+     500
+    ],
+    [
+     960,
+     350
+    ],
+    [
+     900,
+     230
+    ]
+   ],
+   [
+    [
+     900,
+     230
+    ],
+    [
+     700,
+     225
+    ],
+    [
+     520,
+     240
+    ],
+    [
+     420,
+     300
+    ],
+    [
+     380,
+     450
+    ]
+   ],
+   [
+    [
+     900,
+     230
+    ],
+    [
+     950,
+     230
+    ],
+    [
+     1000,
+     210
+    ],
+    [
+     1050,
+     190
+    ]
+   ],
+   [
+    [
+     930,
+     740
+    ],
+    [
+     800,
+     745
+    ],
+    [
+     500,
+     800
+    ],
+    [
+     340,
+     720
+    ],
+    [
+     290,
+     720
+    ]
+   ],
+   [
+    [
+     940,
+     900
+    ],
+    [
+     800,
+     890
+    ],
+    [
+     745,
+     950
+    ]
+   ],
+   [
+    [
+     940,
+     900
+    ],
+    [
+     1000,
+     905
+    ],
+    [
+     1070,
+     925
+    ],
+    [
+     1130,
+     945
+    ],
+    [
+     1380,
+     945
+    ]
+   ]
+  ],
+  "001": [
+   [
+    [
+     294,
+     758
+    ],
+    [
+     294,
+     984
+    ],
+    [
+     516,
+     984
+    ],
+    [
+     693,
+     984
+    ],
+    [
+     737,
+     960
+    ]
+   ],
+   [
+    [
+     1018,
+     945
+    ],
+    [
+     1067,
+     945
+    ],
+    [
+     1136,
+     945
+    ],
+    [
+     1382,
+     945
+    ]
+   ],
+   [
+    [
+     1077,
+     876
+    ],
+    [
+     1067,
+     945
+    ]
+   ]
+  ]
+ },
+ "force_rooms": {
+  "1112.000.A001": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A002": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A003": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A004": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A005": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A006": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A007": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A008": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A009": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A011": "wing A: the OSM outline ends before the plan's east end",
+  "1112.000.A016": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A101": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A102": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A103": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A103A": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A105": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A106": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A107": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A108": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A109": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A110": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A110A": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A110B": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A111": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A112": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A113": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A114": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A115": "wing A: the OSM outline ends before the plan's east end",
+  "1112.001.A116": "wing A: the OSM outline ends before the plan's east end"
+ }
+}
