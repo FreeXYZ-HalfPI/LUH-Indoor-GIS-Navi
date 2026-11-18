@@ -190,9 +190,12 @@ permission come before scale. Phase B starts now and runs in parallel.
 These guide the next phases. Each needs its own concrete plan before work starts.
 
 **Next places to cover**
-- [ ] International Office (first stop for every exchange student): the way to its door works
-      (service place, building 1106); the way inside the building needs its floor plan,
-      `source.json` and a visit
+- [x] International Office (first stop for every exchange student): building 1106 is mapped door to
+      door (3 floors, 94 rooms), with the Welcome Centre and 28 staff findable by name; still to do: a
+      visit on site
+- [x] ServiceCenter (1101), AStA (1112), ptb (1139) and ZQS (3428) as named destinations
+- [ ] Indoor maps for 1112 (AStA) and 3428 (ZQS): the OpenStreetMap outlines do not match the floor
+      plans (fit under 10 %); map the outlines in OSM first, then `build_indoor.py fit`
 - [ ] Mensa and the university's public services: ServiceCenter,
       Immatrikulationsamt, library, Studentenwerk counters, IT help desk
 

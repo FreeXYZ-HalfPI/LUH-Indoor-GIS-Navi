@@ -258,12 +258,13 @@ class AppDataTest(unittest.TestCase):
                     self.assertTrue(all(-w <= v <= 2 * w for v in flat))
 
     def test_people_are_findable_and_minimal(self):
-        # every person must lead to a known room of a mapped building (rooms that are not
-        # routable yet still get a route to the building), and no contact details may be stored
+        # every person must lead to a known room of a crawled building (a building without an indoor
+        # map, like 3428 ZQS, or a room that is not routable yet still gets a route to the building),
+        # and no contact details may be stored
         people = json.loads((ROOT / "web" / "data" / "people.json").read_text(encoding="utf-8"))["people"]
         for p in people:
             with self.subTest(person=p["name"]):
-                self.assertIn(p["room"][:4], self.indoor)
+                self.assertIn(p["room"][:4], self.rooms)
                 self.assertIn(p["room"], self.rooms[p["room"][:4]])
                 self.assertEqual(set(p), {"name", "role", "org", "room", "source"})
 

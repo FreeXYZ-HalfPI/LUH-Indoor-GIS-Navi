@@ -1,7 +1,14 @@
 {
-"generated": "2026-10-29",
+"generated": "2026-11-18",
 "attribution": "Names and office rooms from public web pages of Leibniz Universität Hannover",
 "people": [
+{
+"name": "Kristina Melcher, M. A.",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.008",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
 {
 "name": "Dr. Johannes Aastrup",
 "role": "",
@@ -45,6 +52,13 @@
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Anne-Dörte Balks",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.000.005",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
+},
+{
 "name": "Heike Bank",
 "role": "",
 "org": "Institut für Kartographie und Geoinformatik",
@@ -57,6 +71,13 @@
 "org": "Geodätisches Institut",
 "room": "3101.001.B105",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Birgit Barden-Läufer",
+"role": "Management",
+"org": "International Office",
+"room": "1106.000.014",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Priyanka Barik",
@@ -143,6 +164,20 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "M.A. Alina Bosse",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.114",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
+},
+{
+"name": "Melek Boubaker",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.008",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Prof. Dr. Jonathan Bowden",
 "role": "",
 "org": "Institut für Differentialgeometrie",
@@ -190,6 +225,27 @@
 "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
 "room": "3101.002.A231",
 "source": "https://www.lufi.uni-hannover.de/institut/team"
+},
+{
+"name": "Cesar Limaylla Bustamante",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.231",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "Nataliya Butych",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.012",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "M.A. Isabella Bytyci",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.002.213",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
 },
 {
 "name": "Dipl.-Betriebsw. (FH) Christine Bödeker",
@@ -269,6 +325,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Ludolf von Dassel",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.030",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Dr.-Ing. Heiner Denker",
 "role": "",
 "org": "Institut für Erdmessung",
@@ -297,6 +360,20 @@
 "source": "https://www.ipi.uni-hannover.de/institut/team"
 },
 {
+"name": "Cristian Dragnea",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.234",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "M.A. Agnieszka Dudzinska",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.000.002",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
+},
+{
 "name": "Jairo Alejandro Ovalle Duque",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
@@ -311,6 +388,13 @@
 "source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
+"name": "Alexandra Krüger, M. Ed.",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.115",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
+},
+{
 "name": "Antje Egert-Rösner",
 "role": "Geschäftszimmer",
 "org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
@@ -318,11 +402,25 @@
 "source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
+"name": "Dipl.-Soz.Wiss. Peter Eichhorn",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.002.211",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
+},
+{
 "name": "Leon Eickhoff",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.A422",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "M.A. Tanja Ellinghaus",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.003.313",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
 },
 {
 "name": "Rebecca Herrmann, M. Eng.",
@@ -379,6 +477,13 @@
 "org": "Präsidium",
 "room": "1101.001.A111",
 "source": "https://www.uni-hannover.de/universitaet/praesidium/vize-personalentwicklung"
+},
+{
+"name": "Vasif Faradzhov",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.008",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Dipl.-Inf. Colin Fischer",
@@ -458,6 +563,13 @@
 "source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Anastasija Geppert",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.008",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Katja Germann",
 "role": "Geschäftsführung, Koordinatorin Gesundheitsmanagement",
 "org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
@@ -491,6 +603,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.000.G013",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dipl.-Päd. Rebecca Gora",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.003.309",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
 },
 {
 "name": "Kai Christian Grensemann",
@@ -549,11 +668,32 @@
 "source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Azar Haghshenas",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.029",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Dr. Zhicheng Han",
 "role": "",
 "org": "Institut für Analysis",
 "room": "1101.001.G121",
 "source": "https://www.analysis.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Julia Harmeling",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.029",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "Dr. Eva Catherina Heesen",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.031",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Dr. Naghmeh Heidari",
@@ -619,6 +759,13 @@
 "source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
 },
 {
+"name": "Dr. Angela Maria Beltran Hernandez",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.021",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Dr. Álvaro Sánchez Hernández",
 "role": "",
 "org": "Institut für Analysis",
@@ -633,6 +780,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Annika Hillmann",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.232",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Prof. Dr. Viktoriia Hnatushenko",
 "role": "",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -645,6 +799,13 @@
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.C411",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "M.A. Martina Vanden Hoeck",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.003.315",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
 },
 {
 "name": "Dr. Arne Hofmann",
@@ -668,6 +829,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Marcus Hoppe",
+"role": "Management",
+"org": "International Office",
+"room": "1106.000.003",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Anja Hoppenworth",
 "role": "",
 "org": "Dezernat 5 – Finanzen",
@@ -680,6 +848,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.001.G131",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Anne Höch",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.021",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Dr. Bianca Iwan",
@@ -815,6 +990,13 @@
 "source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
+"name": "Sofoklis Komninos",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.003.314",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
+},
+{
 "name": "Lina Kornberger",
 "role": "",
 "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
@@ -855,6 +1037,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.003.G319",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Dipl.-Päd. Tanja Kruse",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.000.004",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
 },
 {
 "name": "Dr.-Ing. Johannes Kröger",
@@ -906,6 +1095,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Ulrike Leichnitz",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.003.314",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
+},
+{
 "name": "Julian David Lemburg",
 "role": "",
 "org": "Institut für Quantenoptik",
@@ -918,6 +1114,13 @@
 "org": "Institut für Quantenoptik",
 "room": "1101.003.D306",
 "source": "https://www.iqo.uni-hannover.de/arbeitsgruppen/guidedmatterwaveinterferometry/team"
+},
+{
+"name": "Renate Locmelis-Pizzirani",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.004",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Tatjana Loos",
@@ -946,6 +1149,13 @@
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.000.G012",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Anne Schäfer, M.A.",
+"role": "Office",
+"org": "International Office",
+"room": "1106.000.013",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Martin Malara, M.A.",
@@ -1221,6 +1431,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dipl.-Psych./M.A. Julia Männel",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.114",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
+},
+{
 "name": "Dr. Paul Mücksch",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
@@ -1235,6 +1452,20 @@
 "source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
 },
 {
+"name": "Charmain Müller",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.230",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "M.A. Sabine Lucia Müller",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.114",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
+},
+{
 "name": "Prof. Dr.-Ing. habil. Jürgen Müller",
 "role": "",
 "org": "Institut für Erdmessung",
@@ -1247,6 +1478,13 @@
 "org": "Institut für Differentialgeometrie",
 "room": "1101.004.C413",
 "source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "M.A. Matthias Nee",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.003.313",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
 },
 {
 "name": "Prof. Dr.-Ing. Ingo Neumann",
@@ -1268,6 +1506,13 @@
 "org": "Institut für Siedlungswasserwirtschaft und Abfalltechnik",
 "room": "1101.002.E227",
 "source": "https://www.isah.uni-hannover.de/institut/team"
+},
+{
+"name": "Prof. Dr.-Ing. Regina Nogueira",
+"role": "",
+"org": "International Office",
+"room": "1106.000.023",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Johannes Thomas Oertel",
@@ -1347,6 +1592,13 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dipl.-Päd. Tabea Pirl",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.002.214",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
+},
+{
 "name": "Dr.-Ing. Andreas Piter",
 "role": "Gruppenleiter",
 "org": "Institut für Photogrammetrie und GeoInformation",
@@ -1424,6 +1676,13 @@
 "source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
 },
 {
+"name": "M.A. Mirjam Reale",
+"role": "",
+"org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre",
+"room": "3428.001.113",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt"
+},
+{
 "name": "Margherita Recchia",
 "role": "",
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
@@ -1431,11 +1690,39 @@
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Thomas Reimann",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.015",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
+"name": "Markus Remmers",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.030",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Dipl.-Geol. Nadja Reusch",
 "role": "Assistenz der Geschäftsführung",
 "org": "Geodätisches Institut",
 "room": "3101.001.B157",
 "source": "https://www.gih.uni-hannover.de/institut/team"
+},
+{
+"name": "Dr. Rüdiger Rhein",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.000.004",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
+},
+{
+"name": "M.Ed./M.A. Sonja Riedel",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.111",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
 },
 {
 "name": "Prof. Dr. Karl-Heinz Rosenwinkel",
@@ -1471,6 +1758,13 @@
 "org": "Institut für Erdmessung",
 "room": "3109.004.402B",
 "source": "https://www.ife.uni-hannover.de/team"
+},
+{
+"name": "Dr. Veronika Rückamp",
+"role": "",
+"org": "ZQS/Qualitätsentwicklung",
+"room": "3428.000.003",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe"
 },
 {
 "name": "Ann Sabu",
@@ -2040,6 +2334,13 @@
 "source": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Manuela Schimmels",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.031",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Prof. Dr.-Ing. habil. Torsten Schlurmann",
 "role": "",
 "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen",
@@ -2110,11 +2411,25 @@
 "source": "https://www.differentialgeometrie.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Dr. Solenne Schwanemann",
+"role": "Management",
+"org": "International Office",
+"room": "1106.000.033",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Prof. Dr. Matthias Schütt",
 "role": "",
 "org": "Institut für Algebraische Geometrie",
 "room": "1101.003.G316",
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Stephen James Sechrist",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.232",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Prof. i.R. Dr.-Ing. Günter Seeber",
@@ -2150,6 +2465,13 @@
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.A450",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "Anna Shapiro",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.000.015",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
 },
 {
 "name": "Dr. Mirco Siercke",
@@ -2192,6 +2514,13 @@
 "org": "Institut für Algebra, Zahlentheorie und Diskrete Mathematik",
 "room": "1101.004.B403",
 "source": "https://www.iazd.uni-hannover.de/institut/personenverzeichnis"
+},
+{
+"name": "M.Sc. Elisabeth Noemi Sperber",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.002.211",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
 },
 {
 "name": "Svenja Spomer",
@@ -2334,6 +2663,13 @@
 "source": "https://www.iag.uni-hannover.de/institut/personenverzeichnis"
 },
 {
+"name": "Yin Wang",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.231",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "PD Dr. Alden Marie Seaburg Waters",
 "role": "",
 "org": "Institut für Analysis",
@@ -2376,6 +2712,13 @@
 "source": "https://www.isah.uni-hannover.de/institut/team"
 },
 {
+"name": "Jessica Wille",
+"role": "Administrative/Technical Staff",
+"org": "International Office",
+"room": "1106.002.232",
+"source": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team"
+},
+{
 "name": "Rüdiger Wolf",
 "role": "Leitung",
 "org": "Dezernat 3 – Gebäudemanagement",
@@ -2388,6 +2731,13 @@
 "org": "Dezernat 1 – Organisations- und Personalentwicklung, IuK-Technik",
 "room": "1101.001.D117",
 "source": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-1/mitarbeit"
+},
+{
+"name": "Dipl.-Päd. Angela Zeilinger",
+"role": "",
+"org": "ZQS/Schlüsselkompetenzen",
+"room": "3428.001.115",
+"source": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk"
 },
 {
 "name": "Dr. Lin Zhou",

@@ -280,14 +280,14 @@ class Scanner:
         return found
 
     def find_floors(self):
-        """The floors of the public list, plus the floor below and above if they have rooms.
+        """The floors of the public list, plus the floors in between, below and above if they have rooms.
 
         Basements and top floors often hold only offices and technical rooms,
         so no public room points at them. Only base numbers are probed there,
         which is enough to tell whether the floor exists at all."""
         floors = list(self.seed_floors)
         lo, hi = level_num(self.seed_floors[0]), level_num(self.seed_floors[-1])
-        for lvl in (lo - 1, hi + 1):
+        for lvl in range(lo - 1, hi + 2):         # also floors between two public ones (3428 has public rooms on 000, 001, 003)
             code = floor_code(lvl)
             if code in floors:
                 continue

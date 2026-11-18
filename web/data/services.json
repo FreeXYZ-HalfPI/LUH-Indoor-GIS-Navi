@@ -4,13 +4,132 @@
   {
    "id": "international-office",
    "building": "1106",
-   "name": {"en": "International Office", "de": "Hochschulbüro für Internationales (International Office)"},
-   "aliases": ["international office", "hochschulbüro für internationales", "internationales"],
-   "detail": {
-    "en": "The International Office is in the Wilhelm-Grunwald-Haus (building 1106). The way inside the building is not mapped yet. Check the opening hours before you go.",
-    "de": "Das International Office ist im Wilhelm-Grunwald-Haus (Gebäude 1106). Der Weg im Gebäude ist noch nicht kartiert. Prüfe vor dem Besuch die Öffnungszeiten."
+   "name": {
+    "en": "International Office",
+    "de": "Hochschulbüro für Internationales (International Office)"
    },
-   "url": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales"
+   "aliases": [
+    "international office",
+    "hochschulbüro für internationales",
+    "internationales",
+    "eulist",
+    "erasmus",
+    "auslandsamt"
+   ],
+   "detail": {
+    "en": "The International Office is in the Wilhelm-Grunwald-Haus (building 1106), on the ground floor. The route leads to its central office (room 013); search a staff member by name to get to their own room. Check the opening hours before you go.",
+    "de": "Das International Office ist im Wilhelm-Grunwald-Haus (Gebäude 1106), im Erdgeschoss. Die Route führt zum Geschäftszimmer (Raum 013); suche eine Person mit Namen, um zu ihrem Büro zu kommen. Prüfe vor dem Besuch die Öffnungszeiten."
+   },
+   "url": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales",
+   "room": "1106.000.013"
+  },
+  {
+   "id": "welcome-centre",
+   "building": "1106",
+   "room": "1106.000.031",
+   "name": {
+    "en": "Welcome Centre (International Office)",
+    "de": "Welcome Centre (International Office)"
+   },
+   "aliases": [
+    "welcome centre",
+    "welcome center",
+    "international researchers",
+    "visiting researchers",
+    "guest researchers"
+   ],
+   "detail": {
+    "en": "The Welcome Centre helps international researchers and visiting doctoral candidates. It is in the Wilhelm-Grunwald-Haus (building 1106), ground floor.",
+    "de": "Das Welcome Centre unterstützt internationale Forschende und Gastdoktorand*innen. Es ist im Wilhelm-Grunwald-Haus (Gebäude 1106), Erdgeschoss."
+   },
+   "url": "https://www.uni-hannover.de/en/forschung/internationale-forschende"
+  },
+  {
+   "id": "servicecenter",
+   "building": "1101",
+   "room": "1101.001.F135",
+   "name": {
+    "en": "ServiceCenter (Hauptgebäude)",
+    "de": "ServiceCenter (Hauptgebäude)"
+   },
+   "aliases": [
+    "servicecenter",
+    "service center",
+    "servicecentre",
+    "studierendenservice",
+    "infothek",
+    "immatrikulationsamt",
+    "admissions office",
+    "leibnizcard",
+    "student advisory"
+   ],
+   "detail": {
+    "en": "The ServiceCenter is in the main building (Welfenschloss) on level 1, next to the Lichthof. Reception, Infothek, Leibnizcard replacement, admissions. Mon–Fri 10:00–14:00 (check the page).",
+    "de": "Das ServiceCenter liegt im Hauptgebäude (Welfenschloss) im 1. Obergeschoss am Lichthof. Empfang, Infothek, Leibnizcard-Ersatz, Zulassung. Mo–Fr 10–14 Uhr (siehe Seite)."
+   },
+   "url": "https://www.uni-hannover.de/en/studium/beratung-hilfe/servicecenter"
+  },
+  {
+   "id": "asta",
+   "building": "1112",
+   "name": {
+    "en": "AStA (student union)",
+    "de": "AStA (Studierendenausschuss)"
+   },
+   "aliases": [
+    "asta",
+    "allgemeiner studierendenausschuss",
+    "student union",
+    "studierendenvertretung",
+    "theodor-lessing-haus",
+    "lessinghaus"
+   ],
+   "detail": {
+    "en": "The AStA is in the Theodor-Lessing-Haus, Welfengarten 2c (building 1112). Its rooms can only be reached by steps. Opening hours: Mon–Wed 10–18, Thu–Fri 10–14. The room is not published, so the route ends at the building.",
+    "de": "Der AStA ist im Theodor-Lessing-Haus, Welfengarten 2c (Gebäude 1112). Die Räume sind nur über Stufen erreichbar. Öffnungszeiten: Mo–Mi 10–18, Do–Fr 10–14 Uhr. Der Raum ist nicht veröffentlicht, die Route endet am Gebäude."
+   },
+   "url": "https://www.asta-hannover.de/kontakt"
+  },
+  {
+   "id": "ptb",
+   "building": "1139",
+   "name": {
+    "en": "ptb – Psychological-therapeutic counselling",
+    "de": "ptb – Psychologisch-therapeutische Beratung"
+   },
+   "aliases": [
+    "ptb",
+    "psychologisch-therapeutische beratung",
+    "psychological counselling",
+    "psychologische beratung"
+   ],
+   "detail": {
+    "en": "The ptb is at Im Moore 13 (building 1139), in the corner house. Registration and counselling rooms are there. Make an appointment by phone first: Mon–Fri 10–12.",
+    "de": "Die ptb ist Im Moore 13 (Gebäude 1139), im linken Eckhaus. Dort sind Anmeldung und Beratungszimmer. Bitte vorher telefonisch einen Termin vereinbaren: Mo–Fr 10–12 Uhr."
+   },
+   "url": "https://www.ptb.uni-hannover.de/die-ptb/kontakt-und-oeffnungszeiten"
+  },
+  {
+   "id": "zqs",
+   "building": "3428",
+   "name": {
+    "en": "ZQS (Centre for Quality Enhancement in Teaching and Learning)",
+    "de": "ZQS (Zentrale Einrichtung für Qualität in Studium und Lehre)"
+   },
+   "aliases": [
+    "zqs",
+    "schlüsselkompetenzen",
+    "career service",
+    "key competencies",
+    "qualität in studium und lehre",
+    "callinstraße 14"
+   ],
+   "detail": {
+    "en": "The ZQS (key competencies, Career Service, quality development) is at Callinstraße 14 (building 3428). The route leads to the office (room 314, 3rd floor); the way inside the building is not mapped yet. The E-Learning Service is elsewhere (Schloßwender Str. 7).",
+    "de": "Die ZQS (Schlüsselkompetenzen, Career Service, Qualitätsentwicklung) ist in der Callinstraße 14 (Gebäude 3428). Die Route führt zum Geschäftszimmer (Raum 314, 3. Stock); der Weg im Gebäude ist noch nicht kartiert. Der E-Learning Service sitzt woanders (Schloßwender Str. 7)."
+   },
+   "url": "https://www.zqs.uni-hannover.de/zqs/team-kontakt",
+   "room": "3428.003.314"
   }
  ]
 }

@@ -78,16 +78,18 @@ than for others.
 
 ## What exists today (pilot)
 
-- **5 buildings** routable door to door: 1101 Hauptgebäude, 3101 Schneiderberg-Gebäude,
-  3109 Verfügungsgebäude, 3408 Hochhaus Appelstraße, 3110 Hauptmensa.
-- **2,961 rooms** found, **2,713 (92 %)** routable, **343 people** findable by name
+- **7 buildings** routable door to door: 1101 Hauptgebäude, 3101 Schneiderberg-Gebäude,
+  3109 Verfügungsgebäude, 3408 Hochhaus Appelstraße, 3110 Hauptmensa, 1106 Wilhelm-Grunwald-Haus
+  (International Office), 1139 Im Moore 13 (ptb).
+- **3,081 rooms** found, **2,833 (92 %)** routable, **393 people** findable by name
   (office rooms of the Präsidium, Dezernate and institutes, from public pages;
   no phone numbers, no e-mail). Umlauts can be typed as ae/oe/ue.
 - **Start where you are:** the Hauptbahnhof, the ZOB, 60+ tram and bus stops near the campus, and the
   **19 open dorms of the Studentenwerk**. Near places are routed on foot; for a long walk the app names a
   stop near the start, a stop near the goal and the Stadtbahn or bus line they share; far places are
   "ride to a stop near the goal, then walk".
-- **The International Office** as a destination (to the door of building 1106; inside is not mapped yet).
+- **The International Office** and its Welcome Centre as destinations, door to door inside building 1106,
+  with its 28 staff findable by name. Also named: ServiceCenter, AStA, ptb and ZQS.
 - **Easy to learn:** a start page with three steps and one-tap examples, an About page, German and
   English, numbered markers on the map that match the numbered steps.
 - **Careful with accessibility:** "Avoid steps" with a loud warning when stairs remain, large text,
@@ -162,7 +164,7 @@ der Karte. Die App sagt ehrlich, wie sicher ein Weg ist (hoch, mittel, niedrig),
 ein Stockwerk vor Ort geprüft wurde. Zweisprachig (DE/EN), offline nutzbar,
 Open Source (GPL-3.0).
 
-*Stand:* Pilot mit 5 Gebäuden, 2.713 begehbaren Räumen und 343 Personen. Alle Wege sind
+*Stand:* Pilot mit 7 Gebäuden, 2.833 begehbaren Räumen und 393 Personen. Alle Wege sind
 noch **ungeprüft** (aus Grundrissen gezeichnet). **Wir bitten das International Office
 um** eine kleine Testgruppe, einen Platz im Willkommensmaterial, die Abbildung des
 International Office als Ziel und eine feste Ansprechperson.

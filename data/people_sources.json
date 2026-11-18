@@ -36,7 +36,14 @@
   {"url": "https://www.uni-hannover.de/universitaet/organisation/dezernate/dezernat-6", "org": "Dezernat 6 – Studentische und Akademische Angelegenheiten"},
   {"url": "https://www.lufi.uni-hannover.de/institut/team", "org": "Ludwig-Franzius-Institut für Wasserbau, Ästuar- und Küsteningenieurwesen"},
   {"url": "https://www.ikg.uni-hannover.de/institut/personenverzeichnis", "org": "Institut für Kartographie und Geoinformatik"},
-  {"url": "https://www.ife.uni-hannover.de/team", "org": "Institut für Erdmessung"}
+  {"url": "https://www.ife.uni-hannover.de/team", "org": "Institut für Erdmessung"},
+  {"url": "https://www.uni-hannover.de/en/universitaet/organisation/praesidialstab-und-stabsstellen/internationales/team", "org": "International Office"},
+  {"url": "https://www.uni-hannover.de/en/forschung/internationale-forschende", "org": "Welcome Centre (International Office)"},
+  {"url": "https://www.uni-hannover.de/en/universitaet/organisation/dezernate/dezernat-6/sg-61-admissions-office", "org": "Dezernat 6 – Admissions Office"},
+  {"url": "https://www.zqs.uni-hannover.de/zqs/team-kontakt", "org": "ZQS – Zentrale Einrichtung für Qualität in Studium und Lehre"},
+  {"url": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/sk", "org": "ZQS/Schlüsselkompetenzen"},
+  {"url": "https://www.zqs.uni-hannover.de/zqs/team-kontakt/qe", "org": "ZQS/Qualitätsentwicklung"},
+  {"url": "https://www.zqs.uni-hannover.de/sk/kontakte-arbeitswelt", "org": "ZQS/Schlüsselkompetenzen"}
  ],
  "exclude": []
 }

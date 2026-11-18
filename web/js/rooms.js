@@ -141,9 +141,15 @@ export class Places {
     return { type: "room", key: `p:${person.slug}`, room, building: this.buildings.get(room.building), person };
   }
 
-  /** A service as a place: its building (the way inside is not mapped), with the service attached for labels. */
+  /**
+   * A service as a place, with the service attached for labels. With a "room" in services.json (and that room
+   * known) it is a room, so the route runs inside the building; without, it is the building (the way inside is not mapped).
+   */
   servicePlace(sv) {
-    return { type: "building", key: `s:${sv.id}`, building: this.buildings.get(sv.building), service: sv };
+    const building = this.buildings.get(sv.building);
+    const room = sv.room && this.roomIndex.get(sv.room);
+    if (room) return { type: "room", key: `s:${sv.id}`, room, building, service: sv };
+    return { type: "building", key: `s:${sv.id}`, building, service: sv };
   }
 
   /** A stop as a place. Its pseudo building has the stop's position, so maps and distances work as for a building. */

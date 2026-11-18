@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 ### Added
+- **International Office and partners:** the Wilhelm-Grunwald-Haus (1106, 3 floors, 94 rooms) and the
+  house Im Moore 13 (1139, ptb, 26 rooms) are mapped door to door. New named destinations in
+  `web/data/services.json`: International Office (room 013), Welcome Centre (031), ServiceCenter (1101.001.F135),
+  AStA (building 1112 Lessinghaus, with the note that its rooms are reachable by steps only), ptb (1139) and
+  ZQS (3428, room 314). A service can now carry a `room`; the route then ends in that room.
+- **People:** 28 staff of the International Office and 22 of the ZQS are findable by name
+  (393 people in total; 368 door to door). The ZQS and AStA buildings (3428, 1112) have their room lists but
+  no indoor map yet: the OpenStreetMap outlines do not fit the floor plans.
+- **Hauptgebäude path review:** the 2nd-floor south wing had no corridor, so its rooms and the stairs
+  `S-south-west` were cut off; two corridors added (`data/indoor/1101/source.json`). Check: all 1,106
+  routable rooms and 15 entrances form one connected graph, no detour edges.
+
+### Fixed
+- `tools/crawl_rooms.py` skipped floors that lie between two floors with public rooms (floor 001 of 1106 and
+  floor 002 of 3428 were missing). It now looks at every floor between the lowest and the highest.
+
 - **Student dorms as start or destination:** the 19 open houses of the Studentenwerk Hannover
   (`web/data/dorms.json`, built by `tools/build_dorms.py` from the Studentenwerk's public pages and
   geocoded with Nominatim; only name, address and position are stored). Type *Dorotheenstraße*,
