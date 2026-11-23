@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `tools/check_links.py` and a weekly *Link check* workflow (opens an issue with dead links); tests that fail when the
+  room and people counts in README, IDEA.md and RISKS.md drift from the data; New ideas section in `docs/IDEA.md`.
+### Changed
+- Deploys write the commit id into the service worker cache name; vector map files (OpenFreeMap) are cached for offline
+  use; the Overpass fallback mirrors are now `z.` and `lz4.overpass-api.de` and the tool prints which one answered.
 ### Fixed
 - Review of 2026-11-23 (all links, tools, docs): the TopPlus Open "Datenquellen" attribution link (404) now points to the
   BKG data page; `docs/RISKS.md` numbers brought up to date (393 people, tests); `CONTRIBUTING.md` says that

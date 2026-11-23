@@ -85,6 +85,25 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
+  // vector maps (OpenFreeMap style, tiles, sprites, fonts): network first, the cache keeps what was viewed
+  // so a vector map still draws offline (MapLibre itself is a same-origin file, cached below)
+  if (url.hostname === "tiles.openfreemap.org") {
+    e.respondWith(
+      caches.open(TILES).then(async (c) => {
+        try {
+          const res = await fetch(e.request);
+          if (res.ok) c.put(e.request, res.clone()).then(trimTiles);
+          return res;
+        } catch (err) {
+          const hit = await c.match(e.request);
+          if (hit) return hit;
+          throw err;
+        }
+      }),
+    );
+    return;
+  }
+
   if (url.origin === location.origin) {
     // network first so updates arrive quickly, cache as offline fallback.
     // cache: "no-cache" asks the server whether the file changed (a cheap 304 if not);

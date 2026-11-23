@@ -330,5 +330,30 @@ class BuildDormsTest(unittest.TestCase):
             self.assertEqual(set(x), {"id", "name", "street", "zip", "city", "lat", "lon", "node", "cluster", "url"}, x["id"])
 
 
+class DocsCountsTest(unittest.TestCase):
+    """The numbers in the README and IDEA.md are written by hand: fail when they drift from the data."""
+
+    def test_counts_match_the_data(self):
+        import json
+        import re
+        cov = (ROOT / "docs" / "COVERAGE.md").read_text(encoding="utf-8")
+        m = re.search(r"\| \*\*total\*\* \| \d+ \| (\d+) \| \*\*(\d+)\*\*", cov)
+        found, routable = int(m.group(1)), int(m.group(2))
+        people = len(json.loads((ROOT / "web" / "data" / "people.json").read_text(encoding="utf-8"))["people"])
+        for name in ("README.md", "docs/IDEA.md"):
+            text = (ROOT / name).read_text(encoding="utf-8")
+            for n in (found, routable, people):
+                self.assertTrue(f"{n:,}" in text or str(n) in text, f"{name} does not mention {n}")
+            for old in re.findall(r"\*\*([\d,]+) rooms\*\*", text):
+                self.assertEqual(int(old.replace(",", "")), found, name)
+
+    def test_risks_people_count(self):
+        import json
+        import re
+        people = len(json.loads((ROOT / "web" / "data" / "people.json").read_text(encoding="utf-8"))["people"])
+        m = re.search(r"of (\d+) staff", (ROOT / "docs" / "RISKS.md").read_text(encoding="utf-8"))
+        self.assertEqual(int(m.group(1)), people)
+
+
 if __name__ == "__main__":
     unittest.main()

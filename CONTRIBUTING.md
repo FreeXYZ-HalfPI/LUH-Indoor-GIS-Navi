@@ -23,7 +23,7 @@ Tests (all offline):
 
 ```bash
 python3 -m unittest discover tests   # data tools and generated data (needs numpy, pillow)
-node --test "tests/js/*.test.mjs"   # router, turns, rooms; every routable room reaches an entrance (Node 22+, no npm packages)
+node --test "tests/js/*.test.mjs"   # router, turns, rooms; every routable room reaches an entrance (Node 22+, no npm packages; no Node? `sudo apt install nodejs` is too old on some systems, use `nvm install 22` or the official tarball from nodejs.org)
 ```
 
 ```bash

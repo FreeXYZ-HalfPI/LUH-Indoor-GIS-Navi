@@ -27,6 +27,8 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      # a new cache name for every deploy, so offline users never keep old files (web/sw.js VERSION)
+      - run: sed -i "s/^const VERSION = .*/const VERSION = \"${GITHUB_SHA::8}\";/" web/sw.js
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web

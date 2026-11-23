@@ -100,6 +100,12 @@ What comes next, in this order:
 6. **Accessibility:** a screen-reader test on a real phone.
 7. **Phase C:** a review editor / semi-automatic tracing for buildings beyond the 5 pilots.
 
+## New ideas (2026-11-23)
+
+Written in [docs/IDEA.md](docs/IDEA.md#new-ideas-collected-2026-11-23): offline campus download,
+"data from <date>" in About, legal links in the app, route card in the other language,
+Python smoke test for routability.
+
 ## Path to a real-world solution
 
 Plan from the project evaluation of 2026-11-05 (see [docs/RISKS.md](docs/RISKS.md)).

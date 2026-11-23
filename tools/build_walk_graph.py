@@ -31,7 +31,8 @@ OUT = ROOT / "web" / "data"
 OVERRIDES = ROOT / "data" / "entrances_override.json"
 
 # Two public Overpass servers: when the main one is busy (429/504) the mirror usually answers.
-OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
+# main server first, then the other public instances run by the Overpass maintainers (kumi.systems was dead on 2026-11-23)
+OVERPASS = ["https://overpass-api.de/api/interpreter", "https://z.overpass-api.de/api/interpreter", "https://lz4.overpass-api.de/api/interpreter"]
 USER_AGENT = "LUH-Indoor-GIS-Navi/0.1 (+https://github.com/FreeXYZ-HalfPI/LUH-Indoor-GIS-Navi)"
 
 # LUH buildings are spread over Hannover. One Overpass query for the whole city
@@ -113,6 +114,7 @@ def overpass(query, cache_name, refresh):
                     text = r.read().decode("utf-8")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(text, encoding="utf-8")
+                print(f"    overpass answered: {url}", file=sys.stderr)
                 time.sleep(2)                      # Overpass asks for a pause between queries
                 return json.loads(text)
             except Exception as e:  # network errors, 429, 504 …

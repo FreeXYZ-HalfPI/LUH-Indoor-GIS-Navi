@@ -138,6 +138,26 @@ permission and an official data export from the university; a printable
 more buildings, the International Office and public services; an English guide for
 EULiST students; a university-hosted launch before a winter semester.
 
+## New ideas (collected 2026-11-23)
+
+Small and larger ideas from the project review. None is promised; each says what it needs.
+
+- **Maps that work offline, vector maps included.** Tiles people have looked at stay on the phone
+  (done for raster and OpenFreeMap vector maps); next: a "download the campus for offline use"
+  button that fetches the tiles of the pilot buildings' area once on Wi-Fi.
+- **Self-checking project.** Weekly checks already watch the room list; a weekly link check now
+  watches every URL in the docs, and a test fails when the numbers in README and this page drift
+  from the data. Idea: the same for the people list (pages that changed) and for the OSM
+  entrances near each building.
+- **Always-fresh app.** Every deploy gets its own cache name, so offline users never keep old
+  routes. Idea: show "data from <date>" in the About dialog, so people and staff see how old the data is.
+- **Legal pages inside the app.** A footer link to imprint and privacy statement, once the
+  operator has filled in the names (needs a decision, [ROADMAP](../ROADMAP.md) Phase B).
+- **A second look at the same route.** "Show this route in the other language" and a printable
+  one-page route card with a QR code for the welcome mail (needs the QR decision in the ROADMAP).
+- **Local Node-free testing.** A Python smoke test of the routability checks, so a contributor
+  without Node can still verify a data change.
+
 ## Try it
 
 <https://freexyz-halfpi.github.io/LUH-Indoor-GIS-Navi/>, for example
