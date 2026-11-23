@@ -39,7 +39,7 @@ python3 tools/fetch_luh_data.py      # buildings + rooms → web/data/
 python3 tools/build_walk_graph.py    # OSM footpaths + entrances → web/data/walkgraph.json
 ```
 
-Indoor graphs (needs `pip install pillow numpy`):
+Room crawler and indoor graphs (need `pip install pillow numpy`):
 
 ```bash
 python3 tools/build_indoor.py build 1101 --debug   # → web/data/indoor/1101.json, overlays in data/raw/
@@ -55,7 +55,7 @@ See [docs/INDOOR_FORMAT.md](docs/INDOOR_FORMAT.md).
 - Keep it privacy-friendly: no trackers, no analytics, no third-party
   requests with user data.
 - Plain JavaScript (ES modules) for the web app. The data tools use only the
-  Python standard library, except `build_indoor.py` (Pillow + numpy for image work).
+  Python standard library, except `build_indoor.py` and `crawl_rooms.py` (Pillow + numpy for image work).
 - One topic per pull request. Describe what you changed and how you tested it.
 
 Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).

@@ -34,7 +34,7 @@ export const BASEMAPS = [
   {
     id: "topplus", kind: "raster", group: "germany", maxNativeZoom: 18,
     url: "https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web/default/WEBMERCATOR/{z}/{y}/{x}.png",
-    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://gdz.bkg.bund.de/index.php/default/wmts-topplusopen-wmts-topplus-open.html">Datenquellen</a>',
     name: { en: "TopPlus Open (BKG)", de: "TopPlus Open (BKG)" },
     note: { en: "The official map of the German federal mapping agency.", de: "Die amtliche Karte des Bundesamts für Kartographie und Geodäsie." },
     swatch: ["#f3ecd9", "#b4d3e6", "#c7dba6"],
@@ -42,7 +42,7 @@ export const BASEMAPS = [
   {
     id: "topplus-grau", kind: "raster", group: "germany", maxNativeZoom: 18,
     url: "https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web_grau/default/WEBMERCATOR/{z}/{y}/{x}.png",
-    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://gdz.bkg.bund.de/index.php/default/wmts-topplusopen-wmts-topplus-open.html">Datenquellen</a>',
     name: { en: "TopPlus Open, grey (BKG)", de: "TopPlus Open, grau (BKG)" },
     note: { en: "Calm and grey: your route stands out.", de: "Ruhig und grau: deine Route fällt auf." },
     swatch: ["#ececec", "#c9d0d4", "#d9dcd5"],
@@ -50,7 +50,7 @@ export const BASEMAPS = [
   {
     id: "topplus-light", kind: "raster", group: "germany", maxNativeZoom: 18,
     url: "https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web_light/default/WEBMERCATOR/{z}/{y}/{x}.png",
-    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://sg.geodatenzentrum.de/web_public/Datenquellen_TopPlus_Open.pdf">Datenquellen</a>',
+    attribution: '© <a href="https://www.bkg.bund.de/">GeoBasis-DE / BKG</a> (dl-de/by-2-0) · <a href="https://gdz.bkg.bund.de/index.php/default/wmts-topplusopen-wmts-topplus-open.html">Datenquellen</a>',
     name: { en: "TopPlus Open, light (BKG)", de: "TopPlus Open, hell (BKG)" },
     note: { en: "A soft, light version of the official map.", de: "Eine weiche, helle Version der amtlichen Karte." },
     swatch: ["#f7f4ec", "#cfe2ee", "#dfe8cf"],

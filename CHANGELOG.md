@@ -1,6 +1,10 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Review of 2026-11-23 (all links, tools, docs): the TopPlus Open "Datenquellen" attribution link (404) now points to the
+  BKG data page; `docs/RISKS.md` numbers brought up to date (393 people, tests); `CONTRIBUTING.md` says that
+  `crawl_rooms.py` also needs Pillow + numpy. Open findings are tracked as GitHub issues.
 ### Added
 - **International Office and partners:** the Wilhelm-Grunwald-Haus (1106, 3 floors, 94 rooms) and the
   house Im Moore 13 (1139, ptb, 26 rooms) are mapped door to door. New named destinations in
