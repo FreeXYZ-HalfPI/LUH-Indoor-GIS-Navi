@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 ### Added
+- **One command per building:** `tools/run_building.py <building>` runs crawl, fit, corridors, build, entrances and
+  coverage, and prints the result (rooms found, routable, why not). `--report`, `--debug`, `--serve` (local web app).
+- **Automatic corridors, stairs and lifts:** `tools/auto_corridors.py` finds them from the floor plans (centre lines of
+  the walkable space; stairs by their tread lines, lifts by the boxed cross), written to `auto_corridors` and
+  `auto_connectors` in `source.json`; hand-made `corridors` and `connectors` still work and are never overwritten.
+  `build_indoor.py fit --debug` draws the OSM outline on the plan.
+- **3703 TI-Gebäude** mapped door to door (6 floors, 206 rooms, all routable; corridors automatic, not verified on site).
+### Added
 - `tools/check_links.py` and a weekly *Link check* workflow (opens an issue with dead links); tests that fail when the
   room and people counts in README, IDEA.md and RISKS.md drift from the data; New ideas section in `docs/IDEA.md`.
 ### Changed

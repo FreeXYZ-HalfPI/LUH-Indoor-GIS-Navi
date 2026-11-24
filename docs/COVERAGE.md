@@ -18,7 +18,8 @@ other floors are approximate (traced from the floor plans), and the app says so.
 | 3110 Hauptmensa | 8 | 234 | **222** | 95% | 0/5 | 2026-10-26 |
 | 3408 Hochhaus Appelstraße | 43 | 926 | **843** | 91% | 0/18 | 2026-10-29 |
 | 3428 Callinstraße 14 (ZQS) | 3 | 89 | **85** | 96% | 0/5 | 2026-11-18 |
-| **total** | 161 | 3235 | **2981** | 92% | 0/49 | |
+| 3703 TI-Gebäude | 14 | 206 | **206** | 100% | 0/6 | 2026-11-24 |
+| **total** | 175 | 3441 | **3187** | 93% | 0/55 | |
 
 Want to help? Pick a reason below, fix it in the building's `source.json`,
 run `python3 tools/build_indoor.py build <building>` and this script, and open a pull request.
@@ -213,3 +214,13 @@ Not routable yet:
 `3428.000.003A` `3428.001.103A` `3428.001.114A` `3428.002.203A`
 </details>
 
+### 3703 TI-Gebäude
+
+| floor | rooms | routable | on site |
+|---|---:|---:|---|
+| ground (`000`) | 50 | 50 | approximate |
+| +1 (`001`) | 40 | 40 | approximate |
+| +2 (`002`) | 38 | 38 | approximate |
+| +3 (`003`) | 37 | 37 | approximate |
+| +4 (`004`) | 37 | 37 | approximate |
+| +5 (`005`) | 4 | 4 | approximate |

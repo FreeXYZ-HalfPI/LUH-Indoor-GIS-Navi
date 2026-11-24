@@ -81,7 +81,7 @@ than for others.
 - **9 buildings** routable door to door: 1101 Hauptgebäude, 3101 Schneiderberg-Gebäude,
   3109 Verfügungsgebäude, 3408 Hochhaus Appelstraße, 3110 Hauptmensa, 1106 Wilhelm-Grunwald-Haus
   (International Office), 1139 Im Moore 13 (ptb), 1112 Lessinghaus (AStA), 3428 Callinstraße 14 (ZQS).
-- **3,235 rooms** found, **2,981 (92 %)** routable, **393 people** findable by name
+- **3,441 rooms** found, **3,187 (93 %)** routable, **393 people** findable by name
   (office rooms of the Präsidium, Dezernate and institutes, from public pages;
   no phone numbers, no e-mail). Umlauts can be typed as ae/oe/ue.
 - **Start where you are:** the Hauptbahnhof, the ZOB, 60+ tram and bus stops near the campus, and the

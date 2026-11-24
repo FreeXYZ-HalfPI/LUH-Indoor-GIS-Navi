@@ -472,8 +472,11 @@ class PixelGraph:
         for a, b in zip(path, path[1:]):
             self.link((code, *a), (code, *b), flags)
 
-    def trace_corridor(self, code, line):
-        """Route a hand-drawn corridor polyline through the free space of a floor."""
+    def trace_corridor(self, code, line, direct=False):
+        """Route a hand-drawn corridor polyline through the free space of a floor.
+
+        direct: the line already follows the free space (tools/auto_corridors.py): a segment whose
+        straight line is all free is taken as it is, which saves a path search per segment."""
         cost = self.costs[code]
         snapped = [snap_free(cost, x, y) for x, y in line]
         for (a, b), raw in zip(zip(snapped, snapped[1:]), zip(line, line[1:])):
@@ -481,6 +484,11 @@ class PixelGraph:
                 self.warnings.append(f"{code}: corridor vertex in wall near {raw}")
                 continue
             path = None
+            if direct:
+                line_px = straight_line(a, b)
+                if all(np.isfinite(cost[y, x]) for x, y in line_px):
+                    self.add_path(code, line_px)
+                    continue
             for margin in (50, 150):          # try a tight search window first: much faster
                 box = (min(a[0], b[0]) - margin, min(a[1], b[1]) - margin,
                        max(a[0], b[0]) + margin, max(a[1], b[1]) + margin)
@@ -759,14 +767,16 @@ def build(bid, debug=False):
     for code, reg in src["levels"].items():
         plans[code] = to_plan_frame(fetch_plan(src["plan_room"][code]), reg, size)
         graph.costs[code] = walk_cost(plans[code], inside)
-        for line in src["corridors"].get(code, []):
+        for line in src.get("corridors", {}).get(code, []):
             graph.trace_corridor(code, line)
+        for line in src.get("auto_corridors", {}).get(code, []):     # from tools/auto_corridors.py
+            graph.trace_corridor(code, line, direct=True)
     graph.freeze_corridors()
 
     # 2. rooms, entrances and stairs/lifts, each linked to the corridors
     room_nodes, unrouted = connect_rooms(graph, rooms_all, src, inside)
     entrances = connect_entrances(graph, bid, geo)
-    connect_floors(graph, src["connectors"])
+    connect_floors(graph, src.get("connectors", []) + src.get("auto_connectors", []))
 
     # 3. the compact graph for the app
     index, nodes, edges = graph.contract()
@@ -941,7 +951,20 @@ def register_floor(base_fft, plan, size):
     return {"s": round(float(s), 3), "dx": int(wrap_shift(dx, w)), "dy": int(wrap_shift(dy, h))}
 
 
-def fit(bid, coarse=False):
+def write_fit_overlay(bid, src, rings, g):
+    """data/raw/fit_<bid>.png: the ground-floor plan with the OSM outline (magenta) and the
+    georeference drawn on it. If the magenta line does not follow the outer walls, the fit is wrong."""
+    im = fetch_plan(src["plan_room"]["000"]).convert("RGB")
+    geo = Georef(g)
+    d = ImageDraw.Draw(im)
+    for ring in rings:
+        d.line([geo.to_px(lat, lon) for lat, lon in ring], fill=(255, 0, 255), width=3)
+    path = RAW / f"fit_{bid}.png"
+    im.save(path)
+    print(f"  overlay: {path.relative_to(ROOT)}", file=sys.stderr)
+
+
+def fit(bid, coarse=False, debug=False):
     """Fit plan→OSM georeference and register the upper floors onto the ground floor (FFT correlation).
 
     Prints JSON snippets to paste into source.json; it never edits the file,
@@ -955,6 +978,8 @@ def fit(bid, coarse=False):
 
     p, best = refine_georef(g, edge, rings)
     print(f"  refined: {math.degrees(p[0]):.1f}°, {p[1]:.3f} px/m, {best:.0%} of the outline on walls", file=sys.stderr)
+    if debug:
+        write_fit_overlay(bid, src, rings, {**g, "theta": p[0], "scale": p[1], "tx": p[2], "ty": p[3]})
     print(json.dumps({"georef": {"lat0": g["lat0"], "lon0": g["lon0"], "theta": round(p[0], 7), "scale": round(p[1], 6),
                                  "tx": round(p[2], 3), "ty": round(p[3], 3)}}))
 
@@ -977,7 +1002,7 @@ if __name__ == "__main__":
     ap.add_argument("--coarse", action="store_true", help="fit: search rotation/scale from scratch")
     a = ap.parse_args()
     if a.command == "fit":
-        fit(a.building, a.coarse)
+        fit(a.building, a.coarse, a.debug)
     elif a.command == "status":
         for bid in json.loads((ROOT / "web" / "data" / "indoor" / "index.json").read_text()) if a.building == "all" else [a.building]:
             status(bid)
