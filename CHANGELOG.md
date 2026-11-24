@@ -4,6 +4,8 @@
 ### Added
 - **1102 Bibliotheksgebäude (TIB)** mapped door to door (4 floors, 164 rooms, 160 routable; not verified on site).
 ### Fixed
+- A room that cannot be reached from the entrances is no longer offered as routable (1102.003.335); the service test
+  no longer routes 1101 to itself.
 - The automatic fit (`build_indoor.py fit --coarse`) no longer wraps around the plan border: an outline larger than the plan
   or rotated by about 180° (1102) was fitted to the wrong place. `field_test.py` no longer gets stuck on a floor with one room.
 ### Added

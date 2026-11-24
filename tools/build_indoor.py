@@ -821,8 +821,11 @@ def build(bid, debug=False):
         print(f"  rooms not reachable from the entrances: {' '.join(unreachable)}", file=sys.stderr)
     for rid in unreachable:
         unrouted[rid] = "not reachable from the entrances"
+        del out["rooms"][rid]      # the app must not offer a route that cannot exist
+    if unreachable:
+        write_app_data(bid, out)
     report = {"building": bid, "generated": out["generated"], "total": len(rooms_all),
-              "routable": len(out["rooms"]) - len(unreachable), "unrouted": dict(sorted(unrouted.items()))}
+              "routable": len(out["rooms"]), "unrouted": dict(sorted(unrouted.items()))}
     (ROOT / "data" / "indoor" / bid / "build_report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
 
 

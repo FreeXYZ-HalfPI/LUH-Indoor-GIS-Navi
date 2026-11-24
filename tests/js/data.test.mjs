@@ -132,8 +132,9 @@ test("every service in services.json points to a building that can be walked to"
     assert.ok(graph.buildings[sv.building], `${sv.id}: building ${sv.building} is not on the walk graph`);
     assert.ok(graph.entrances(sv.building).length, `${sv.id}: building ${sv.building} has no entrance`);
     assert.ok(sv.name.en && sv.name.de && sv.detail.en && sv.detail.de && /^https:\/\//.test(sv.url), `${sv.id}: incomplete entry`);
-    const r = graph.route(outside("1101"), outside(sv.building));
-    assert.ok(r && r.distance > 0, `${sv.id}: no route from 1101`);
+    const from = sv.building === "1101" ? "3101" : "1101"; // a service in the Hauptgebäude is walked to from elsewhere
+    const r = graph.route(outside(from), outside(sv.building));
+    assert.ok(r && r.distance > 0, `${sv.id}: no route from ${from}`);
   }
 });
 
