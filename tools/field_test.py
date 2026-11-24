@@ -116,11 +116,13 @@ def pick_routes(b, others, n, rng):
         counts[1] = 0
 
     for kind, count in zip([k for k, _ in MIX], counts):
-        made = tries = 0
+        made = tries = stuck = 0
         while made < count and tries < count * 50:      # tries: small buildings run out of distinct pairs
             tries += 1
             if kind == "same-floor":
-                code = b.codes[made % len(b.codes)]       # round-robin, so every floor gets corridors tested
+                # round-robin, so every floor gets corridors tested; `stuck` moves on to the next floor
+                # when one floor has no (new) pair left, e.g. an attic with a single room
+                code = b.codes[(made + stuck) % len(b.codes)]
                 a, z = b.room(rng, code), b.room(rng, code)
                 if b.metres(a, z) < MIN_SAME_FLOOR_M and tries < count * 40:
                     continue
@@ -134,6 +136,7 @@ def pick_routes(b, others, n, rng):
                 a, z = b.room(rng), o.room(rng)
                 ok = add(kind, *((a, z) if made % 2 == 0 else (z, a)))
             made += ok
+            stuck = 0 if ok else stuck + 1
     return routes
 
 

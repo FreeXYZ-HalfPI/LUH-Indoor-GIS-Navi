@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 ### Added
+- **1102 Bibliotheksgebäude (TIB)** mapped door to door (4 floors, 164 rooms, 160 routable; not verified on site).
+### Fixed
+- The automatic fit (`build_indoor.py fit --coarse`) no longer wraps around the plan border: an outline larger than the plan
+  or rotated by about 180° (1102) was fitted to the wrong place. `field_test.py` no longer gets stuck on a floor with one room.
+### Added
 - **Layer "Mapped buildings":** the map shows every building with an indoor map as a labelled frame (number and name),
   switchable with a checkbox; tap a frame to start or end a route there. `run_building.py --layer` lists them and writes
   `data/indoor/indexed_buildings.geojson` for QGIS.

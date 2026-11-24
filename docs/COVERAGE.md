@@ -10,6 +10,7 @@ other floors are approximate (traced from the floor plans), and the app says so.
 | building | public | found | routable | share | verified floors | crawled |
 |---|---:|---:|---:|---:|---:|---|
 | 1101 Hauptgebäude | 58 | 1227 | **1106** | 90% | 0/5 | 2026-10-26 |
+| 1102 Bibliotheksgebäude | 6 | 164 | **160** | 98% | 0/4 | 2026-11-24 |
 | 1106 Grunwald Haus | 7 | 94 | **94** | 100% | 0/3 | 2026-11-18 |
 | 1112 Lessinghaus | 6 | 65 | **63** | 97% | 0/2 | 2026-11-18 |
 | 1139 Im Moore 13 (ptb) | 1 | 26 | **26** | 100% | 0/2 | 2026-11-18 |
@@ -19,7 +20,7 @@ other floors are approximate (traced from the floor plans), and the app says so.
 | 3408 Hochhaus Appelstraße | 43 | 926 | **843** | 91% | 0/18 | 2026-10-29 |
 | 3428 Callinstraße 14 (ZQS) | 3 | 89 | **85** | 96% | 0/5 | 2026-11-18 |
 | 3703 TI-Gebäude | 14 | 206 | **206** | 100% | 0/6 | 2026-11-24 |
-| **total** | 175 | 3441 | **3187** | 93% | 0/55 | |
+| **total** | 181 | 3605 | **3347** | 93% | 0/59 | |
 
 Want to help? Pick a reason below, fix it in the building's `source.json`,
 run `python3 tools/build_indoor.py build <building>` and this script, and open a pull request.
@@ -60,6 +61,27 @@ Not routable yet:
 <details><summary>5 × skipped by hand → see `skip_rooms` in `source.json`</summary>
 
 `1101.002.E214` `1101.004.F428` `1101.004.F435` `1101.004.F448` `1101.004.F453`
+</details>
+
+### 1102 Bibliotheksgebäude
+
+| floor | rooms | routable | on site |
+|---|---:|---:|---|
+| ground (`000`) | 87 | 86 | approximate |
+| +1 (`001`) | 33 | 31 | approximate |
+| +2 (`002`) | 43 | 43 | approximate |
+| +3 (`003`) | 1 | 0 | approximate |
+
+Not routable yet:
+
+<details><summary>3 × no corridor reachable → trace a corridor nearby in `source.json`</summary>
+
+`1102.000.066` `1102.001.127A` `1102.001.134B`
+</details>
+
+<details><summary>1 × not reachable from the entrances → connect its corridor to stairs or the rest of the floor</summary>
+
+`1102.003.335`
 </details>
 
 ### 1106 Grunwald Haus

@@ -29,11 +29,11 @@ another across the campus:
    building entrances, using OpenStreetMap footpaths.
 3. It tells you the floor and wing of the target room and shows the official
    floor plan.
-4. In **10 buildings** it already routes door to door: corridors, stairs and
+4. In **11 buildings** it already routes door to door: corridors, stairs and
    lifts, drawn on the floor plans (pilot, approximate): **1101 Hauptgebäude**,
    **3101 Schneiderberg-Gebäude** (IPI, GIH), **3109 Verfügungsgebäude** (IfE),
    **3408 Hochhaus Appelstraße** (IKG), **3110 Hauptmensa**, **1106 Wilhelm-Grunwald-Haus**
-   (International Office) **1139 Im Moore 13** (ptb), **1112 Lessinghaus** (AStA), **3428 Callinstraße 14** (ZQS) and **3703 TI-Gebäude**.
+   (International Office) **1139 Im Moore 13** (ptb), **1112 Lessinghaus** (AStA), **3428 Callinstraße 14** (ZQS), **3703 TI-Gebäude** and **1102 Bibliotheksgebäude** (TIB).
    The geodesy institutes IPI, GIH, IKG and IfE are the first targets.
 5. Directions say **left, right or straight on**, and distances come in
    **steps** (an average adult step, 0.75 m) with the metres behind them:
@@ -73,9 +73,9 @@ that stop to the room, door to door. It works the other way round too (room → 
 |---|---|---|
 | ![Route from the office of the LUH president (1101.001.A120) to the office of Prof. Heipke (3101.001.B143)](docs/img/person-to-person.jpg) | ![Route from 1101.001.F111 to lecture hall F102, both rooms outlined on the map](docs/img/room-to-room.jpg) | ![Room explorer: labelled room outlines of the Schneiderberg-Gebäude ground floor, room A020 selected](docs/img/room-explorer.jpg) |
 
-- **3,441 rooms** in the 10 mapped buildings, found by the room crawler. LUH
+- **3,605 rooms** in the 11 mapped buildings, found by the room crawler. LUH
   Rauminfo lists only 143 of them (the lecture and seminar rooms).
-- **3,187 rooms (93%) are routable** door to door, across floors and buildings
+- **3,347 rooms (93%) are routable** door to door, across floors and buildings
   ([coverage per floor](docs/COVERAGE.md)).
 - **Find people:** type a name instead of a room code ("Christian Heipke",
   even with a typo like "Eping" for Epping) and the app routes to their office.
@@ -122,7 +122,7 @@ Data: **[docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)**
 - 🆓 **Free Software.** [GNU GPL v3](LICENSE).
 
 ## Features
-- [x] Indoor routing (10 buildings, approximate)
+- [x] Indoor routing (11 buildings, approximate)
 - [x] Turn-by-turn directions (left / right / straight on), distances in steps
 - [x] Multi-floor buildings, stairs and lifts
 - [x] Outdoor → indoor transition

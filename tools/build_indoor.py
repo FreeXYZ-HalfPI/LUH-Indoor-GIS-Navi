@@ -871,8 +871,12 @@ def coarse_georef(base, rings):
     f = 4                                     # 1/4 resolution: 16× fewer pixels, still precise enough to start
     small = base[: h // f * f, : w // f * f].reshape(h // f, f, w // f, f).any(axis=(1, 3))
     walls = dilate(small, 1).astype(float)
-    walls_fft = np.fft.rfft2(walls)
     hl, wl = walls.shape
+    # zero margin around the plan: an FFT correlation is circular, and without a margin an outline
+    # larger than the plan "wraps around" the border and scores well on walls it does not touch
+    padded = np.zeros((2 * hl, 2 * wl))
+    padded[hl // 2: hl // 2 + hl, wl // 2: wl // 2 + wl] = walls
+    walls_fft = np.fft.rfft2(padded)
     ys, xs = np.nonzero(base)
     # first guess of the scale: the plan's diagonal over the outline's diagonal
     s0 = math.hypot(xs.max() - xs.min(), ys.max() - ys.min()) / math.hypot(east.max() - east.min(), north.max() - north.min())
@@ -880,17 +884,17 @@ def coarse_georef(base, rings):
     for s in s0 * np.arange(0.6, 1.5, 0.03):
         for deg in range(0, 360, 2):
             th = math.radians(deg)
-            x = s * (east * math.cos(th) - north * math.sin(th)) / f + wl / 2
-            y = -s * (east * math.sin(th) + north * math.cos(th)) / f + hl / 2
-            outline = np.zeros_like(walls)
+            x = s * (east * math.cos(th) - north * math.sin(th)) / f + wl
+            y = -s * (east * math.sin(th) + north * math.cos(th)) / f + hl
+            outline = np.zeros_like(padded)
             xi, yi = x.round().astype(int), y.round().astype(int)
-            ok = (xi >= 0) & (xi < wl) & (yi >= 0) & (yi < hl)
+            ok = (xi >= 0) & (xi < 2 * wl) & (yi >= 0) & (yi < 2 * hl)
             outline[yi[ok], xi[ok]] = 1
-            corr = np.fft.irfft2(walls_fft * np.conj(np.fft.rfft2(outline)), s=walls.shape)
+            corr = np.fft.irfft2(walls_fft * np.conj(np.fft.rfft2(outline)), s=padded.shape)
             i = np.unravel_index(corr.argmax(), corr.shape)
             score = corr[i] / outline.sum()   # share of outline points that land on a wall
             if best is None or score > best[0]:
-                dy, dx = wrap_shift(i[0], hl), wrap_shift(i[1], wl)
+                dy, dx = wrap_shift(i[0], 2 * hl), wrap_shift(i[1], 2 * wl)
                 best = (score, th, s, w / 2 + f * dx, h / 2 + f * dy)
     print(f"  coarse fit: {math.degrees(best[1]):.0f}°, {best[2]:.2f} px/m, score {best[0]:.2f}", file=sys.stderr)
     return {"lat0": round(lat0, 6), "lon0": round(lon0, 6), "theta": best[1], "scale": best[2], "tx": best[3], "ty": best[4]}
