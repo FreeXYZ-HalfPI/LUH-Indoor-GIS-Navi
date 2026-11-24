@@ -30,6 +30,7 @@ let places, graph, map, routeLayer, basemaps;
 let landmarks = {}; // room code → {en, de}: rooms people recognise (data/landmarks.json)
 const indoorData = {}; // building → generated indoor JSON (outlines, meta, georef); filled as buildings are loaded
 let indoorList = []; // buildings that have an indoor map
+let indexedLayer; // the map layer of the buildings with an indoor map
 const frameBounds = {}; // building → map frame (data/indoor/frames.json), known before the building is loaded
 const indoorLoading = {}; // building → promise of its indoor file (a building is fetched once, and only when needed)
 let updateToken = 0; // a newer update() makes an older one that waited for a building stop
@@ -338,7 +339,7 @@ function initMap(buildings) {
     m.on("click", () => placePopup(`${b.id} ${b.name}`, address(b), `b:${b.id}`, [b.lat, b.lon]));
   }
   routeLayer = L.layerGroup().addTo(map);
-  initExplorer();
+  initExplorer(buildings);
 }
 
 /** A map popup with "Start here" / "Go here" buttons that set the place `key`. */
@@ -393,14 +394,11 @@ function roomRing(id) {
   return ring;
 }
 
-function initExplorer() {
+function initExplorer(buildings) {
   explorerLayer = L.layerGroup().addTo(map);
   floorLayer = L.layerGroup().addTo(map);
   stepLayer = L.layerGroup().addTo(map);
-  // a dashed frame shows which buildings have rooms to explore (from frames.json: no building is loaded for it)
-  for (const bounds of Object.values(frameBounds)) {
-    L.rectangle(bounds, { color: COLOR_INDOOR, weight: 1, dashArray: "4 4", fill: false, interactive: false }).addTo(map);
-  }
+  initIndexedLayer(buildings);
   floorCtl = L.control({ position: "topright" });
   floorCtl.onAdd = () => {
     const div = L.DomUtil.create("div", "leaflet-bar floor-ctl");
@@ -410,6 +408,32 @@ function initExplorer() {
   floorCtl.addTo(map);
   map.on("zoomend moveend", drawExplorer);
   drawExplorer();
+}
+
+/**
+ * The layer "Mapped buildings": every building with an indoor map, as a purple frame labelled with its
+ * number and name (frames.json and buildings.json: nothing is loaded for it). A checkbox switches it
+ * on and off; tapping a frame offers "Start here" / "Go here" for the building.
+ */
+function initIndexedLayer(buildings) {
+  const info = Object.fromEntries(buildings.map((b) => [b.id, b]));
+  indexedLayer = L.layerGroup().addTo(map);
+  for (const [id, bounds] of Object.entries(frameBounds)) {
+    const b = info[id];
+    const title = b ? `${id} ${b.name}` : id;
+    const frame = L.rectangle(bounds, { color: COLOR_INDOOR, weight: 2, dashArray: "4 4", fillColor: COLOR_INDOOR, fillOpacity: 0.12 }).addTo(indexedLayer);
+    frame.bindTooltip(title, { permanent: true, direction: "top", className: "room-label" });
+    frame.on("click", (e) => placePopup(title, b ? address(b) : "", `b:${id}`, e.latlng));
+  }
+  const ctl = L.control({ position: "bottomleft" });
+  ctl.onAdd = () => {
+    const div = L.DomUtil.create("div", "leaflet-bar layer-ctl");
+    div.innerHTML = `<label><input type="checkbox" checked> <span data-t="indexedLayer"></span> (${Object.keys(frameBounds).length})</label>`;
+    L.DomEvent.disableClickPropagation(div);
+    div.querySelector("input").addEventListener("change", (e) => (e.target.checked ? indexedLayer.addTo(map) : indexedLayer.remove()));
+    return div;
+  };
+  ctl.addTo(map);
 }
 
 /** Indoor data of the buildings in view, when zoomed in far enough. */

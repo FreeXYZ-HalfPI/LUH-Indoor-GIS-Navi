@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 ### Added
+- **Layer "Mapped buildings":** the map shows every building with an indoor map as a labelled frame (number and name),
+  switchable with a checkbox; tap a frame to start or end a route there. `run_building.py --layer` lists them and writes
+  `data/indoor/indexed_buildings.geojson` for QGIS.
 - **One command per building:** `tools/run_building.py <building>` runs crawl, fit, corridors, build, entrances and
   coverage, and prints the result (rooms found, routable, why not). `--report`, `--debug`, `--serve` (local web app).
 - **Automatic corridors, stairs and lifts:** `tools/auto_corridors.py` finds them from the floor plans (centre lines of

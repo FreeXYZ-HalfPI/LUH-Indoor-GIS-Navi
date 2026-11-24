@@ -191,6 +191,8 @@ main { max-width: 760px; margin: 0 auto; padding: 12px 16px; }
 /* a step that shows its floor on the map when tapped */
 .steps li[data-floor] { cursor: pointer; }
 .steps li[data-floor]:hover, .steps li[data-floor]:focus-visible { background: #f1ecfb; color: #1b1f24; }
+.layer-ctl { background: #fff; color: #1a1a1a; padding: 4px 8px; font-size: 0.8rem; }
+.layer-ctl label { cursor: pointer; display: flex; gap: 4px; align-items: center; }
 .room-label { background: rgb(255 255 255 / 0.85); border: 0; box-shadow: none; padding: 0 3px; font-size: 0.7rem; font-weight: 600; }
 .room-label::before { display: none; }
 

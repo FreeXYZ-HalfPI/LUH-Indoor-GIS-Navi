@@ -1,0 +1,395 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "1101",
+    "name": "Hauptgebäude",
+    "rooms": 1227,
+    "routable": 1106,
+    "floors": "000, 001, 002, 003, 004",
+    "approximate": true,
+    "built": "2026-11-18"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.715714,
+       52.381912
+      ],
+      [
+       9.719373,
+       52.381912
+      ],
+      [
+       9.719373,
+       52.383296
+      ],
+      [
+       9.715714,
+       52.383296
+      ],
+      [
+       9.715714,
+       52.381912
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "1106",
+    "name": "Grunwald Haus",
+    "rooms": 94,
+    "routable": 94,
+    "floors": "000, 001, 002",
+    "approximate": true,
+    "built": "2026-11-18"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.719299,
+       52.381916
+      ],
+      [
+       9.719948,
+       52.381916
+      ],
+      [
+       9.719948,
+       52.382297
+      ],
+      [
+       9.719299,
+       52.382297
+      ],
+      [
+       9.719299,
+       52.381916
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "1112",
+    "name": "Lessinghaus",
+    "rooms": 65,
+    "routable": 63,
+    "floors": "000, 001",
+    "approximate": true,
+    "built": "2026-11-18"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.718793,
+       52.383197
+      ],
+      [
+       9.719611,
+       52.383197
+      ],
+      [
+       9.719611,
+       52.383811
+      ],
+      [
+       9.718793,
+       52.383811
+      ],
+      [
+       9.718793,
+       52.383197
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "1139",
+    "name": "Im Moore 13 (ptb)",
+    "rooms": 26,
+    "routable": 26,
+    "floors": "000, 001",
+    "approximate": true,
+    "built": "2026-11-18"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.720794,
+       52.383408
+      ],
+      [
+       9.721077,
+       52.383408
+      ],
+      [
+       9.721077,
+       52.383552
+      ],
+      [
+       9.720794,
+       52.383552
+      ],
+      [
+       9.720794,
+       52.383408
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3101",
+    "name": "Schneiderberg-Gebäude",
+    "rooms": 261,
+    "routable": 244,
+    "floors": "000, 001, 002, 003",
+    "approximate": true,
+    "built": "2026-10-29"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.711789,
+       52.385068
+      ],
+      [
+       9.713435,
+       52.385068
+      ],
+      [
+       9.713435,
+       52.386033
+      ],
+      [
+       9.711789,
+       52.386033
+      ],
+      [
+       9.711789,
+       52.385068
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3109",
+    "name": "Verfügungsgebäude",
+    "rooms": 313,
+    "routable": 298,
+    "floors": "000, 001, 002, 003, 004",
+    "approximate": true,
+    "built": "2026-10-29"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.712873,
+       52.385581
+      ],
+      [
+       9.713799,
+       52.385581
+      ],
+      [
+       9.713799,
+       52.386108
+      ],
+      [
+       9.712873,
+       52.386108
+      ],
+      [
+       9.712873,
+       52.385581
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3110",
+    "name": "Hauptmensa",
+    "rooms": 234,
+    "routable": 222,
+    "floors": "000, 001, 002, 003, 004",
+    "approximate": true,
+    "built": "2026-10-29"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.713264,
+       52.385941
+      ],
+      [
+       9.714527,
+       52.385941
+      ],
+      [
+       9.714527,
+       52.386816
+      ],
+      [
+       9.713264,
+       52.386816
+      ],
+      [
+       9.713264,
+       52.385941
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3408",
+    "name": "Hochhaus Appelstraße",
+    "rooms": 926,
+    "routable": 843,
+    "floors": "000, 001, 002, 003, 004, 005, 006, 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017",
+    "approximate": true,
+    "built": "2026-10-29"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.712194,
+       52.388407
+      ],
+      [
+       9.713119,
+       52.388407
+      ],
+      [
+       9.713119,
+       52.388834
+      ],
+      [
+       9.712194,
+       52.388834
+      ],
+      [
+       9.712194,
+       52.388407
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3428",
+    "name": "Callinstraße 14 (ZQS)",
+    "rooms": 89,
+    "routable": 85,
+    "floors": "000, 001, 002, 003, 004",
+    "approximate": true,
+    "built": "2026-11-18"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.714995,
+       52.386744
+      ],
+      [
+       9.715394,
+       52.386744
+      ],
+      [
+       9.715394,
+       52.386924
+      ],
+      [
+       9.714995,
+       52.386924
+      ],
+      [
+       9.714995,
+       52.386744
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "building": "3703",
+    "name": "TI-Gebäude",
+    "rooms": 206,
+    "routable": 206,
+    "floors": "000, 001, 002, 003, 004, 005",
+    "approximate": true,
+    "built": "2026-11-24"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       9.714848,
+       52.389084
+      ],
+      [
+       9.715647,
+       52.389084
+      ],
+      [
+       9.715647,
+       52.38973
+      ],
+      [
+       9.714848,
+       52.38973
+      ],
+      [
+       9.714848,
+       52.389084
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

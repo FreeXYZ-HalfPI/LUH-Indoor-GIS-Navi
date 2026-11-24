@@ -9,6 +9,8 @@
   run_building.py 3101 --recrawl       crawl the rooms again (default: reuse data/indoor/<b>/rooms.json)
   run_building.py 3101 --refit         fit the georeference again, even if source.json has one
   run_building.py 3101 --osm way/123,way/456   OSM outline(s) of the building, if the walk graph does not know them
+  run_building.py --layer              list the indexed buildings (number, name, rooms) and write the GIS layer
+                                       data/indoor/indexed_buildings.geojson (open it in QGIS or geojson.io)
   run_building.py --serve              start the web app at http://localhost:8000 (no building needed)
 
 The steps, in order. Each one is skipped when its output already exists:
@@ -211,6 +213,31 @@ def report(bid):
     say(f"      try it          http://localhost:8000/#to={ok}   (python3 tools/run_building.py --serve)" if ok else "")
 
 
+def layer():
+    """The buildings with an indoor map as a GIS layer: one polygon (map frame of all room outlines) per building.
+
+    Reads only generated files, so it needs no network. The web app draws the same frames as its
+    "Mapped buildings" layer (web/data/indoor/frames.json)."""
+    names = {b["id"]: b for b in read(WEB / "data" / "buildings.json")}
+    frames = read(WEB / "data" / "indoor" / "frames.json")
+    features = []
+    say(f"{'building':<10}{'name':<34}{'rooms':>6}{'routable':>10}  floors")
+    for bid, (s, w, n, e) in sorted(frames.items()):
+        base = ROOT / "data" / "indoor" / bid
+        rep = read(base / "build_report.json") if (base / "build_report.json").exists() else {}
+        app = read(WEB / "data" / "indoor" / f"{bid}.json")
+        floors = [lv["code"] for lv in sorted(app["levels"].values(), key=lambda lv: lv["code"])]
+        name = names.get(bid, {}).get("name", "")
+        say(f"{bid:<10}{name[:32]:<34}{rep.get('total', '-'):>6}{rep.get('routable', '-'):>10}  {', '.join(floors)}")
+        features.append({"type": "Feature",
+                         "properties": {"building": bid, "name": name, "rooms": rep.get("total"), "routable": rep.get("routable"),
+                                        "floors": ", ".join(floors), "approximate": app["approximate"], "built": app.get("generated")},
+                         "geometry": {"type": "Polygon", "coordinates": [[[w, s], [e, s], [e, n], [w, n], [w, s]]]}})
+    out = ROOT / "data" / "indoor" / "indexed_buildings.geojson"
+    out.write_text(json.dumps({"type": "FeatureCollection", "features": features}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    say(f"\n{len(features)} buildings -> {out.relative_to(ROOT)} (WGS84)")
+
+
 def serve(port=8000):
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(WEB))
     say(f"web app: http://localhost:{port}/   (Ctrl+C to stop)")
@@ -248,9 +275,14 @@ def main():
     ap.add_argument("--refit", action="store_true", help="fit the georeference again")
     ap.add_argument("--reauto", action="store_true", help="find corridors, stairs and lifts again")
     ap.add_argument("--osm", help="OSM outline(s) of the building, e.g. way/123,way/456")
+    ap.add_argument("--layer", action="store_true", help="list the indexed buildings and write the GeoJSON layer")
     ap.add_argument("--serve", action="store_true", help="serve the web app on http://localhost:8000")
     ap.add_argument("--port", type=int, default=8000)
     a = ap.parse_args()
+    if a.layer:
+        layer()
+        if not a.buildings and not a.serve:
+            return
     if a.serve and not a.buildings:
         return serve(a.port)
     if not a.buildings:

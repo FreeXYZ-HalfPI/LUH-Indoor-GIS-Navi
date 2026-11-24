@@ -23,6 +23,7 @@ const dict = {
     installBtn: "Install on your phone",
     printBtn: "Print directions",
     aboutBtn: "About",
+    indexedLayer: "Mapped buildings",
     quickTitle: "Popular places",
     quick: [
       ["from", "t:hannover-hauptbahnhof", "🚉", "I am at the Hauptbahnhof"],
@@ -206,6 +207,7 @@ const dict = {
     installBtn: "Auf dem Handy installieren",
     printBtn: "Wegbeschreibung drucken",
     aboutBtn: "Über",
+    indexedLayer: "Kartierte Gebäude",
     quickTitle: "Beliebte Ziele",
     quick: [
       ["from", "t:hannover-hauptbahnhof", "🚉", "Ich bin am Hauptbahnhof"],
